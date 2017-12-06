@@ -32,15 +32,13 @@ namespace CVProject
         private Color backColor;
         private EditMode editMode = EditMode.Cursor;
 
-        [DllImport("CVProject.Core.dll", EntryPoint = "fnCVProjectCore")]
-        public extern static int test();
-
         public MainWindow()
         {
             InitializeComponent();
             WindowState = WindowState.Maximized;
             RenderOptions.SetBitmapScalingMode(CurImage, BitmapScalingMode.NearestNeighbor);
             RenderOptions.SetClearTypeHint(CurImage, ClearTypeHint.Enabled);
+            ImageProcessor.Init();
         }
 
         private void OpenFile()
@@ -51,7 +49,7 @@ namespace CVProject
                 imgFile = t;
                 CurImage.Source = imgFile.getCurImg();
                 ResetImage();
-                ImageProcessor.DrawLine(CurImage.Source as WriteableBitmap, new Point(0, 0), new Point(1, 1));
+                ImageProcessor.DrawLine(CurImage.Source as WriteableBitmap, new Point(1, 1), new Point(80, 60));
             }
         }
 
@@ -84,6 +82,8 @@ namespace CVProject
         private void CurImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             mouseDown = true;
+            ImageProcessor.DrawLine(CurImage.Source as WriteableBitmap, new Point(Math.Floor(e.GetPosition(CurImage).X / CurImage.ActualWidth * imgFile.getCurImg().PixelWidth),
+                Math.Floor(e.GetPosition(CurImage).Y / CurImage.ActualHeight * imgFile.getCurImg().PixelHeight)), new Point(1, 1));
             switch (editMode)
             {
                 case EditMode.Cursor:

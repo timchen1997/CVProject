@@ -8,6 +8,7 @@ using CVProject.Model;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Media.Imaging;
+using System.Runtime.InteropServices;
 
 namespace CVProject
 {
@@ -68,6 +69,12 @@ namespace CVProject
             byte[] bytearray = new byte[bmp.PixelHeight * bmp.PixelWidth * ((bmp.Format.BitsPerPixel + 7) / 8)];
             bmp.CopyPixels(bytearray, bmp.PixelWidth * ((bmp.Format.BitsPerPixel + 7) / 8), 0);
             return bytearray;
+        }
+
+        public static IntPtr getIntPtr(byte[] array)
+        {
+            GCHandle hObject = GCHandle.Alloc(array, GCHandleType.Pinned);
+            return hObject.AddrOfPinnedObject();
         }
 
     }
