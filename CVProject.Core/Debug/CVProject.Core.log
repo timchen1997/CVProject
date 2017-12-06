@@ -1,0 +1,4 @@
+﻿  CVProject.Core.cpp
+f:\courses\se342\cvproject\cvproject.core\cvproject.core.cpp(23): warning C4101: “depthTextureID”: 未引用的局部变量
+f:\courses\se342\cvproject\cvproject.core\cvproject.core.cpp(23): warning C4101: “imageID”: 未引用的局部变量
+  CVProject.Core.vcxproj -> F:\Courses\SE342\CVProject\Debug\CVProject.Core.dll

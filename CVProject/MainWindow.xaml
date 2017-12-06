@@ -1,0 +1,177 @@
+﻿<Window x:Class="CVProject.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CVProject"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="720" Width="1280" Background="#FF363636"
+        Closing="MainWindow_Closing">
+    <Window.Resources>
+        <RoutedUICommand x:Key="openFile_key" Text="Button Click"/>
+    </Window.Resources>
+    <Window.InputBindings>
+        <KeyBinding Gesture="Ctrl+O" Command="{StaticResource openFile_key}"/>
+    </Window.InputBindings>
+    <Window.CommandBindings>
+        <CommandBinding Command="{StaticResource openFile_key}" 
+                        Executed="OpenFileCommand_Executed"/>
+    </Window.CommandBindings>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="25"/>
+        </Grid.RowDefinitions>
+        <Menu Grid.Row="0">
+            <MenuItem Header="File">
+                <MenuItem Header="Open" Click="Open_Click"></MenuItem>
+                <MenuItem Header="Save"></MenuItem>
+                <MenuItem Header="Save As"></MenuItem>
+                <MenuItem Header="Exit" Click="Exit_Click"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="Edit">
+                <MenuItem Header="Undo"></MenuItem>
+                <MenuItem Header="Redo"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="View"></MenuItem>
+            <MenuItem Header="Image"></MenuItem>
+            <MenuItem Header="Help">
+                <MenuItem Header="About"></MenuItem>
+            </MenuItem>
+        </Menu>
+        <DockPanel Grid.Row="1">
+            <ToolBarTray Orientation="Vertical" DockPanel.Dock="Left" Background="#FF363636" IsLocked="True">
+                <ToolBar>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Button Content="Save" Grid.Column="0"></Button>
+                        <Button Content="Open" Click="Open_Click" Grid.Column="1"></Button>
+                    </Grid>
+                    <Grid>
+                        <Button Margin="15,15,3,0" Click="btnBackColor_Click" Name="btnBackColor">
+                            <Button.Template>
+                                <ControlTemplate>
+                                    <Rectangle Width="40" Height="40" Fill="Black" Name="BackColorView" />
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                        <Button Margin="3,3,15,15" Click="btnForeColor_Click" Name="btnForeColor">
+                            <Button.Template>
+                                <ControlTemplate>
+                                    <Rectangle Width="40" Height="40" Fill="White" Name="ForeColorView" />
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>                        
+                    </Grid>
+                </ToolBar>
+            </ToolBarTray>
+            <Grid DockPanel.Dock="Right">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="250"/>
+                </Grid.ColumnDefinitions>
+                <Grid.Resources>
+                    <TransformGroup x:Key="Imageview">
+                        <ScaleTransform />
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Grid.Resources>
+                <ScrollViewer Grid.Column="0" Name="root" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled">
+                    <ContentControl x:Name="TestContentControl1"
+                                    MouseLeftButtonDown="CurImage_MouseLeftButtonDown"
+                                    MouseLeftButtonUp="CurImage_MouseLeftButtonUp"
+                                    MouseMove="CurImage_MouseMove"
+                                    MouseWheel="CurImage_MouseWheel">
+                        <Image x:Name="CurImage"
+                               RenderTransform="{StaticResource Imageview}" RenderOptions.BitmapScalingMode="NearestNeighbor" RenderOptions.ClearTypeHint="Enabled" ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                        />
+                    </ContentControl>
+                </ScrollViewer>
+                <TabControl Grid.Column="1" HorizontalAlignment="Left" Height="177" Margin="10,10,0,0" VerticalAlignment="Top" Width="230">
+                    <TabItem Header="Pixel">
+                        <Grid>
+                            <Grid.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FF363636" Offset="0"/>
+                                    <GradientStop Color="#FF424242" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Grid.Background>
+                            <Rectangle x:Name="colorView" HorizontalAlignment="Left" Height="60" Margin="10,10,0,0" VerticalAlignment="Top" Width="60"/>
+                            <Label Content="X = " HorizontalAlignment="Left" Margin="113,8,0,0" VerticalAlignment="Top"/>
+                            <Label Content="Y = " HorizontalAlignment="Left" Margin="113,31,0,0" VerticalAlignment="Top"/>
+                            <Label Content="Red = " HorizontalAlignment="Left" Margin="10,75,0,0" VerticalAlignment="Top"/>
+                            <Label Content="Green = " HorizontalAlignment="Left" Margin="10,98,0,0" VerticalAlignment="Top"/>
+                            <Label Content="Blue = " HorizontalAlignment="Left" Margin="10,121,0,0" VerticalAlignment="Top"/>
+                            <Label Content="Hue = " HorizontalAlignment="Left" Margin="113,75,0,0" VerticalAlignment="Top"/>
+                            <Label Content="Saturation = " HorizontalAlignment="Left" Margin="113,98,0,0" VerticalAlignment="Top"/>
+                            <Label Content="Lightness = " HorizontalAlignment="Left" Margin="113,121,0,0" VerticalAlignment="Top"/>
+                            <Label Content="Alpha = " HorizontalAlignment="Left" Margin="113,54,0,0" VerticalAlignment="Top"/>
+                            <Label x:Name="SVal" HorizontalAlignment="Left" Margin="187,98,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.071,-0.125"/>
+                            <Label x:Name="HVal" HorizontalAlignment="Left" Margin="187,75,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.071,-0.125"/>
+                            <Label x:Name="AVal" HorizontalAlignment="Left" Margin="187,54,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.071,-0.125"/>
+                            <Label x:Name="YVal" HorizontalAlignment="Left" Margin="187,31,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.071,-0.125"/>
+                            <Label x:Name="XVal" HorizontalAlignment="Left" Margin="187,8,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.071,-0.125"/>
+                            <Label x:Name="LVal" HorizontalAlignment="Left" Margin="187,121,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.071,-0.125"/>
+                            <Label x:Name="GVal" HorizontalAlignment="Left" Margin="62,98,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.071,-0.125"/>
+                            <Label x:Name="BVal" HorizontalAlignment="Left" Margin="62,121,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.071,-0.125"/>
+                            <Label x:Name="RVal" HorizontalAlignment="Left" Margin="62,75,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.071,-0.125"/>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="Histogram">
+                        <Grid>
+                            <Grid.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FF363636" Offset="0"/>
+                                    <GradientStop Color="#FF424242" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Grid.Background>
+
+                        </Grid>
+                    </TabItem>
+                </TabControl>
+                <TabControl Grid.Column="1" HorizontalAlignment="Left" Height="177" Margin="10,192,0,0" VerticalAlignment="Top" Width="230">
+                    <TabItem Header="History">
+                        <Grid Background="#FF2C2C2C">
+                            <ListBox x:Name="listBox" Background="#FF2C2C2C" BorderBrush="{x:Null}">
+                                <ListBoxItem Content="a"/>
+                                <ListBoxItem Content="b"/>
+                            </ListBox>
+                        </Grid>
+                    </TabItem>
+
+                </TabControl>
+            </Grid>
+        </DockPanel>
+        <StatusBar Grid.Row="2" Background="#FF212121" Foreground="White">
+            <StatusBar.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="50"/>
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ItemsPanelTemplate>
+            </StatusBar.ItemsPanel>
+            <StatusBarItem Grid.Column="0">
+                <TextBlock Name="status"></TextBlock>
+            </StatusBarItem>
+            <StatusBarItem Grid.Column="1">
+                <Button Width="55" Content="Reset" Click="btnReset_Click" Name="btnReset"></Button>
+            </StatusBarItem>
+            <StatusBarItem Grid.Column="2">
+                <Slider Width="190"></Slider>
+            </StatusBarItem>
+            <StatusBarItem Grid.Column="3">
+                <TextBox Width="48"></TextBox>
+            </StatusBarItem>
+        </StatusBar>
+    </Grid>
+</Window>
