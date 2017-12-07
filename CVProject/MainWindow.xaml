@@ -53,6 +53,14 @@
                         <Button Content="Open" Click="Open_Click" Grid.Column="1"></Button>
                     </Grid>
                     <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Button Content="Cursor" Click="Cursor_Click" Grid.Column="0"></Button>
+                        <Button Content="Line" Click="Line_Click" Grid.Column="1"></Button>
+                    </Grid>
+                    <Grid>
                         <Button Margin="15,15,3,0" Click="btnBackColor_Click" Name="btnBackColor">
                             <Button.Template>
                                 <ControlTemplate>
@@ -81,17 +89,21 @@
                         <TranslateTransform/>
                     </TransformGroup>
                 </Grid.Resources>
-                <ScrollViewer Grid.Column="0" Name="root" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled">
-                    <ContentControl x:Name="TestContentControl1"
-                                    MouseLeftButtonDown="CurImage_MouseLeftButtonDown"
-                                    MouseLeftButtonUp="CurImage_MouseLeftButtonUp"
-                                    MouseMove="CurImage_MouseMove"
-                                    MouseWheel="CurImage_MouseWheel">
-                        <Image x:Name="CurImage"
-                               RenderTransform="{StaticResource Imageview}" RenderOptions.BitmapScalingMode="NearestNeighbor" RenderOptions.ClearTypeHint="Enabled" ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                        />
-                    </ContentControl>
-                </ScrollViewer>
+                <Grid Grid.Column="0" Name="g">
+                    
+                    <ScrollViewer Name="root" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled">                    
+                        <ContentControl x:Name="TestContentControl1"
+                                        MouseLeftButtonDown="CurImage_MouseLeftButtonDown"
+                                        MouseLeftButtonUp="CurImage_MouseLeftButtonUp"
+                                        MouseMove="CurImage_MouseMove"
+                                        MouseWheel="CurImage_MouseWheel">
+                            <Image x:Name="CurImage"
+                                   RenderTransform="{StaticResource Imageview}" RenderOptions.BitmapScalingMode="NearestNeighbor" RenderOptions.ClearTypeHint="Enabled" ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                            />
+                        </ContentControl>                    
+                    </ScrollViewer>
+                    <Line Stroke="Black" X1="0" Y1="0" Y2="0" X2="1000" Name="l" StrokeThickness="10" MouseLeftButtonUp="CurImage_MouseLeftButtonUp" Visibility="Hidden"/>
+                </Grid>
                 <TabControl Grid.Column="1" HorizontalAlignment="Left" Height="177" Margin="10,10,0,0" VerticalAlignment="Top" Width="230">
                     <TabItem Header="Pixel">
                         <Grid>

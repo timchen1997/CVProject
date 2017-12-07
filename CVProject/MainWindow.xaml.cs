@@ -22,7 +22,7 @@ namespace CVProject
     /// </summary>
     public partial class MainWindow : Window
     {
-        enum EditMode { Cursor, Brush, Eraser};
+        enum EditMode { Cursor, Brush, Eraser, Line};
 
         private bool mouseDown;
         private Point mouseXY;
@@ -30,6 +30,9 @@ namespace CVProject
         private ImageFile imgFile;
         private Color foreColor;
         private Color backColor;
+        private Point startPoint, endPoint;
+        private bool drawing = false;
+        private Line curLine;
         private EditMode editMode = EditMode.Cursor;
 
         public MainWindow()
@@ -49,7 +52,6 @@ namespace CVProject
                 imgFile = t;
                 CurImage.Source = imgFile.getCurImg();
                 ResetImage();
-                ImageProcessor.DrawLine(CurImage.Source as WriteableBitmap, new Point(1, 1), new Point(80, 60));
             }
         }
 
@@ -79,11 +81,25 @@ namespace CVProject
             Close();
         }
 
+        private void Cursor_Click(object sender, RoutedEventArgs e)
+        {
+            editMode = EditMode.Cursor;
+        }
+
+        private void Line_Click(object sender, RoutedEventArgs e)
+        {
+            editMode = EditMode.Line;
+        }
+
+        private Point realPoint(Point pos)
+        {
+            return new Point(Math.Floor(pos.X / CurImage.ActualWidth  * imgFile.getCurImg().PixelWidth),
+                             Math.Floor(pos.Y / CurImage.ActualHeight * imgFile.getCurImg().PixelHeight));
+        }
+
         private void CurImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             mouseDown = true;
-            ImageProcessor.DrawLine(CurImage.Source as WriteableBitmap, new Point(Math.Floor(e.GetPosition(CurImage).X / CurImage.ActualWidth * imgFile.getCurImg().PixelWidth),
-                Math.Floor(e.GetPosition(CurImage).Y / CurImage.ActualHeight * imgFile.getCurImg().PixelHeight)), new Point(1, 1));
             switch (editMode)
             {
                 case EditMode.Cursor:
@@ -94,13 +110,23 @@ namespace CVProject
                     break;
                 case EditMode.Brush:
                     break;
+                case EditMode.Line:
+                    CurImage.CaptureMouse();
+                    startPoint = realPoint(e.GetPosition(CurImage));
+                    drawing = true;
+                    var visPoint = e.GetPosition(g); 
+                    l.Visibility = Visibility.Visible;
+                    l.X1 = visPoint.X;
+                    l.Y1 = visPoint.Y;
+                    l.X2 = visPoint.X;
+                    l.Y2 = visPoint.Y;
+                    break;
             }
         }
 
         private void CurImage_MouseMove(object sender, MouseEventArgs e)
         {
-            Point curPixel = new Point(Math.Floor(e.GetPosition(CurImage).X / CurImage.ActualWidth * imgFile.getCurImg().PixelWidth),
-                Math.Floor(e.GetPosition(CurImage).Y / CurImage.ActualHeight * imgFile.getCurImg().PixelHeight));
+            Point curPixel = realPoint(e.GetPosition(CurImage));
             if (curPixel.X >= 0 && curPixel.X < imgFile.getCurImg().PixelWidth && curPixel.Y >= 0 && curPixel.Y < imgFile.getCurImg().PixelHeight)
             {
                 byte[] buf = new byte[4];
@@ -140,6 +166,12 @@ namespace CVProject
                         break;
                     case EditMode.Brush:
                         break;
+                    case EditMode.Line:
+                        if (!drawing) break;
+                        var t = e.GetPosition(g);
+                        l.X2 = t.X;
+                        l.Y2 = t.Y;
+                        break;
                 }
             }
         }
@@ -156,6 +188,14 @@ namespace CVProject
                         return;
                     }
                     img.ReleaseMouseCapture();
+                    break;
+                case EditMode.Line:
+                    if (!drawing) break;
+                    l.Visibility = Visibility.Hidden;
+                    endPoint = realPoint(e.GetPosition(CurImage));
+                    ImageProcessor.DrawLine(CurImage.Source as WriteableBitmap, startPoint, endPoint, Color.FromArgb(255, 255, 0, 0));
+                    drawing = false;
+                    CurImage.ReleaseMouseCapture();
                     break;
             }
         }
