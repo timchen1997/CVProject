@@ -10,16 +10,24 @@
     <Window.Resources>
         <RoutedUICommand x:Key="openFile_key" Text="Button Click"/>
         <RoutedUICommand x:Key="saveFile_key" Text="Button Click"/>
+        <RoutedUICommand x:Key="undo_key" Text="Button Click"/>
+        <RoutedUICommand x:Key="redo_key" Text="Button Click"/>
     </Window.Resources>
     <Window.InputBindings>
         <KeyBinding Gesture="Ctrl+O" Command="{StaticResource openFile_key}"/>
         <KeyBinding Gesture="Ctrl+S" Command="{StaticResource saveFile_key}"/>
+        <KeyBinding Gesture="Ctrl+Z" Command="{StaticResource undo_key}"/>
+        <KeyBinding Gesture="Ctrl+Y" Command="{StaticResource redo_key}"/>
     </Window.InputBindings>
     <Window.CommandBindings>
         <CommandBinding Command="{StaticResource openFile_key}" 
                         Executed="OpenFileCommand_Executed"/>
         <CommandBinding Command="{StaticResource saveFile_key}" 
                         Executed="SaveFileCommand_Executed"/>
+        <CommandBinding Command="{StaticResource undo_key}" 
+                        Executed="UndoCommand_Executed"/>
+        <CommandBinding Command="{StaticResource redo_key}" 
+                        Executed="RedoCommand_Executed"/>
     </Window.CommandBindings>
 
     <Grid>

@@ -7,12 +7,24 @@ using System.Windows.Media.Imaging;
 
 namespace CVProject.Model
 {
+    class ImageHistory
+    {
+        public WriteableBitmap img { set; get; }
+        public string description { set; get; }
+
+        public ImageHistory(WriteableBitmap img, string description)
+        {
+            this.img = img;
+            this.description = description;
+        }
+    }
+
 
     class ImageFile
     {
         private enum ImageFormat { Bmp, Jpg, Png};
 
-        private List<WriteableBitmap> ImageList { set; get; }
+        private List<ImageHistory> ImageList { set; get; }
         public string FullPath { set; get; }
         public string FileName { set; get; }
         private ImageFormat Format { set; get; }
@@ -38,16 +50,16 @@ namespace CVProject.Model
             FullPath = uri.LocalPath;
             FileName = FullPath.Split('\\').Last();
             Format = DetectFormat(FileName);
-            ImageList = new List<WriteableBitmap>();
+            ImageList = new List<ImageHistory>();
             var Img = BitmapFrame.Create(uri);
             var WBitmap = new WriteableBitmap(Img);
-            ImageList.Add(WBitmap);
+            ImageList.Add(new ImageHistory(WBitmap, "Open File"));
             curStateNo = 0;
         }
 
         public WriteableBitmap getCurImg()
         {
-            return ImageList[curStateNo];
+            return ImageList[curStateNo].img;
         }
 
         public static ImageFile Open()
@@ -101,6 +113,33 @@ namespace CVProject.Model
                 FileName = FullPath.Split('\\').Last();
                 Format = DetectFormat(FileName);
                 Save();
+            }
+        }
+
+        public void Undo()
+        {
+            if (curStateNo == 0) return;
+            curStateNo--;
+        }
+
+        public void Redo()
+        {
+            if (curStateNo == ImageList.Count - 1) return;
+            curStateNo++;
+        }
+
+        public void Advance(string description)
+        {
+            var newBitmap = Helper.DuplicateWritableBitmap(getCurImg());
+            var ih = new ImageHistory(newBitmap, description);
+            curStateNo++;
+            if (curStateNo == ImageList.Count)
+                ImageList.Add(ih);
+            else
+            {
+                ImageList[curStateNo] = ih;
+                for (int i = curStateNo + 1; i < ImageList.Count; i++)
+                    ImageList[i] = null;
             }
         }
     }

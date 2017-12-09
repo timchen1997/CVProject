@@ -72,6 +72,13 @@ namespace CVProject
             return bytearray;
         }
 
+        public static WriteableBitmap DuplicateWritableBitmap(WriteableBitmap bmp)
+        {
+            byte[] bytearray = BitmapSourceToByteArray(bmp);
+            var Img = BitmapSource.Create(bmp.PixelWidth, bmp.PixelHeight, bmp.DpiX, bmp.DpiY, bmp.Format, bmp.Palette, bytearray, bmp.PixelWidth * ((bmp.Format.BitsPerPixel + 7) / 8));
+            return new WriteableBitmap(Img);
+        }
+
         public static IntPtr getIntPtr(byte[] array)
         {
             GCHandle hObject = GCHandle.Alloc(array, GCHandleType.Pinned);

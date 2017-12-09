@@ -26,9 +26,9 @@ namespace CVProject
 
         private bool mouseDown;
         private Point mouseXY;
-        private bool needSave = true;
+        private bool needSave = false;
         private ImageFile imgFile;
-        private Color foreColor;
+        private Color foreColor = Color.FromArgb(255, 255, 255, 255);
         private Color backColor;
         private Point startPoint, endPoint;
         private bool drawing = false;
@@ -68,12 +68,47 @@ namespace CVProject
 
         private void SaveFile()
         {
-            imgFile.Save();
+            if (imgFile != null)
+            {
+                imgFile.Save();
+                needSave = false;
+            }
         }
 
         private void SaveAs()
         {
-            imgFile.SaveAs();
+            if (imgFile != null)
+            {
+                imgFile.SaveAs();
+                needSave = false;
+            }
+                
+        }
+
+        private void Undo()
+        {
+            if (imgFile != null)
+            {
+                imgFile.Undo();
+                CurImage.Source = imgFile.getCurImg();
+                needSave = true;
+            }
+        }
+
+        private void Redo()
+        {
+            if (imgFile != null)
+            {
+                imgFile.Redo();
+                CurImage.Source = imgFile.getCurImg();
+                needSave = true;
+            }
+        }
+
+        private void Advance(string description)
+        {
+            imgFile.Advance(description);
+            CurImage.Source = imgFile.getCurImg();
         }
 
         private void Open_Click(object sender, RoutedEventArgs e)
@@ -221,9 +256,11 @@ namespace CVProject
                     break;
                 case EditMode.Line:
                     if (!drawing) break;
+                    needSave = true;
+                    Advance("Line");
                     l.Visibility = Visibility.Hidden;
                     endPoint = realPoint(e.GetPosition(CurImage));
-                    ImageProcessor.DrawLine(CurImage.Source as WriteableBitmap, startPoint, endPoint, Color.FromArgb(255, 255, 0, 0));
+                    ImageProcessor.DrawLine(CurImage.Source as WriteableBitmap, startPoint, endPoint, foreColor);
                     drawing = false;
                     CurImage.ReleaseMouseCapture();
                     break;
@@ -277,6 +314,16 @@ namespace CVProject
         private void SaveFileCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             SaveFile();
+        }
+
+        private void UndoCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            Undo();
+        }
+
+        private void RedoCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            Redo();
         }
 
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
