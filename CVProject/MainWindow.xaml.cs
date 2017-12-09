@@ -22,7 +22,7 @@ namespace CVProject
     /// </summary>
     public partial class MainWindow : Window
     {
-        enum EditMode { Cursor, Brush, Eraser, Line};
+        enum EditMode { Cursor, Brush, Eraser, Line, PickColor};
 
         private bool mouseDown;
         private Point mouseXY;
@@ -32,16 +32,15 @@ namespace CVProject
         private Color backColor;
         private Point startPoint, endPoint;
         private bool drawing = false;
-        private Line curLine;
         private EditMode editMode = EditMode.Cursor;
 
         public MainWindow()
         {
             InitializeComponent();
             WindowState = WindowState.Maximized;
+            Title = Settings.appName;
             RenderOptions.SetBitmapScalingMode(CurImage, BitmapScalingMode.NearestNeighbor);
             RenderOptions.SetClearTypeHint(CurImage, ClearTypeHint.Enabled);
-            ImageProcessor.Init();
         }
 
         private void OpenFile()
@@ -51,6 +50,7 @@ namespace CVProject
             {
                 imgFile = t;
                 CurImage.Source = imgFile.getCurImg();
+                Title = Settings.appName + " - " + imgFile.FileName;
                 ResetImage();
             }
         }
@@ -68,12 +68,27 @@ namespace CVProject
 
         private void SaveFile()
         {
-            ;
+            imgFile.Save();
+        }
+
+        private void SaveAs()
+        {
+            imgFile.SaveAs();
         }
 
         private void Open_Click(object sender, RoutedEventArgs e)
         {
             OpenFile();
+        }
+
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFile();
+        }
+
+        private void SaveAs_Click(object sender, RoutedEventArgs e)
+        {
+            SaveAs();
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)
@@ -90,11 +105,29 @@ namespace CVProject
         {
             editMode = EditMode.Line;
         }
+        private void PickColor_Click(object sender, RoutedEventArgs e)
+        {
+            editMode = EditMode.PickColor;
+        }
 
         private Point realPoint(Point pos)
         {
             return new Point(Math.Floor(pos.X / CurImage.ActualWidth  * imgFile.getCurImg().PixelWidth),
                              Math.Floor(pos.Y / CurImage.ActualHeight * imgFile.getCurImg().PixelHeight));
+        }
+
+        private Color getPixelColor(Point pos)
+        {
+            byte[] buf = new byte[4];
+            try
+            {
+                (CurImage.Source as BitmapSource).CopyPixels(new Int32Rect(Convert.ToInt32(pos.X), Convert.ToInt32(pos.Y), 1, 1), buf, (CurImage.Source as BitmapSource).Format.BitsPerPixel / 8, 0);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            return Color.FromArgb(buf[3], buf[2], buf[1], buf[0]);
         }
 
         private void CurImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -121,6 +154,12 @@ namespace CVProject
                     l.X2 = visPoint.X;
                     l.Y2 = visPoint.Y;
                     break;
+                case EditMode.PickColor:
+                    Point curPixel = realPoint(e.GetPosition(CurImage));
+                    foreColor = getPixelColor(curPixel);
+                    (btnForeColor.Template.FindName("ForeColorView", btnForeColor) as Rectangle).Fill = new SolidColorBrush(foreColor);
+                    break;
+
             }
         }
 
@@ -129,16 +168,7 @@ namespace CVProject
             Point curPixel = realPoint(e.GetPosition(CurImage));
             if (curPixel.X >= 0 && curPixel.X < imgFile.getCurImg().PixelWidth && curPixel.Y >= 0 && curPixel.Y < imgFile.getCurImg().PixelHeight)
             {
-                byte[] buf = new byte[4];
-                try
-                {
-                    (CurImage.Source as BitmapSource).CopyPixels(new Int32Rect(Convert.ToInt32(curPixel.X), Convert.ToInt32(curPixel.Y), 1, 1), buf, (CurImage.Source as BitmapSource).Format.BitsPerPixel / 8, 0);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-                Color curColor = Color.FromArgb(buf[3], buf[2], buf[1], buf[0]);
+                Color curColor = getPixelColor(curPixel);
                 colorView.Fill = new SolidColorBrush(curColor);
                 RVal.Content = curColor.R;
                 GVal.Content = curColor.G;
@@ -242,6 +272,11 @@ namespace CVProject
         private void OpenFileCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             OpenFile();
+        }
+
+        private void SaveFileCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            SaveFile();
         }
 
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)

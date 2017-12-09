@@ -53,3 +53,5 @@ E:\CVProject\Debug\dll\x64\OpenCvSharpExtern.dll
 E:\CVProject\Debug\dll\x64\opencv_ffmpeg331_64.dll
 E:\CVProject\CVProject\obj\Debug\Window1.g.cs
 E:\CVProject\CVProject\obj\Debug\Window1.baml
+E:\CVProject\CVProject\obj\Debug\Dialog\JpegSaveDialog.g.cs
+E:\CVProject\CVProject\obj\Debug\Dialog\JpegSaveDialog.baml

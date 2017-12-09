@@ -9,13 +9,17 @@
         Closing="MainWindow_Closing">
     <Window.Resources>
         <RoutedUICommand x:Key="openFile_key" Text="Button Click"/>
+        <RoutedUICommand x:Key="saveFile_key" Text="Button Click"/>
     </Window.Resources>
     <Window.InputBindings>
         <KeyBinding Gesture="Ctrl+O" Command="{StaticResource openFile_key}"/>
+        <KeyBinding Gesture="Ctrl+S" Command="{StaticResource saveFile_key}"/>
     </Window.InputBindings>
     <Window.CommandBindings>
         <CommandBinding Command="{StaticResource openFile_key}" 
                         Executed="OpenFileCommand_Executed"/>
+        <CommandBinding Command="{StaticResource saveFile_key}" 
+                        Executed="SaveFileCommand_Executed"/>
     </Window.CommandBindings>
 
     <Grid>
@@ -26,9 +30,10 @@
         </Grid.RowDefinitions>
         <Menu Grid.Row="0">
             <MenuItem Header="File">
+                <MenuItem Header="New"></MenuItem>
                 <MenuItem Header="Open" Click="Open_Click"></MenuItem>
-                <MenuItem Header="Save"></MenuItem>
-                <MenuItem Header="Save As"></MenuItem>
+                <MenuItem Header="Save" Click="Save_Click"></MenuItem>
+                <MenuItem Header="Save As" Click="SaveAs_Click"></MenuItem>
                 <MenuItem Header="Exit" Click="Exit_Click"></MenuItem>
             </MenuItem>
             <MenuItem Header="Edit">
@@ -49,16 +54,16 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <Button Content="Save" Grid.Column="0"></Button>
-                        <Button Content="Open" Click="Open_Click" Grid.Column="1"></Button>
-                    </Grid>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Button Content="Cursor" Click="Cursor_Click" Grid.Column="0"></Button>
-                        <Button Content="Line" Click="Line_Click" Grid.Column="1"></Button>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Button Content="Save" Grid.Column="0" Grid.Row="0"></Button>
+                        <Button Content="Open" Click="Open_Click" Grid.Column="1" Grid.Row="0"></Button>
+                        <Button Content="Cursor" Click="Cursor_Click" Grid.Column="0" Grid.Row="1"></Button>
+                        <Button Content="Line" Click="Line_Click" Grid.Column="1" Grid.Row="1"></Button>
+                        <Button Content="PickColor" Click="PickColor_Click" Grid.Column="0" Grid.Row="2"></Button>
                     </Grid>
                     <Grid>
                         <Button Margin="15,15,3,0" Click="btnBackColor_Click" Name="btnBackColor">
@@ -155,7 +160,6 @@
                             </ListBox>
                         </Grid>
                     </TabItem>
-
                 </TabControl>
             </Grid>
         </DockPanel>
