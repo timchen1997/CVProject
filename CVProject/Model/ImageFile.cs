@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace CVProject.Model
@@ -24,11 +26,18 @@ namespace CVProject.Model
     {
         private enum ImageFormat { Bmp, Jpg, Png};
 
-        private List<ImageHistory> ImageList { set; get; }
+        public ObservableCollection<ImageHistory> ImageList { set; get; }
         public string FullPath { set; get; }
         public string FileName { set; get; }
         private ImageFormat Format { set; get; }
-        private int curStateNo { set; get; }
+        public int curStateNo { set; get; }
+        public ImageSource curImage
+        {
+            get
+            {
+                return ImageList[curStateNo].img;
+            }
+        }
 
         private ImageFormat DetectFormat(string name)
         {
@@ -50,7 +59,7 @@ namespace CVProject.Model
             FullPath = uri.LocalPath;
             FileName = FullPath.Split('\\').Last();
             Format = DetectFormat(FileName);
-            ImageList = new List<ImageHistory>();
+            ImageList = new ObservableCollection<ImageHistory>();
             var Img = BitmapFrame.Create(uri);
             var WBitmap = new WriteableBitmap(Img);
             ImageList.Add(new ImageHistory(WBitmap, "Open File"));
@@ -128,6 +137,11 @@ namespace CVProject.Model
             curStateNo++;
         }
 
+        public void ChangeState(int stateNo)
+        {
+            curStateNo = stateNo;
+        }
+
         public void Advance(string description)
         {
             var newBitmap = Helper.DuplicateWritableBitmap(getCurImg());
@@ -138,8 +152,8 @@ namespace CVProject.Model
             else
             {
                 ImageList[curStateNo] = ih;
-                for (int i = curStateNo + 1; i < ImageList.Count; i++)
-                    ImageList[i] = null;
+                for (int i = ImageList.Count - 1; i > curStateNo; i--)
+                    ImageList.RemoveAt(i);
             }
         }
     }
