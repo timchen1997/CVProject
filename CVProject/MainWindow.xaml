@@ -112,7 +112,7 @@
                                         MouseWheel="CurImage_MouseWheel">
                             <Image x:Name="CurImage"
                                    RenderTransform="{StaticResource Imageview}" RenderOptions.BitmapScalingMode="NearestNeighbor" RenderOptions.ClearTypeHint="Enabled" ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                            />
+                                   Source="{Binding curImage}"/>
                         </ContentControl>                    
                     </ScrollViewer>
                     <Line Stroke="Black" X1="0" Y1="0" Y2="0" X2="1000" Name="l" StrokeThickness="10" MouseLeftButtonUp="CurImage_MouseLeftButtonUp" Visibility="Hidden"/>
@@ -162,9 +162,14 @@
                 <TabControl Grid.Column="1" HorizontalAlignment="Left" Height="177" Margin="10,192,0,0" VerticalAlignment="Top" Width="230">
                     <TabItem Header="History">
                         <Grid Background="#FF2C2C2C">
-                            <ListBox x:Name="listBox" Background="#FF2C2C2C" BorderBrush="{x:Null}">
-                                <ListBoxItem Content="a"/>
-                                <ListBoxItem Content="b"/>
+                            <ListBox x:Name="listBox" Background="#FF2C2C2C" BorderBrush="{x:Null}" SelectionChanged="listBox_SelectionChanged">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Path=description}"></TextBlock>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
                             </ListBox>
                         </Grid>
                     </TabItem>

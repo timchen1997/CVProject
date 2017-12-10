@@ -39,6 +39,7 @@ namespace CVProject
             InitializeComponent();
             WindowState = WindowState.Maximized;
             Title = Settings.appName;
+            
             RenderOptions.SetBitmapScalingMode(CurImage, BitmapScalingMode.NearestNeighbor);
             RenderOptions.SetClearTypeHint(CurImage, ClearTypeHint.Enabled);
         }
@@ -49,8 +50,9 @@ namespace CVProject
             if (t != null)
             {
                 imgFile = t;
-                CurImage.Source = imgFile.getCurImg();
                 Title = Settings.appName + " - " + imgFile.FileName;
+                listBox.ItemsSource = imgFile.ImageList;
+                listBox.SelectedIndex = 0;
                 ResetImage();
             }
         }
@@ -90,7 +92,7 @@ namespace CVProject
             if (imgFile != null)
             {
                 imgFile.Undo();
-                CurImage.Source = imgFile.getCurImg();
+                listBox.SelectedIndex = imgFile.curStateNo;
                 needSave = true;
             }
         }
@@ -100,7 +102,7 @@ namespace CVProject
             if (imgFile != null)
             {
                 imgFile.Redo();
-                CurImage.Source = imgFile.getCurImg();
+                listBox.SelectedIndex = imgFile.curStateNo;
                 needSave = true;
             }
         }
@@ -108,7 +110,7 @@ namespace CVProject
         private void Advance(string description)
         {
             imgFile.Advance(description);
-            CurImage.Source = imgFile.getCurImg();
+            listBox.SelectedIndex = imgFile.curStateNo;
         }
 
         private void Open_Click(object sender, RoutedEventArgs e)
@@ -362,6 +364,16 @@ namespace CVProject
                 foreColor.B = colorDialog.Color.B;
                 (btnForeColor.Template.FindName("ForeColorView", btnForeColor) as Rectangle).Fill = new SolidColorBrush(foreColor);
             }
+        }
+
+        private void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            for (int i = 0; i <= listBox.SelectedIndex; i++)
+                (listBox.ItemContainerGenerator.ContainerFromIndex(i) as ListBoxItem).Foreground = new SolidColorBrush(Colors.White);
+            for (int i = listBox.SelectedIndex + 1; i < imgFile.ImageList.Count; i++)
+                (listBox.ItemContainerGenerator.ContainerFromIndex(i) as ListBoxItem).Foreground = new SolidColorBrush(Colors.Gray);
+            imgFile.ChangeState(listBox.SelectedIndex);
+            CurImage.Source = imgFile.curImage;
         }
 
         private void btnBackColor_Click(object sender, RoutedEventArgs e)
