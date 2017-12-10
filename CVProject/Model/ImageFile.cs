@@ -30,12 +30,20 @@ namespace CVProject.Model
         public string FullPath { set; get; }
         public string FileName { set; get; }
         private ImageFormat Format { set; get; }
+        private WriteableBitmap store { set; get; }
         public int curStateNo { set; get; }
-        public ImageSource curImage
+        public BitmapSource curImage
         {
             get
             {
                 return ImageList[curStateNo].img;
+            }
+        }
+        public ImageSource prevImage
+        {
+            get
+            {
+                return ImageList[curStateNo - 1].img;
             }
         }
 
@@ -64,11 +72,6 @@ namespace CVProject.Model
             var WBitmap = new WriteableBitmap(Img);
             ImageList.Add(new ImageHistory(WBitmap, "Open File"));
             curStateNo = 0;
-        }
-
-        public WriteableBitmap getCurImg()
-        {
-            return ImageList[curStateNo].img;
         }
 
         public static ImageFile Open()
@@ -102,7 +105,7 @@ namespace CVProject.Model
                     encoder = new BmpBitmapEncoder();
                     break;
             }
-            encoder.Frames.Add(BitmapFrame.Create(getCurImg()));
+            encoder.Frames.Add(BitmapFrame.Create(curImage));
             using (var fileStream = new System.IO.FileStream(FullPath, System.IO.FileMode.Create))
             {
                 encoder.Save(fileStream);
@@ -139,12 +142,13 @@ namespace CVProject.Model
 
         public void ChangeState(int stateNo)
         {
+            if (stateNo == -1) return;
             curStateNo = stateNo;
         }
 
         public void Advance(string description)
         {
-            var newBitmap = Helper.DuplicateWritableBitmap(getCurImg());
+            var newBitmap = Helper.DuplicateWritableBitmap(curImage as WriteableBitmap);
             var ih = new ImageHistory(newBitmap, description);
             curStateNo++;
             if (curStateNo == ImageList.Count)
@@ -155,6 +159,17 @@ namespace CVProject.Model
                 for (int i = ImageList.Count - 1; i > curStateNo; i--)
                     ImageList.RemoveAt(i);
             }
+        }
+
+        public WriteableBitmap Recover()
+        {
+            store = Helper.DuplicateWritableBitmap(prevImage as WriteableBitmap);
+            return store;
+        }
+
+        public void Commit()
+        {
+            ImageList[curStateNo].img = store;
         }
     }
 }

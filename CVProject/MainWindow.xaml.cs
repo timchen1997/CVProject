@@ -22,7 +22,7 @@ namespace CVProject
     /// </summary>
     public partial class MainWindow : Window
     {
-        enum EditMode { Cursor, Brush, Eraser, Line, PickColor};
+        enum EditMode { Cursor, Brush, Eraser, Line, Rect, PickColor, Ellipse, Circle};
 
         private bool mouseDown;
         private Point mouseXY;
@@ -142,6 +142,22 @@ namespace CVProject
         {
             editMode = EditMode.Line;
         }
+
+        private void Rect_Click(object sender, RoutedEventArgs e)
+        {
+            editMode = EditMode.Rect;
+        }
+
+        private void Ellipse_Click(object sender, RoutedEventArgs e)
+        {
+            editMode = EditMode.Ellipse;
+        }
+
+        private void Circle_Click(object sender, RoutedEventArgs e)
+        {
+            editMode = EditMode.Circle;
+        }
+
         private void PickColor_Click(object sender, RoutedEventArgs e)
         {
             editMode = EditMode.PickColor;
@@ -149,8 +165,8 @@ namespace CVProject
 
         private Point realPoint(Point pos)
         {
-            return new Point(Math.Floor(pos.X / CurImage.ActualWidth  * imgFile.getCurImg().PixelWidth),
-                             Math.Floor(pos.Y / CurImage.ActualHeight * imgFile.getCurImg().PixelHeight));
+            return new Point(Math.Floor(pos.X / CurImage.ActualWidth  * imgFile.curImage.PixelWidth),
+                             Math.Floor(pos.Y / CurImage.ActualHeight * imgFile.curImage.PixelHeight));
         }
 
         private Color getPixelColor(Point pos)
@@ -181,15 +197,14 @@ namespace CVProject
                 case EditMode.Brush:
                     break;
                 case EditMode.Line:
+                case EditMode.Rect:
+                case EditMode.Ellipse:
+                case EditMode.Circle:
                     CurImage.CaptureMouse();
-                    startPoint = realPoint(e.GetPosition(CurImage));
+                    startPoint = realPoint(e.GetPosition(CurImage));                    
+                    var visPoint = e.GetPosition(g);
+                    Advance(editMode.ToString());
                     drawing = true;
-                    var visPoint = e.GetPosition(g); 
-                    l.Visibility = Visibility.Visible;
-                    l.X1 = visPoint.X;
-                    l.Y1 = visPoint.Y;
-                    l.X2 = visPoint.X;
-                    l.Y2 = visPoint.Y;
                     break;
                 case EditMode.PickColor:
                     Point curPixel = realPoint(e.GetPosition(CurImage));
@@ -203,7 +218,7 @@ namespace CVProject
         private void CurImage_MouseMove(object sender, MouseEventArgs e)
         {
             Point curPixel = realPoint(e.GetPosition(CurImage));
-            if (curPixel.X >= 0 && curPixel.X < imgFile.getCurImg().PixelWidth && curPixel.Y >= 0 && curPixel.Y < imgFile.getCurImg().PixelHeight)
+            if (curPixel.X >= 0 && curPixel.X < imgFile.curImage.PixelWidth && curPixel.Y >= 0 && curPixel.Y < imgFile.curImage.PixelHeight)
             {
                 Color curColor = getPixelColor(curPixel);
                 colorView.Fill = new SolidColorBrush(curColor);
@@ -234,10 +249,32 @@ namespace CVProject
                     case EditMode.Brush:
                         break;
                     case EditMode.Line:
+                        if (!drawing) break;            
+                        endPoint = realPoint(e.GetPosition(CurImage));
+                        ImageProcessor.DrawLine(imgFile.Recover(), startPoint, endPoint, foreColor, 1);
+                        imgFile.Commit();
+                        CurImage.Source = imgFile.curImage;
+                        break;
+                    case EditMode.Rect:
                         if (!drawing) break;
-                        var t = e.GetPosition(g);
-                        l.X2 = t.X;
-                        l.Y2 = t.Y;
+                        endPoint = realPoint(e.GetPosition(CurImage));
+                        ImageProcessor.DrawRect(imgFile.Recover(), startPoint, endPoint, foreColor, 1);
+                        imgFile.Commit();
+                        CurImage.Source = imgFile.curImage;
+                        break;
+                    case EditMode.Ellipse:
+                        if (!drawing) break;
+                        endPoint = realPoint(e.GetPosition(CurImage));
+                        ImageProcessor.DrawEllipse(imgFile.Recover(), startPoint, endPoint, foreColor, 1);
+                        imgFile.Commit();
+                        CurImage.Source = imgFile.curImage;
+                        break;
+                    case EditMode.Circle:
+                        if (!drawing) break;
+                        endPoint = realPoint(e.GetPosition(CurImage));
+                        ImageProcessor.DrawCircle(imgFile.Recover(), startPoint, endPoint, foreColor, 1);
+                        imgFile.Commit();
+                        CurImage.Source = imgFile.curImage;
                         break;
                 }
             }
@@ -257,12 +294,10 @@ namespace CVProject
                     img.ReleaseMouseCapture();
                     break;
                 case EditMode.Line:
-                    if (!drawing) break;
+                case EditMode.Rect:
+                case EditMode.Ellipse:
+                case EditMode.Circle:
                     needSave = true;
-                    Advance("Line");
-                    l.Visibility = Visibility.Hidden;
-                    endPoint = realPoint(e.GetPosition(CurImage));
-                    ImageProcessor.DrawLine(CurImage.Source as WriteableBitmap, startPoint, endPoint, foreColor);
                     drawing = false;
                     CurImage.ReleaseMouseCapture();
                     break;

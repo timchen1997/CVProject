@@ -66,12 +66,18 @@
                             <RowDefinition Height="*" />
                             <RowDefinition Height="*" />
                             <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <Button Content="Save" Grid.Column="0" Grid.Row="0"></Button>
                         <Button Content="Open" Click="Open_Click" Grid.Column="1" Grid.Row="0"></Button>
                         <Button Content="Cursor" Click="Cursor_Click" Grid.Column="0" Grid.Row="1"></Button>
-                        <Button Content="Line" Click="Line_Click" Grid.Column="1" Grid.Row="1"></Button>
-                        <Button Content="PickColor" Click="PickColor_Click" Grid.Column="0" Grid.Row="2"></Button>
+                        <Button Content="PickColor" Click="PickColor_Click" Grid.Column="1" Grid.Row="1"></Button>
+                        <Button Content="Rect" Click="Rect_Click" Grid.Column="0" Grid.Row="2"></Button>
+                        <Button Content="Line" Click="Line_Click" Grid.Column="1" Grid.Row="2"></Button>
+                        <Button Content="Ellipse" Click="Ellipse_Click" Grid.Column="0" Grid.Row="3"></Button>
+                        <Button Content="Circle" Click="Circle_Click" Grid.Column="1" Grid.Row="3"></Button>                        
                     </Grid>
                     <Grid>
                         <Button Margin="15,15,3,0" Click="btnBackColor_Click" Name="btnBackColor">
