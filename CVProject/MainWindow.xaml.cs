@@ -138,6 +138,11 @@ namespace CVProject
             editMode = EditMode.Cursor;
         }
 
+        private void Brush_Click(object sender, RoutedEventArgs e)
+        {
+            editMode = EditMode.Brush;
+        }
+
         private void Line_Click(object sender, RoutedEventArgs e)
         {
             editMode = EditMode.Line;
@@ -195,14 +200,12 @@ namespace CVProject
                     mouseXY = e.GetPosition(img);
                     break;
                 case EditMode.Brush:
-                    break;
                 case EditMode.Line:
                 case EditMode.Rect:
                 case EditMode.Ellipse:
                 case EditMode.Circle:
                     CurImage.CaptureMouse();
-                    startPoint = realPoint(e.GetPosition(CurImage));                    
-                    var visPoint = e.GetPosition(g);
+                    startPoint = realPoint(e.GetPosition(CurImage));
                     Advance(editMode.ToString());
                     drawing = true;
                     break;
@@ -231,9 +234,9 @@ namespace CVProject
                 HVal.Content = H.ToString("0.00") + "°";
                 SVal.Content = S.ToString("0.00") + "%";
                 LVal.Content = L.ToString("0.00") + "%";
-            }
-            XVal.Content = curPixel.X;
-            YVal.Content = curPixel.Y;
+                XVal.Content = curPixel.X;
+                YVal.Content = curPixel.Y;
+            }            
             if (mouseDown)
             {
                 switch (editMode)
@@ -247,6 +250,12 @@ namespace CVProject
                         DoImgMove(img, e);
                         break;
                     case EditMode.Brush:
+                        if (!drawing) break;
+                        endPoint = realPoint(e.GetPosition(CurImage));
+                        ImageProcessor.DrawLine(imgFile.curImage as WriteableBitmap, startPoint, endPoint, foreColor, 10);
+                        startPoint = endPoint;
+                        imgFile.Refresh();
+                        CurImage.Source = imgFile.curImage;
                         break;
                     case EditMode.Line:
                         if (!drawing) break;            
@@ -293,6 +302,7 @@ namespace CVProject
                     }
                     img.ReleaseMouseCapture();
                     break;
+                case EditMode.Brush:
                 case EditMode.Line:
                 case EditMode.Rect:
                 case EditMode.Ellipse:

@@ -70,7 +70,7 @@
                             <RowDefinition Height="*" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
-                        <Button Content="Save" Grid.Column="0" Grid.Row="0"></Button>
+                        <Button Content="Brush" Click="Brush_Click" Grid.Column="0" Grid.Row="0"></Button>
                         <Button Content="Open" Click="Open_Click" Grid.Column="1" Grid.Row="0"></Button>
                         <Button Content="Cursor" Click="Cursor_Click" Grid.Column="0" Grid.Row="1"></Button>
                         <Button Content="PickColor" Click="PickColor_Click" Grid.Column="1" Grid.Row="1"></Button>

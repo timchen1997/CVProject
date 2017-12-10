@@ -40,5 +40,6 @@ namespace CVProject
             Mat m = new Mat(Image.PixelHeight, Image.PixelWidth, MatType.CV_8UC4, Image.BackBuffer);
             Cv2.Circle(m, new OpenCvSharp.Point((a.X + b.X) / 2, (a.Y + b.Y) / 2), (int)Math.Min(Math.Abs(a.X - b.X), Math.Abs(a.Y - b.Y)) / 2, new Scalar(c.B, c.G, c.R, c.A), thickness, LineTypes.AntiAlias);
         }
+
     }
 }
