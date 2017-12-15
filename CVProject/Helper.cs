@@ -37,5 +37,12 @@ namespace CVProject
             else
                 S = (max - min) / (double)(510 - max - min) * 100;
         }
+
+        public static void Swap<T>(ref T a, ref T b)
+        {
+            T t = a;
+            a = b;
+            b = t;
+        }
     }
 }

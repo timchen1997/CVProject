@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -175,6 +176,18 @@ namespace CVProject.Model
         public void Refresh()
         {
             ImageList[curStateNo].img = (curImage as WriteableBitmap).Clone();
+        }
+
+        public BitmapSource Part(Point a, Point b)
+        {
+            int x1 = (int) Math.Min(a.X, b.X),
+                x2 = (int) Math.Max(a.X, b.X),
+                y1 = (int) Math.Min(a.Y, b.Y),
+                y2 = (int) Math.Max(a.Y, b.Y);
+            byte[] buffer = new byte[(x2 - x1) * (y2 - y1) * curImage.Format.BitsPerPixel];
+            curImage.CopyPixels(new Int32Rect(x1, y1, x2 - x1, y2 - y1), buffer, (x2 - x1) * curImage.Format.BitsPerPixel, 0);
+            var r = BitmapSource.Create(x2 - x1, y2 - y1, curImage.DpiX, curImage.DpiY, curImage.Format, curImage.Palette, buffer, (x2 - x1) * curImage.Format.BitsPerPixel);
+            return r;
         }
     }
 }

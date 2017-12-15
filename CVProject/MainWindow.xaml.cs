@@ -22,7 +22,7 @@ namespace CVProject
     /// </summary>
     public partial class MainWindow : Window
     {
-        enum EditMode { Cursor, Brush, Eraser, Line, Rect, PickColor, Ellipse, Circle};
+        enum EditMode { Cursor, Brush, Eraser, Line, Rect, PickColor, Ellipse, Circle, Select};
 
         private bool mouseDown;
         private Point mouseXY;
@@ -31,7 +31,10 @@ namespace CVProject
         private Color foreColor = Color.FromArgb(255, 255, 255, 255);
         private Color backColor;
         private Point startPoint, endPoint;
+        private Point selectPointA, selectPointB;
         private bool drawing = false;
+        private bool fileOpened = false;
+        private bool selecting = false;
         private EditMode editMode = EditMode.Cursor;
 
         public MainWindow()
@@ -54,6 +57,11 @@ namespace CVProject
                 listBox.ItemsSource = imgFile.ImageList;
                 listBox.SelectedIndex = 0;
                 ResetImage();
+                CurImage.Source = imgFile.curImage;
+                selectPointA = new Point(0, 0);
+                selectPointB = new Point(0, 0);
+                setSelectRectPos(selectPointA, selectPointB);
+                fileOpened = true;
             }
         }
 
@@ -107,6 +115,19 @@ namespace CVProject
             }
         }
 
+        private void CancelSelect()
+        {
+            selectRect.Visibility = Visibility.Hidden;
+            selecting = false;
+        }
+
+        private void Copy()
+        {
+            if (!selecting) return;
+            Clipboard.SetImage(imgFile.Part(selectPointA, selectPointB));
+            status.Text = "Copied to clipboard";
+        }
+
         private void Advance(string description)
         {
             imgFile.Advance(description);
@@ -136,6 +157,11 @@ namespace CVProject
         private void Cursor_Click(object sender, RoutedEventArgs e)
         {
             editMode = EditMode.Cursor;
+        }
+
+        private void Select_Click(object sender, RoutedEventArgs e)
+        {
+            editMode = EditMode.Select;
         }
 
         private void Brush_Click(object sender, RoutedEventArgs e)
@@ -188,8 +214,32 @@ namespace CVProject
             return Color.FromArgb(buf[3], buf[2], buf[1], buf[0]);
         }
 
+        private void setSelectRectPos(Point a, Point b)
+        {
+            double x1 = a.X, y1 = a.Y, x2 = b.X, y2 = b.Y;
+            if (x1 > x2) Helper.Swap(ref x1, ref x2);
+            if (y1 > y2) Helper.Swap(ref y1, ref y2);
+            var viewPoint1 = new Point(x1 * CurImage.ActualWidth / imgFile.curImage.PixelWidth,
+                                      y1 * CurImage.ActualHeight / imgFile.curImage.PixelHeight);
+            var relaPoint1 = CurImage.TranslatePoint(viewPoint1, g);
+            var viewPoint2 = new Point(x2 * CurImage.ActualWidth / imgFile.curImage.PixelWidth,
+                                      y2 * CurImage.ActualHeight / imgFile.curImage.PixelHeight);
+            var relaPoint2 = CurImage.TranslatePoint(viewPoint2, g);
+            selectRect.Margin = new Thickness(relaPoint1.X, relaPoint1.Y, g.ActualWidth - relaPoint2.X, g.ActualHeight - relaPoint2.Y);
+        }
+
+        private bool InSelection(Point p)
+        {
+            double x1 = Math.Min(selectPointA.X, selectPointB.X),
+                   x2 = Math.Max(selectPointA.X, selectPointB.X),
+                   y1 = Math.Min(selectPointA.Y, selectPointB.Y),
+                   y2 = Math.Max(selectPointA.Y, selectPointB.Y);
+            return p.X >= x1 && p.X < x2 && p.Y >= y1 && p.Y < y2;
+        }
+
         private void CurImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            if (!fileOpened) return;
             mouseDown = true;
             switch (editMode)
             {
@@ -209,6 +259,13 @@ namespace CVProject
                     Advance(editMode.ToString());
                     drawing = true;
                     break;
+                case EditMode.Select:
+                    CurImage.CaptureMouse();
+                    selectPointA = realPoint(e.GetPosition(CurImage));
+                    selectPointB = realPoint(e.GetPosition(CurImage));
+                    setSelectRectPos(selectPointA, selectPointB);
+                    selectRect.Visibility = Visibility.Visible;
+                    break;
                 case EditMode.PickColor:
                     Point curPixel = realPoint(e.GetPosition(CurImage));
                     foreColor = getPixelColor(curPixel);
@@ -220,6 +277,8 @@ namespace CVProject
 
         private void CurImage_MouseMove(object sender, MouseEventArgs e)
         {
+            if (!fileOpened) return;
+            
             Point curPixel = realPoint(e.GetPosition(CurImage));
             if (curPixel.X >= 0 && curPixel.X < imgFile.curImage.PixelWidth && curPixel.Y >= 0 && curPixel.Y < imgFile.curImage.PixelHeight)
             {
@@ -248,6 +307,7 @@ namespace CVProject
                             return;
                         }
                         DoImgMove(img, e);
+                        setSelectRectPos(selectPointA, selectPointB);
                         break;
                     case EditMode.Brush:
                         if (!drawing) break;
@@ -285,12 +345,29 @@ namespace CVProject
                         imgFile.Commit();
                         CurImage.Source = imgFile.curImage;
                         break;
+                    case EditMode.Select:
+                        selectPointB = realPoint(e.GetPosition(CurImage));
+                        if (selectPointB.X < 0)
+                            selectPointB.X = 0;
+                        if (selectPointB.Y < 0)
+                            selectPointB.Y = 0;
+                        if (selectPointB.X >= imgFile.curImage.PixelWidth)
+                            selectPointB.X = imgFile.curImage.PixelWidth;
+                        if (selectPointB.Y >= imgFile.curImage.PixelHeight)
+                            selectPointB.Y = imgFile.curImage.PixelHeight;
+                        setSelectRectPos(selectPointA, selectPointB);
+                        if (selectPointA == selectPointB)
+                            selecting = false;
+                        else
+                            selecting = true;
+                        break;
                 }
             }
         }
 
         private void CurImage_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
+            if (!fileOpened) return;
             mouseDown = false;
             switch (editMode)
             {
@@ -311,6 +388,9 @@ namespace CVProject
                     drawing = false;
                     CurImage.ReleaseMouseCapture();
                     break;
+                case EditMode.Select:
+                    CurImage.ReleaseMouseCapture();
+                    break;
             }
         }
 
@@ -328,6 +408,7 @@ namespace CVProject
 
         private void CurImage_MouseWheel(object sender, MouseWheelEventArgs e)
         {
+            if (!fileOpened) return;
             var img = sender as ContentControl;
             if (img == null)
             {
@@ -337,6 +418,7 @@ namespace CVProject
             var group = CurImage.FindResource("Imageview") as TransformGroup;
             var delta = e.Delta * 0.001;
             DowheelZoom(group, point, delta);
+            setSelectRectPos(selectPointA, selectPointB);
         }               
 
         private void DoImgMove(ContentControl img, MouseEventArgs e)
@@ -371,6 +453,16 @@ namespace CVProject
         private void RedoCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             Redo();
+        }
+
+        private void CancelSelectCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            CancelSelect();
+        }
+
+        private void CopyCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            Copy();
         }
 
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -409,6 +501,15 @@ namespace CVProject
                 foreColor.B = colorDialog.Color.B;
                 (btnForeColor.Template.FindName("ForeColorView", btnForeColor) as Rectangle).Fill = new SolidColorBrush(foreColor);
             }
+        }
+
+        private void CurImage_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (editMode != EditMode.Cursor)
+                return;
+            var p = realPoint(e.GetPosition(CurImage));
+            if (!InSelection(p))
+                CancelSelect();
         }
 
         private void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
