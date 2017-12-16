@@ -111,29 +111,10 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="250"/>
                 </Grid.ColumnDefinitions>
-                <Grid.Resources>
-                    <TransformGroup x:Key="Imageview">
-                        <ScaleTransform />
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </Grid.Resources>
                 <Grid Grid.Column="0">
-                    
-                    <ScrollViewer Name="root" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled">                    
-                        <ContentControl x:Name="TestContentControl1"
-                                        MouseLeftButtonDown="CurImage_MouseLeftButtonDown"
-                                        MouseLeftButtonUp="CurImage_MouseLeftButtonUp"
-                                        MouseMove="CurImage_MouseMove"
-                                        MouseWheel="CurImage_MouseWheel"
-                                        MouseDoubleClick="CurImage_MouseDoubleClick">
-                            <Grid Name="g">
-                                <Image x:Name="CurImage"
-                                   ScrollViewer.VerticalScrollBarVisibility="Disabled" RenderTransform="{StaticResource Imageview}" RenderOptions.BitmapScalingMode="NearestNeighbor" RenderOptions.ClearTypeHint="Enabled"
-                                   Source="{Binding curImage}"/>
-                                <Rectangle Stroke="Black" Name="selectRect" StrokeThickness="2" Fill="#33000000" Visibility="Hidden"/>
-                            </Grid>
-                        </ContentControl>                    
-                    </ScrollViewer>                    
+                    <TabControl Name="tabs">
+                        
+                    </TabControl>
                 </Grid>
                 <TabControl Grid.Column="1" HorizontalAlignment="Left" Height="177" Margin="10,10,0,0" VerticalAlignment="Top" Width="230">
                     <TabItem Header="Pixel">

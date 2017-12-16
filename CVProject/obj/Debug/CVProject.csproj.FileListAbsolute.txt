@@ -55,3 +55,5 @@ E:\CVProject\CVProject\obj\Debug\Window1.g.cs
 E:\CVProject\CVProject\obj\Debug\Window1.baml
 E:\CVProject\CVProject\obj\Debug\Dialog\JpegSaveDialog.g.cs
 E:\CVProject\CVProject\obj\Debug\Dialog\JpegSaveDialog.baml
+E:\CVProject\CVProject\obj\Debug\Control\TabItemPlus.baml
+E:\CVProject\CVProject\obj\Debug\Control\TabItemPlus.g.cs

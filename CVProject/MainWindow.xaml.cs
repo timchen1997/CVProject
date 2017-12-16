@@ -22,29 +22,23 @@ namespace CVProject
     /// </summary>
     public partial class MainWindow : Window
     {
-        enum EditMode { Cursor, Brush, Eraser, Line, Rect, PickColor, Ellipse, Circle, Select};
-
-        private bool mouseDown;
-        private Point mouseXY;
-        private bool needSave = false;
-        private ImageFile imgFile;
-        private Color foreColor = Color.FromArgb(255, 255, 255, 255);
-        private Color backColor;
-        private Point startPoint, endPoint;
-        private Point selectPointA, selectPointB;
-        private bool drawing = false;
-        private bool fileOpened = false;
-        private bool selecting = false;
-        private EditMode editMode = EditMode.Cursor;
+               
+        private List<Model.Environment> envList;
+        private int curEnvNum = -1;
+        private Model.Environment curEnv
+        {
+            get
+            {
+                return curEnvNum == -1 ? null : envList[curEnvNum];
+            }
+        }        
 
         public MainWindow()
         {
             InitializeComponent();
             WindowState = WindowState.Maximized;
             Title = Settings.appName;
-            
-            RenderOptions.SetBitmapScalingMode(CurImage, BitmapScalingMode.NearestNeighbor);
-            RenderOptions.SetClearTypeHint(CurImage, ClearTypeHint.Enabled);
+            envList = new List<Model.Environment>();            
         }
 
         private void OpenFile()
@@ -52,22 +46,23 @@ namespace CVProject
             var t = ImageFile.Open();
             if (t != null)
             {
-                imgFile = t;
-                Title = Settings.appName + " - " + imgFile.FileName;
-                listBox.ItemsSource = imgFile.ImageList;
+                envList.Add(new Model.Environment(t, this));
+                curEnvNum = envList.Count - 1;
+                curEnv.imgFile = t;
+                Title = Settings.appName + " - " + curEnv.imgFile.FileName;
+                listBox.ItemsSource = curEnv.imgFile.ImageList;
                 listBox.SelectedIndex = 0;
                 ResetImage();
-                CurImage.Source = imgFile.curImage;
-                selectPointA = new Point(0, 0);
-                selectPointB = new Point(0, 0);
-                setSelectRectPos(selectPointA, selectPointB);
-                fileOpened = true;
+                curEnv.setSelectRectPos(curEnv.selectPointA, curEnv.selectPointB);
+                tabs.Items.Add(curEnv.tabItem);
+                tabs.SelectedIndex = envList.Count - 1;
             }
         }
 
         private void ResetImage()
         {
-            var group = CurImage.FindResource("Imageview") as TransformGroup;
+            if (curEnv == null) return;
+            var group = curEnv.tabItem.CurImage.FindResource("Imageview") as TransformGroup;
             var transform0 = group.Children[0] as ScaleTransform;
             var transform1 = group.Children[1] as TranslateTransform;
             transform0.ScaleX = 1;
@@ -78,61 +73,49 @@ namespace CVProject
 
         private void SaveFile()
         {
-            if (imgFile != null)
+            if (curEnv.imgFile != null)
             {
-                imgFile.Save();
-                needSave = false;
+                curEnv.imgFile.Save();
+                curEnv.needSave = false;
             }
         }
 
         private void SaveAs()
         {
-            if (imgFile != null)
+            if (curEnv.imgFile != null)
             {
-                imgFile.SaveAs();
-                needSave = false;
+                curEnv.imgFile.SaveAs();
+                curEnv.needSave = false;
             }
                 
         }
 
         private void Undo()
         {
-            if (imgFile != null)
+            if (curEnv.imgFile != null)
             {
-                imgFile.Undo();
-                listBox.SelectedIndex = imgFile.curStateNo;
-                needSave = true;
+                curEnv.imgFile.Undo();
+                listBox.SelectedIndex = curEnv.imgFile.curStateNo;
+                curEnv.needSave = true;
             }
         }
 
         private void Redo()
         {
-            if (imgFile != null)
+            if (curEnv.imgFile != null)
             {
-                imgFile.Redo();
-                listBox.SelectedIndex = imgFile.curStateNo;
-                needSave = true;
+                curEnv.imgFile.Redo();
+                listBox.SelectedIndex = curEnv.imgFile.curStateNo;
+                curEnv.needSave = true;
             }
-        }
-
-        private void CancelSelect()
-        {
-            selectRect.Visibility = Visibility.Hidden;
-            selecting = false;
-        }
+        }        
 
         private void Copy()
         {
-            if (!selecting) return;
-            Clipboard.SetImage(imgFile.Part(selectPointA, selectPointB));
+            if (!curEnv.selecting) return;
+            Clipboard.SetImage(curEnv.imgFile.Part(curEnv.selectPointA, curEnv.selectPointB));
             status.Text = "Copied to clipboard";
-        }
-
-        private void Advance(string description)
-        {
-            imgFile.Advance(description);
-            listBox.SelectedIndex = imgFile.curStateNo;
-        }
+        }        
 
         private void Open_Click(object sender, RoutedEventArgs e)
         {
@@ -156,283 +139,42 @@ namespace CVProject
 
         private void Cursor_Click(object sender, RoutedEventArgs e)
         {
-            editMode = EditMode.Cursor;
+            curEnv.editMode = EditMode.Cursor;
         }
 
         private void Select_Click(object sender, RoutedEventArgs e)
         {
-            editMode = EditMode.Select;
+            curEnv.editMode = EditMode.Select;
         }
 
         private void Brush_Click(object sender, RoutedEventArgs e)
         {
-            editMode = EditMode.Brush;
+            curEnv.editMode = EditMode.Brush;
         }
 
         private void Line_Click(object sender, RoutedEventArgs e)
         {
-            editMode = EditMode.Line;
+            curEnv.editMode = EditMode.Line;
         }
 
         private void Rect_Click(object sender, RoutedEventArgs e)
         {
-            editMode = EditMode.Rect;
+            curEnv.editMode = EditMode.Rect;
         }
 
         private void Ellipse_Click(object sender, RoutedEventArgs e)
         {
-            editMode = EditMode.Ellipse;
+            curEnv.editMode = EditMode.Ellipse;
         }
 
         private void Circle_Click(object sender, RoutedEventArgs e)
         {
-            editMode = EditMode.Circle;
+            curEnv.editMode = EditMode.Circle;
         }
 
         private void PickColor_Click(object sender, RoutedEventArgs e)
         {
-            editMode = EditMode.PickColor;
-        }
-
-        private Point realPoint(Point pos)
-        {
-            return new Point(Math.Floor(pos.X / CurImage.ActualWidth  * imgFile.curImage.PixelWidth),
-                             Math.Floor(pos.Y / CurImage.ActualHeight * imgFile.curImage.PixelHeight));
-        }
-
-        private Color getPixelColor(Point pos)
-        {
-            byte[] buf = new byte[4];
-            try
-            {
-                (CurImage.Source as BitmapSource).CopyPixels(new Int32Rect(Convert.ToInt32(pos.X), Convert.ToInt32(pos.Y), 1, 1), buf, (CurImage.Source as BitmapSource).Format.BitsPerPixel / 8, 0);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            return Color.FromArgb(buf[3], buf[2], buf[1], buf[0]);
-        }
-
-        private void setSelectRectPos(Point a, Point b)
-        {
-            double x1 = a.X, y1 = a.Y, x2 = b.X, y2 = b.Y;
-            if (x1 > x2) Helper.Swap(ref x1, ref x2);
-            if (y1 > y2) Helper.Swap(ref y1, ref y2);
-            var viewPoint1 = new Point(x1 * CurImage.ActualWidth / imgFile.curImage.PixelWidth,
-                                      y1 * CurImage.ActualHeight / imgFile.curImage.PixelHeight);
-            var relaPoint1 = CurImage.TranslatePoint(viewPoint1, g);
-            var viewPoint2 = new Point(x2 * CurImage.ActualWidth / imgFile.curImage.PixelWidth,
-                                      y2 * CurImage.ActualHeight / imgFile.curImage.PixelHeight);
-            var relaPoint2 = CurImage.TranslatePoint(viewPoint2, g);
-            selectRect.Margin = new Thickness(relaPoint1.X, relaPoint1.Y, g.ActualWidth - relaPoint2.X, g.ActualHeight - relaPoint2.Y);
-        }
-
-        private bool InSelection(Point p)
-        {
-            double x1 = Math.Min(selectPointA.X, selectPointB.X),
-                   x2 = Math.Max(selectPointA.X, selectPointB.X),
-                   y1 = Math.Min(selectPointA.Y, selectPointB.Y),
-                   y2 = Math.Max(selectPointA.Y, selectPointB.Y);
-            return p.X >= x1 && p.X < x2 && p.Y >= y1 && p.Y < y2;
-        }
-
-        private void CurImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            if (!fileOpened) return;
-            mouseDown = true;
-            switch (editMode)
-            {
-                case EditMode.Cursor:
-                    var img = sender as ContentControl;
-                    if (img == null) return;
-                    //img.CaptureMouse();                    
-                    mouseXY = e.GetPosition(img);
-                    break;
-                case EditMode.Brush:
-                case EditMode.Line:
-                case EditMode.Rect:
-                case EditMode.Ellipse:
-                case EditMode.Circle:
-                    CurImage.CaptureMouse();
-                    startPoint = realPoint(e.GetPosition(CurImage));
-                    Advance(editMode.ToString());
-                    drawing = true;
-                    break;
-                case EditMode.Select:
-                    CurImage.CaptureMouse();
-                    selectPointA = realPoint(e.GetPosition(CurImage));
-                    selectPointB = realPoint(e.GetPosition(CurImage));
-                    setSelectRectPos(selectPointA, selectPointB);
-                    selectRect.Visibility = Visibility.Visible;
-                    break;
-                case EditMode.PickColor:
-                    Point curPixel = realPoint(e.GetPosition(CurImage));
-                    foreColor = getPixelColor(curPixel);
-                    (btnForeColor.Template.FindName("ForeColorView", btnForeColor) as Rectangle).Fill = new SolidColorBrush(foreColor);
-                    break;
-
-            }
-        }
-
-        private void CurImage_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (!fileOpened) return;
-            
-            Point curPixel = realPoint(e.GetPosition(CurImage));
-            if (curPixel.X >= 0 && curPixel.X < imgFile.curImage.PixelWidth && curPixel.Y >= 0 && curPixel.Y < imgFile.curImage.PixelHeight)
-            {
-                Color curColor = getPixelColor(curPixel);
-                colorView.Fill = new SolidColorBrush(curColor);
-                RVal.Content = curColor.R;
-                GVal.Content = curColor.G;
-                BVal.Content = curColor.B;
-                AVal.Content = curColor.A;
-                double H, S, L;
-                Helper.Rgb2Hsl(curColor, out H, out S, out L);
-                HVal.Content = H.ToString("0.00") + "°";
-                SVal.Content = S.ToString("0.00") + "%";
-                LVal.Content = L.ToString("0.00") + "%";
-                XVal.Content = curPixel.X;
-                YVal.Content = curPixel.Y;
-            }            
-            if (mouseDown)
-            {
-                switch (editMode)
-                {
-                    case EditMode.Cursor:
-                        var img = sender as ContentControl;
-                        if (img == null)
-                        {
-                            return;
-                        }
-                        DoImgMove(img, e);
-                        setSelectRectPos(selectPointA, selectPointB);
-                        break;
-                    case EditMode.Brush:
-                        if (!drawing) break;
-                        endPoint = realPoint(e.GetPosition(CurImage));
-                        ImageProcessor.DrawLine(imgFile.curImage as WriteableBitmap, startPoint, endPoint, foreColor, 10);
-                        startPoint = endPoint;
-                        imgFile.Refresh();
-                        CurImage.Source = imgFile.curImage;
-                        break;
-                    case EditMode.Line:
-                        if (!drawing) break;            
-                        endPoint = realPoint(e.GetPosition(CurImage));
-                        ImageProcessor.DrawLine(imgFile.Recover(), startPoint, endPoint, foreColor, 1);
-                        imgFile.Commit();
-                        CurImage.Source = imgFile.curImage;
-                        break;
-                    case EditMode.Rect:
-                        if (!drawing) break;
-                        endPoint = realPoint(e.GetPosition(CurImage));
-                        ImageProcessor.DrawRect(imgFile.Recover(), startPoint, endPoint, foreColor, 1);
-                        imgFile.Commit();
-                        CurImage.Source = imgFile.curImage;
-                        break;
-                    case EditMode.Ellipse:
-                        if (!drawing) break;
-                        endPoint = realPoint(e.GetPosition(CurImage));
-                        ImageProcessor.DrawEllipse(imgFile.Recover(), startPoint, endPoint, foreColor, 1);
-                        imgFile.Commit();
-                        CurImage.Source = imgFile.curImage;
-                        break;
-                    case EditMode.Circle:
-                        if (!drawing) break;
-                        endPoint = realPoint(e.GetPosition(CurImage));
-                        ImageProcessor.DrawCircle(imgFile.Recover(), startPoint, endPoint, foreColor, 1);
-                        imgFile.Commit();
-                        CurImage.Source = imgFile.curImage;
-                        break;
-                    case EditMode.Select:
-                        selectPointB = realPoint(e.GetPosition(CurImage));
-                        if (selectPointB.X < 0)
-                            selectPointB.X = 0;
-                        if (selectPointB.Y < 0)
-                            selectPointB.Y = 0;
-                        if (selectPointB.X >= imgFile.curImage.PixelWidth)
-                            selectPointB.X = imgFile.curImage.PixelWidth;
-                        if (selectPointB.Y >= imgFile.curImage.PixelHeight)
-                            selectPointB.Y = imgFile.curImage.PixelHeight;
-                        setSelectRectPos(selectPointA, selectPointB);
-                        if (selectPointA == selectPointB)
-                            selecting = false;
-                        else
-                            selecting = true;
-                        break;
-                }
-            }
-        }
-
-        private void CurImage_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            if (!fileOpened) return;
-            mouseDown = false;
-            switch (editMode)
-            {
-                case EditMode.Cursor:
-                    var img = sender as ContentControl;
-                    if (img == null)
-                    {
-                        return;
-                    }
-                    img.ReleaseMouseCapture();
-                    break;
-                case EditMode.Brush:
-                case EditMode.Line:
-                case EditMode.Rect:
-                case EditMode.Ellipse:
-                case EditMode.Circle:
-                    needSave = true;
-                    drawing = false;
-                    CurImage.ReleaseMouseCapture();
-                    break;
-                case EditMode.Select:
-                    CurImage.ReleaseMouseCapture();
-                    break;
-            }
-        }
-
-        private void DowheelZoom(TransformGroup group, Point point, double delta)
-        {
-            var pointToContent = group.Inverse.Transform(point);
-            var transform = group.Children[0] as ScaleTransform;
-            if (transform.ScaleX + delta < 0.1) return;
-            transform.ScaleX *= 1 + delta;
-            transform.ScaleY *= 1 + delta;
-            var transform1 = group.Children[1] as TranslateTransform;
-            transform1.X = -1 * ((pointToContent.X * transform.ScaleX) - point.X);
-            transform1.Y = -1 * ((pointToContent.Y * transform.ScaleY) - point.Y);
-        }
-
-        private void CurImage_MouseWheel(object sender, MouseWheelEventArgs e)
-        {
-            if (!fileOpened) return;
-            var img = sender as ContentControl;
-            if (img == null)
-            {
-                return;
-            }
-            var point = e.GetPosition(img);
-            var group = CurImage.FindResource("Imageview") as TransformGroup;
-            var delta = e.Delta * 0.001;
-            DowheelZoom(group, point, delta);
-            setSelectRectPos(selectPointA, selectPointB);
-        }               
-
-        private void DoImgMove(ContentControl img, MouseEventArgs e)
-        {
-            if (e.LeftButton != MouseButtonState.Pressed)
-            {
-                return;
-            }
-            var group = CurImage.FindResource("Imageview") as TransformGroup;
-            var transform = group.Children[1] as TranslateTransform;
-            var position = e.GetPosition(img);
-            transform.X -= mouseXY.X - position.X;
-            transform.Y -= mouseXY.Y - position.Y;
-            mouseXY = position;
+            curEnv.editMode = EditMode.PickColor;
         }
 
         private void OpenFileCommand_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -457,7 +199,7 @@ namespace CVProject
 
         private void CancelSelectCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            CancelSelect();
+            curEnv.CancelSelect();
         }
 
         private void CopyCommand_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -467,7 +209,8 @@ namespace CVProject
 
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (needSave)
+            if (curEnv == null) return;
+            if (curEnv.needSave)
             {
                 switch (Xceed.Wpf.Toolkit.MessageBox.Show("Do you want to save this file?", Settings.appName, MessageBoxButton.YesNoCancel, MessageBoxImage.Question))
                 {
@@ -492,48 +235,39 @@ namespace CVProject
         {
             var colorDialog = new System.Windows.Forms.ColorDialog();
             colorDialog.AllowFullOpen = true;
-            colorDialog.Color = System.Drawing.Color.FromArgb(foreColor.A, foreColor.R, foreColor.G, foreColor.B);
+            colorDialog.Color = System.Drawing.Color.FromArgb(curEnv.foreColor.A, curEnv.foreColor.R, curEnv.foreColor.G, curEnv.foreColor.B);
             if (colorDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                foreColor.A = colorDialog.Color.A;
-                foreColor.R = colorDialog.Color.R;
-                foreColor.G = colorDialog.Color.G;
-                foreColor.B = colorDialog.Color.B;
-                (btnForeColor.Template.FindName("ForeColorView", btnForeColor) as Rectangle).Fill = new SolidColorBrush(foreColor);
+                curEnv.foreColor.A = colorDialog.Color.A;
+                curEnv.foreColor.R = colorDialog.Color.R;
+                curEnv.foreColor.G = colorDialog.Color.G;
+                curEnv.foreColor.B = colorDialog.Color.B;
+                (btnForeColor.Template.FindName("ForeColorView", btnForeColor) as Rectangle).Fill = new SolidColorBrush(curEnv.foreColor);
             }
-        }
-
-        private void CurImage_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            if (editMode != EditMode.Cursor)
-                return;
-            var p = realPoint(e.GetPosition(CurImage));
-            if (!InSelection(p))
-                CancelSelect();
-        }
+        }       
 
         private void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             for (int i = 0; i <= listBox.SelectedIndex; i++)
                 (listBox.ItemContainerGenerator.ContainerFromIndex(i) as ListBoxItem).Foreground = new SolidColorBrush(Colors.White);
-            for (int i = listBox.SelectedIndex + 1; i < imgFile.ImageList.Count; i++)
+            for (int i = listBox.SelectedIndex + 1; i < curEnv.imgFile.ImageList.Count; i++)
                 (listBox.ItemContainerGenerator.ContainerFromIndex(i) as ListBoxItem).Foreground = new SolidColorBrush(Colors.Gray);
-            imgFile.ChangeState(listBox.SelectedIndex);
-            CurImage.Source = imgFile.curImage;
+            curEnv.imgFile.ChangeState(listBox.SelectedIndex);
+            curEnv.tabItem.CurImage.Source = curEnv.imgFile.curImage;
         }
 
         private void btnBackColor_Click(object sender, RoutedEventArgs e)
         {
             var colorDialog = new System.Windows.Forms.ColorDialog();
             colorDialog.AllowFullOpen = true;
-            colorDialog.Color = System.Drawing.Color.FromArgb(backColor.A, backColor.R, backColor.G, backColor.B);
+            colorDialog.Color = System.Drawing.Color.FromArgb(curEnv.backColor.A, curEnv.backColor.R, curEnv.backColor.G, curEnv.backColor.B);
             if (colorDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                backColor.A = colorDialog.Color.A;
-                backColor.R = colorDialog.Color.R;
-                backColor.G = colorDialog.Color.G;
-                backColor.B = colorDialog.Color.B;
-                (btnBackColor.Template.FindName("BackColorView", btnBackColor) as Rectangle).Fill = new SolidColorBrush(backColor);
+                curEnv.backColor.A = colorDialog.Color.A;
+                curEnv.backColor.R = colorDialog.Color.R;
+                curEnv.backColor.G = colorDialog.Color.G;
+                curEnv.backColor.B = colorDialog.Color.B;
+                (btnBackColor.Template.FindName("BackColorView", btnBackColor) as Rectangle).Fill = new SolidColorBrush(curEnv.backColor);
             }
         }
     }
