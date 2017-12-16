@@ -12,9 +12,9 @@ using System.Windows.Shapes;
 
 namespace CVProject.Model
 {
-    enum EditMode { Cursor, Brush, Eraser, Line, Rect, PickColor, Ellipse, Circle, Select };
+    public enum EditMode { Cursor, Brush, Eraser, Line, Rect, PickColor, Ellipse, Circle, Select };
 
-    class Environment
+    public class Environment
     {
         public ImageFile imgFile;
         public Point mouseXY;
@@ -40,7 +40,7 @@ namespace CVProject.Model
             editMode = EditMode.Cursor;
             needSave = false;
             imgFile = img;
-            tabItem = new Control.TabItemPlus();
+            tabItem = new Control.TabItemPlus(this);
             tabItem.CurImage.Source = imgFile.curImage;
             tabItem.Header = imgFile.FileName;
             RenderOptions.SetBitmapScalingMode(tabItem.CurImage, BitmapScalingMode.NearestNeighbor);
@@ -49,7 +49,7 @@ namespace CVProject.Model
             tabItem.contentControl.MouseMove += CurImage_MouseMove;
             tabItem.contentControl.MouseLeftButtonUp += CurImage_MouseLeftButtonUp;
             tabItem.contentControl.MouseWheel += CurImage_MouseWheel;
-            tabItem.contentControl.MouseDoubleClick += CurImage_MouseDoubleClick;
+            tabItem.contentControl.MouseDoubleClick += CurImage_MouseDoubleClick;            
         }
 
         public void CancelSelect()
@@ -105,6 +105,27 @@ namespace CVProject.Model
         {
             return new Point(Math.Floor(pos.X / tabItem.CurImage.ActualWidth * imgFile.curImage.PixelWidth),
                              Math.Floor(pos.Y / tabItem.CurImage.ActualHeight * imgFile.curImage.PixelHeight));
+        }
+
+        public void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            if (needSave){
+                switch (Xceed.Wpf.Toolkit.MessageBox.Show(string.Format("Do you want to save {0}?", imgFile.FileName), Settings.appName, MessageBoxButton.YesNoCancel, MessageBoxImage.Question))
+                {
+                    case MessageBoxResult.Yes:
+                        imgFile.Save();
+                        break;
+                    case MessageBoxResult.No:
+                        break;
+                    case MessageBoxResult.Cancel:
+                        return;
+                }
+            }
+            int i = father.tabs.Items.IndexOf(tabItem);
+            father.tabs.Items.Remove(tabItem);
+            father.envList.Remove(this);
+            father.tabs.SelectedIndex = -1;
+            father.tabs.SelectedIndex = i;
         }
 
         private void CurImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

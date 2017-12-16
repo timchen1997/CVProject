@@ -20,9 +20,17 @@ namespace CVProject.Control
     /// </summary>
     public partial class TabItemPlus : TabItem
     {
-        public TabItemPlus()
+        private Model.Environment father;
+
+        public TabItemPlus(Model.Environment father)
         {
             InitializeComponent();
+            this.father = father;
+        }
+
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            father.btnClose_Click(sender, e);
         }
     }
 }

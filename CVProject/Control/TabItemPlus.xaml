@@ -82,7 +82,7 @@
                                     <ColumnDefinition Width="10" />
                                 </Grid.ColumnDefinitions>
                                 <ContentPresenter Grid.Column="0" x:Name="ContentSite" RecognizesAccessKey="True" ContentSource="Header" d:LayoutOverrides="Width, Height" HorizontalAlignment="Center" Margin="6,1,6,1" VerticalAlignment="Center" />
-                                <Button Grid.Column="1" Name="btn_Close" Style="{StaticResource CloseButtonStyle}"></Button>
+                                <Button Grid.Column="1" Name="btn_Close" Style="{StaticResource CloseButtonStyle}" Click="btnClose_Click"></Button>
                             </Grid>
                         </Grid>
                         <ControlTemplate.Triggers>

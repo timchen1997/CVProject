@@ -10,7 +10,7 @@ using System.Windows.Media.Imaging;
 
 namespace CVProject.Model
 {
-    class ImageHistory
+    public class ImageHistory
     {
         public WriteableBitmap img { set; get; }
         public string description { set; get; }
@@ -23,7 +23,7 @@ namespace CVProject.Model
     }
 
 
-    class ImageFile
+    public class ImageFile
     {
         private enum ImageFormat { Bmp, Jpg, Png};
 

@@ -112,11 +112,11 @@
                     <ColumnDefinition Width="250"/>
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="0">
-                    <TabControl Name="tabs">
+                    <TabControl Name="tabs" SelectionChanged="tabs_SelectionChanged">
                         
                     </TabControl>
                 </Grid>
-                <TabControl Grid.Column="1" HorizontalAlignment="Left" Height="177" Margin="10,10,0,0" VerticalAlignment="Top" Width="230">
+                <TabControl Grid.Column="1" HorizontalAlignment="Left" Height="177" Margin="10,10,0,0" VerticalAlignment="Top" Width="230" >
                     <TabItem Header="Pixel">
                         <Grid>
                             <Grid.Background>

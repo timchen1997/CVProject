@@ -23,7 +23,7 @@ namespace CVProject
     public partial class MainWindow : Window
     {
                
-        private List<Model.Environment> envList;
+        public List<Model.Environment> envList;
         private int curEnvNum = -1;
         private Model.Environment curEnv
         {
@@ -38,7 +38,7 @@ namespace CVProject
             InitializeComponent();
             WindowState = WindowState.Maximized;
             Title = Settings.appName;
-            envList = new List<Model.Environment>();            
+            envList = new List<Model.Environment>();
         }
 
         private void OpenFile()
@@ -209,21 +209,33 @@ namespace CVProject
 
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (curEnv == null) return;
-            if (curEnv.needSave)
+            List<Model.Environment> delList = new List<Model.Environment>();
+            for (int i = 0; i < envList.Count; i++)
             {
-                switch (Xceed.Wpf.Toolkit.MessageBox.Show("Do you want to save this file?", Settings.appName, MessageBoxButton.YesNoCancel, MessageBoxImage.Question))
+                tabs.SelectedIndex = 0;
+                var c = envList[i];
+                if (c.needSave)
                 {
-                    case MessageBoxResult.Yes:
-                        SaveFile();
-                        break;
-                    case MessageBoxResult.No:
-                        break;
-                    case MessageBoxResult.Cancel:
-                        e.Cancel = true;
-                        break;
+                    switch (Xceed.Wpf.Toolkit.MessageBox.Show(string.Format("Do you want to save {0}?", c.imgFile.FileName), Settings.appName, MessageBoxButton.YesNoCancel, MessageBoxImage.Question))
+                    {
+                        case MessageBoxResult.Yes:
+                            SaveFile();
+                            break;
+                        case MessageBoxResult.No:
+                            break;
+                        case MessageBoxResult.Cancel:
+                            e.Cancel = true;
+                            break;
+                    }
                 }
+                if (e.Cancel) break;
+                delList.Add(c);
+                tabs.Items.Remove(c.tabItem);
             }
+            foreach (var c in delList)
+                envList.Remove(c);
+            tabs.SelectedIndex = -1;
+            tabs.SelectedIndex = 0;
         }
 
         private void btnReset_Click(object sender, RoutedEventArgs e)
@@ -269,6 +281,17 @@ namespace CVProject
                 curEnv.backColor.B = colorDialog.Color.B;
                 (btnBackColor.Template.FindName("BackColorView", btnBackColor) as Rectangle).Fill = new SolidColorBrush(curEnv.backColor);
             }
+        }
+
+        private void tabs_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (tabs.SelectedIndex == -1) return;
+            curEnvNum = tabs.SelectedIndex;
+            Title = Settings.appName + " - " + curEnv.imgFile.FileName;
+            (btnForeColor.Template.FindName("ForeColorView", btnForeColor) as Rectangle).Fill = new SolidColorBrush(curEnv.foreColor);
+            (btnBackColor.Template.FindName("BackColorView", btnBackColor) as Rectangle).Fill = new SolidColorBrush(curEnv.backColor);
+            listBox.ItemsSource = curEnv.imgFile.ImageList;
+            listBox.SelectedIndex = curEnv.imgFile.curStateNo;
         }
     }
 }
