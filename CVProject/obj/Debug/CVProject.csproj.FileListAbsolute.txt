@@ -82,3 +82,5 @@ F:\CVProject\CVProject\obj\Debug\CVProject.Properties.Resources.resources
 F:\CVProject\CVProject\obj\Debug\CVProject.csproj.GenerateResource.Cache
 F:\CVProject\CVProject\obj\Debug\CVProject.exe
 F:\CVProject\CVProject\obj\Debug\CVProject.pdb
+F:\CVProject\CVProject\obj\Debug\Dialog\NewFileDialog.g.cs
+F:\CVProject\CVProject\obj\Debug\Dialog\NewFileDialog.baml

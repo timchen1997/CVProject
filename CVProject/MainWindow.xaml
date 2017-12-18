@@ -14,6 +14,8 @@
         <RoutedUICommand x:Key="redo_key" Text="Button Click"/>
         <RoutedUICommand x:Key="cancelSelect_key" Text="Button Click"/>
         <RoutedUICommand x:Key="copy_key" Text="Button Click"/>
+        <RoutedUICommand x:Key="newFile_key" Text="Button Click"/>
+        <RoutedUICommand x:Key="selectAll_key" Text="Button Click"/>
     </Window.Resources>
     <Window.InputBindings>
         <KeyBinding Gesture="Ctrl+O" Command="{StaticResource openFile_key}"/>
@@ -22,6 +24,8 @@
         <KeyBinding Gesture="Ctrl+Y" Command="{StaticResource redo_key}"/>
         <KeyBinding Gesture="Ctrl+D" Command="{StaticResource cancelSelect_key}"/>
         <KeyBinding Gesture="Ctrl+C" Command="{StaticResource copy_key}"/>
+        <KeyBinding Gesture="Ctrl+N" Command="{StaticResource newFile_key}"/>
+        <KeyBinding Gesture="Ctrl+A" Command="{StaticResource selectAll_key}"/>
     </Window.InputBindings>
     <Window.CommandBindings>
         <CommandBinding Command="{StaticResource openFile_key}" 
@@ -36,6 +40,10 @@
                         Executed="CancelSelectCommand_Executed"/>
         <CommandBinding Command="{StaticResource copy_key}" 
                         Executed="CopyCommand_Executed"/>
+        <CommandBinding Command="{StaticResource newFile_key}" 
+                        Executed="NewFileCommand_Executed"/>
+        <CommandBinding Command="{StaticResource selectAll_key}" 
+                        Executed="SelectAllCommand_Executed"/>
     </Window.CommandBindings>
 
     <Grid>
@@ -46,7 +54,7 @@
         </Grid.RowDefinitions>
         <Menu Grid.Row="0">
             <MenuItem Header="File">
-                <MenuItem Header="New"></MenuItem>
+                <MenuItem Header="New" Click="New_Click"></MenuItem>
                 <MenuItem Header="Open" Click="Open_Click"></MenuItem>
                 <MenuItem Header="Save" Click="Save_Click"></MenuItem>
                 <MenuItem Header="Save As" Click="SaveAs_Click"></MenuItem>
@@ -78,15 +86,15 @@
                             <RowDefinition Height="*" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
-                        <Button Content="Brush" Click="Brush_Click" Grid.Column="0" Grid.Row="0"></Button>
-                        <Button Content="Open" Click="Open_Click" Grid.Column="1" Grid.Row="0"></Button>
-                        <Button Content="Cursor" Click="Cursor_Click" Grid.Column="0" Grid.Row="1"></Button>
-                        <Button Content="PickColor" Click="PickColor_Click" Grid.Column="1" Grid.Row="1"></Button>
-                        <Button Content="Rect" Click="Rect_Click" Grid.Column="0" Grid.Row="2"></Button>
-                        <Button Content="Line" Click="Line_Click" Grid.Column="1" Grid.Row="2"></Button>
-                        <Button Content="Ellipse" Click="Ellipse_Click" Grid.Column="0" Grid.Row="3"></Button>
-                        <Button Content="Circle" Click="Circle_Click" Grid.Column="1" Grid.Row="3"></Button>
-                        <Button Content="Select" Click="Select_Click" Grid.Column="0" Grid.Row="4"></Button>
+                        <ToggleButton Name="btnBrush" Content="Brush" Click="Brush_Click" Grid.Column="0" Grid.Row="0"></ToggleButton>
+                        <ToggleButton Name="btnEraser" Content="Eraser" Click="Eraser_Click" Grid.Column="1" Grid.Row="0"></ToggleButton>
+                        <ToggleButton Name="btnCursor" Content="Cursor" Click="Cursor_Click" Grid.Column="0" Grid.Row="1"></ToggleButton>
+                        <ToggleButton Name="btnPickColor" Content="PickColor" Click="PickColor_Click" Grid.Column="1" Grid.Row="1"></ToggleButton>
+                        <ToggleButton Name="btnRect" Content="Rect" Click="Rect_Click" Grid.Column="0" Grid.Row="2"></ToggleButton>
+                        <ToggleButton Name="btnLine" Content="Line" Click="Line_Click" Grid.Column="1" Grid.Row="2"></ToggleButton>
+                        <ToggleButton Name="btnEllipse" Content="Ellipse" Click="Ellipse_Click" Grid.Column="0" Grid.Row="3"></ToggleButton>
+                        <ToggleButton Name="btnCircle" Content="Circle" Click="Circle_Click" Grid.Column="1" Grid.Row="3"></ToggleButton>
+                        <ToggleButton Name="btnSelect" Content="Select" Click="Select_Click" Grid.Column="0" Grid.Row="4"></ToggleButton>
                     </Grid>
                     <Grid>
                         <Button Margin="15,15,3,0" Click="btnBackColor_Click" Name="btnBackColor">
@@ -133,7 +141,7 @@
                             <Label Content="Blue = " HorizontalAlignment="Left" Margin="10,121,0,0" VerticalAlignment="Top"/>
                             <Label Content="Hue = " HorizontalAlignment="Left" Margin="113,75,0,0" VerticalAlignment="Top"/>
                             <Label Content="Saturation = " HorizontalAlignment="Left" Margin="113,98,0,0" VerticalAlignment="Top"/>
-                            <Label Content="Lightness = " HorizontalAlignment="Left" Margin="113,121,0,0" VerticalAlignment="Top"/>
+                            <Label Content="Brightness = " HorizontalAlignment="Left" Margin="113,121,0,0" VerticalAlignment="Top"/>
                             <Label Content="Alpha = " HorizontalAlignment="Left" Margin="113,54,0,0" VerticalAlignment="Top"/>
                             <Label x:Name="SVal" HorizontalAlignment="Left" Margin="187,98,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.071,-0.125"/>
                             <Label x:Name="HVal" HorizontalAlignment="Left" Margin="187,75,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.071,-0.125"/>

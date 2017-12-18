@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 F:\CVProject\CVProject\App.xaml
-4421594621
+51581400979
 
-17-603723086
+18-1647905816
 25-247686773
-Control\TabItemPlus.xaml;Dialog\JpegSaveDialog.xaml;Window1.xaml;MainWindow.xaml;
+Control\TabItemPlus.xaml;Dialog\JpegSaveDialog.xaml;Dialog\NewFileDialog.xaml;Window1.xaml;MainWindow.xaml;
 
-False
+True
 

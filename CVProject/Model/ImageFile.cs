@@ -75,6 +75,19 @@ namespace CVProject.Model
             curStateNo = 0;
         }
 
+        public ImageFile(int width, int height, int dpi)
+        {
+            FileName = "Untitled";
+            ImageList = new ObservableCollection<ImageHistory>();
+            uint[] buffer = new uint[width * height];
+            for (uint i = 0; i < width * height; i++)
+                buffer[i] = 0xffffffff;
+            var WBitmap = new WriteableBitmap(width, height, dpi, dpi, PixelFormats.Bgr32, null);
+            WBitmap.WritePixels(new Int32Rect(0, 0, width, height), buffer, width * 4, 0);
+            ImageList.Add(new ImageHistory(WBitmap, "New File"));
+            curStateNo = 0;
+        }
+
         public static ImageFile Open()
         {
             Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog();
@@ -89,6 +102,7 @@ namespace CVProject.Model
 
         public void Save()
         {
+            if (FullPath == null) SaveAs();
             BitmapEncoder encoder;
             switch (Format)
             {

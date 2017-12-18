@@ -20,15 +20,12 @@ namespace CVProject.Model
         public Point mouseXY;
         public Point selectPointA, selectPointB;
         public bool fileOpened;
-        public bool selecting;
-        public EditMode editMode;
+        public bool selecting;        
         public bool needSave;
         public Control.TabItemPlus tabItem;
         private bool mouseDown;
         private Point startPoint, endPoint;
         private bool drawing = false;
-        public Color foreColor = Color.FromArgb(255, 255, 255, 255);
-        public Color backColor;
         private MainWindow father;
 
         public Environment(ImageFile img, MainWindow window)
@@ -37,7 +34,6 @@ namespace CVProject.Model
             selectPointA = selectPointB = new Point(0, 0);
             fileOpened = true;
             selecting = false;
-            editMode = EditMode.Cursor;
             needSave = false;
             imgFile = img;
             tabItem = new Control.TabItemPlus(this);
@@ -125,13 +121,14 @@ namespace CVProject.Model
             father.tabs.Items.Remove(tabItem);
             father.envList.Remove(this);
             father.tabs.SelectedIndex = -1;
-            father.tabs.SelectedIndex = i;
+            if (father.tabs.Items.Count != 0)
+                father.tabs.SelectedIndex = i;
         }
 
         private void CurImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             mouseDown = true;
-            switch (editMode)
+            switch (father.editMode)
             {
                 case EditMode.Cursor:
                     var img = sender as ContentControl;
@@ -140,13 +137,14 @@ namespace CVProject.Model
                     mouseXY = e.GetPosition(img);
                     break;
                 case EditMode.Brush:
+                case EditMode.Eraser:
                 case EditMode.Line:
                 case EditMode.Rect:
                 case EditMode.Ellipse:
                 case EditMode.Circle:
                     tabItem.CurImage.CaptureMouse();
                     startPoint = realPoint(e.GetPosition(tabItem.CurImage));
-                    Advance(editMode.ToString());
+                    Advance(father.editMode.ToString());
                     drawing = true;
                     break;
                 case EditMode.Select:
@@ -158,8 +156,8 @@ namespace CVProject.Model
                     break;
                 case EditMode.PickColor:
                     Point curPixel = realPoint(e.GetPosition(tabItem.CurImage));
-                    foreColor = getPixelColor(curPixel);
-                    (father.btnForeColor.Template.FindName("ForeColorView", father.btnForeColor) as Rectangle).Fill = new SolidColorBrush(foreColor);
+                    father.foreColor = getPixelColor(curPixel);
+                    (father.btnForeColor.Template.FindName("ForeColorView", father.btnForeColor) as Rectangle).Fill = new SolidColorBrush(father.foreColor);
                     break;
 
             }
@@ -173,22 +171,11 @@ namespace CVProject.Model
             if (curPixel.X >= 0 && curPixel.X < imgFile.curImage.PixelWidth && curPixel.Y >= 0 && curPixel.Y < imgFile.curImage.PixelHeight)
             {
                 Color curColor = getPixelColor(curPixel);
-                father.colorView.Fill = new SolidColorBrush(curColor);
-                father.RVal.Content = curColor.R;
-                father.GVal.Content = curColor.G;
-                father.BVal.Content = curColor.B;
-                father.AVal.Content = curColor.A;
-                double H, S, L;
-                Helper.Rgb2Hsl(curColor, out H, out S, out L);
-                father.HVal.Content = H.ToString("0.00") + "°";
-                father.SVal.Content = S.ToString("0.00") + "%";
-                father.LVal.Content = L.ToString("0.00") + "%";
-                father.XVal.Content = curPixel.X;
-                father.YVal.Content = curPixel.Y;
+                father.updateCurPixelInfo(curColor, (int)curPixel.X, (int)curPixel.Y);
             }
             if (mouseDown)
             {
-                switch (editMode)
+                switch (father.editMode)
                 {
                     case EditMode.Cursor:
                         var img = sender as ContentControl;
@@ -202,7 +189,15 @@ namespace CVProject.Model
                     case EditMode.Brush:
                         if (!drawing) break;
                         endPoint = realPoint(e.GetPosition(tabItem.CurImage));
-                        ImageProcessor.DrawLine(imgFile.curImage as WriteableBitmap, startPoint, endPoint, foreColor, 10);
+                        ImageProcessor.DrawLine(imgFile.curImage as WriteableBitmap, startPoint, endPoint, father.foreColor, 10);
+                        startPoint = endPoint;
+                        imgFile.Refresh();
+                        tabItem.CurImage.Source = imgFile.curImage;
+                        break;
+                    case EditMode.Eraser:
+                        if (!drawing) break;
+                        endPoint = realPoint(e.GetPosition(tabItem.CurImage));
+                        ImageProcessor.DrawLine(imgFile.curImage as WriteableBitmap, startPoint, endPoint, father.backColor, 10);
                         startPoint = endPoint;
                         imgFile.Refresh();
                         tabItem.CurImage.Source = imgFile.curImage;
@@ -210,28 +205,28 @@ namespace CVProject.Model
                     case EditMode.Line:
                         if (!drawing) break;
                         endPoint = realPoint(e.GetPosition(tabItem.CurImage));
-                        ImageProcessor.DrawLine(imgFile.Recover(), startPoint, endPoint, foreColor, 1);
+                        ImageProcessor.DrawLine(imgFile.Recover(), startPoint, endPoint, father.foreColor, 1);
                         imgFile.Commit();
                         tabItem.CurImage.Source = imgFile.curImage;
                         break;
                     case EditMode.Rect:
                         if (!drawing) break;
                         endPoint = realPoint(e.GetPosition(tabItem.CurImage));
-                        ImageProcessor.DrawRect(imgFile.Recover(), startPoint, endPoint, foreColor, 1);
+                        ImageProcessor.DrawRect(imgFile.Recover(), startPoint, endPoint, father.foreColor, 1);
                         imgFile.Commit();
                         tabItem.CurImage.Source = imgFile.curImage;
                         break;
                     case EditMode.Ellipse:
                         if (!drawing) break;
                         endPoint = realPoint(e.GetPosition(tabItem.CurImage));
-                        ImageProcessor.DrawEllipse(imgFile.Recover(), startPoint, endPoint, foreColor, 1);
+                        ImageProcessor.DrawEllipse(imgFile.Recover(), startPoint, endPoint, father.foreColor, 1);
                         imgFile.Commit();
                         tabItem.CurImage.Source = imgFile.curImage;
                         break;
                     case EditMode.Circle:
                         if (!drawing) break;
                         endPoint = realPoint(e.GetPosition(tabItem.CurImage));
-                        ImageProcessor.DrawCircle(imgFile.Recover(), startPoint, endPoint, foreColor, 1);
+                        ImageProcessor.DrawCircle(imgFile.Recover(), startPoint, endPoint, father.foreColor, 1);
                         imgFile.Commit();
                         tabItem.CurImage.Source = imgFile.curImage;
                         break;
@@ -259,7 +254,7 @@ namespace CVProject.Model
         {
             if (!fileOpened) return;
             mouseDown = false;
-            switch (editMode)
+            switch (father.editMode)
             {
                 case EditMode.Cursor:
                     var img = sender as ContentControl;
@@ -270,6 +265,7 @@ namespace CVProject.Model
                     img.ReleaseMouseCapture();
                     break;
                 case EditMode.Brush:
+                case EditMode.Eraser:
                 case EditMode.Line:
                 case EditMode.Rect:
                 case EditMode.Ellipse:
@@ -327,7 +323,7 @@ namespace CVProject.Model
 
         private void CurImage_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (editMode != EditMode.Cursor)
+            if (father.editMode != EditMode.Cursor)
                 return;
             var p = realPoint(e.GetPosition(tabItem.CurImage));
             if (!InSelection(p))

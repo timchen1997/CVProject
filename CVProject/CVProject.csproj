@@ -122,6 +122,9 @@
     <Compile Include="Dialog\JpegSaveDialog.xaml.cs">
       <DependentUpon>JpegSaveDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialog\NewFileDialog.xaml.cs">
+      <DependentUpon>NewFileDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ImageProcessor.cs" />
     <Compile Include="Model\Environment.cs" />
     <Compile Include="Model\ImageFile.cs" />
@@ -134,6 +137,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Dialog\JpegSaveDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialog\NewFileDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

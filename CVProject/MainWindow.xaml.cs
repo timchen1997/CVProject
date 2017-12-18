@@ -24,6 +24,9 @@ namespace CVProject
     {
                
         public List<Model.Environment> envList;
+        public EditMode editMode;
+        public Color foreColor = Color.FromArgb(255, 255, 255, 255);
+        public Color backColor = Color.FromArgb(255, 0, 0, 0);
         private int curEnvNum = -1;
         private Model.Environment curEnv
         {
@@ -71,12 +74,33 @@ namespace CVProject
             transform1.Y = 0;
         }
 
+        private void NewFile()
+        {
+            var dialog = new Dialog.NewFileDialog();
+            if (dialog.ShowDialog() == true)
+            {
+                var t = new ImageFile((int)dialog.Width.Value, (int)dialog.Height.Value, (int)dialog.Dpi.Value);
+                envList.Add(new Model.Environment(t, this));
+                curEnvNum = envList.Count - 1;
+                curEnv.imgFile = t;
+                Title = Settings.appName + " - " + curEnv.imgFile.FileName;
+                listBox.ItemsSource = curEnv.imgFile.ImageList;
+                listBox.SelectedIndex = 0;
+                ResetImage();
+                curEnv.setSelectRectPos(curEnv.selectPointA, curEnv.selectPointB);
+                tabs.Items.Add(curEnv.tabItem);
+                tabs.SelectedIndex = envList.Count - 1;
+            }
+        }
+
         private void SaveFile()
         {
             if (curEnv.imgFile != null)
             {
                 curEnv.imgFile.Save();
                 curEnv.needSave = false;
+                (tabs.SelectedItem as TabItem).Header = curEnv.imgFile.FileName;
+                Title = Settings.appName + " - " + curEnv.imgFile.FileName;
             }
         }
 
@@ -86,6 +110,8 @@ namespace CVProject
             {
                 curEnv.imgFile.SaveAs();
                 curEnv.needSave = false;
+                (tabs.SelectedItem as TabItem).Header = curEnv.imgFile.FileName;
+                Title = Settings.appName + " - " + curEnv.imgFile.FileName;
             }
                 
         }
@@ -115,7 +141,21 @@ namespace CVProject
             if (!curEnv.selecting) return;
             Clipboard.SetImage(curEnv.imgFile.Part(curEnv.selectPointA, curEnv.selectPointB));
             status.Text = "Copied to clipboard";
-        }        
+        }
+
+        private void SelectAll()
+        {
+            curEnv.selectPointA = new Point(0, 0);
+            curEnv.selectPointB = new Point(curEnv.imgFile.curImage.PixelWidth, curEnv.imgFile.curImage.PixelHeight);
+            curEnv.selecting = true;
+            curEnv.setSelectRectPos(curEnv.selectPointA, curEnv.selectPointB);
+            curEnv.tabItem.selectRect.Visibility = Visibility.Visible;
+        }
+
+        private void New_Click(object sender, RoutedEventArgs e)
+        {
+            NewFile();
+        }
 
         private void Open_Click(object sender, RoutedEventArgs e)
         {
@@ -139,42 +179,65 @@ namespace CVProject
 
         private void Cursor_Click(object sender, RoutedEventArgs e)
         {
-            curEnv.editMode = EditMode.Cursor;
+            resetToolBox();
+            btnCursor.IsChecked = true;
+            editMode = EditMode.Cursor;
         }
 
         private void Select_Click(object sender, RoutedEventArgs e)
         {
-            curEnv.editMode = EditMode.Select;
+            resetToolBox();
+            btnSelect.IsChecked = true;
+            editMode = EditMode.Select;
         }
 
         private void Brush_Click(object sender, RoutedEventArgs e)
         {
-            curEnv.editMode = EditMode.Brush;
+            resetToolBox();
+            btnBrush.IsChecked = true;
+            editMode = EditMode.Brush;
+        }
+
+        private void Eraser_Click(object sender, RoutedEventArgs e)
+        {
+            resetToolBox();
+            btnEraser.IsChecked = true;
+            editMode = EditMode.Eraser;
         }
 
         private void Line_Click(object sender, RoutedEventArgs e)
         {
-            curEnv.editMode = EditMode.Line;
+            resetToolBox();
+            btnLine.IsChecked = true;
+            editMode = EditMode.Line;
         }
 
         private void Rect_Click(object sender, RoutedEventArgs e)
         {
-            curEnv.editMode = EditMode.Rect;
+            resetToolBox();
+            btnRect.IsChecked = true;
+            editMode = EditMode.Rect;
         }
 
         private void Ellipse_Click(object sender, RoutedEventArgs e)
         {
-            curEnv.editMode = EditMode.Ellipse;
+            resetToolBox();
+            btnEllipse.IsChecked = true;
+            editMode = EditMode.Ellipse;
         }
 
         private void Circle_Click(object sender, RoutedEventArgs e)
         {
-            curEnv.editMode = EditMode.Circle;
+            resetToolBox();
+            btnCircle.IsChecked = true;
+            editMode = EditMode.Circle;
         }
 
         private void PickColor_Click(object sender, RoutedEventArgs e)
         {
-            curEnv.editMode = EditMode.PickColor;
+            resetToolBox();
+            btnPickColor.IsChecked = true;
+            editMode = EditMode.PickColor;
         }
 
         private void OpenFileCommand_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -205,6 +268,16 @@ namespace CVProject
         private void CopyCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             Copy();
+        }
+
+        private void NewFileCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            NewFile();
+        }
+
+        private void SelectAllCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            SelectAll();
         }
 
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -247,19 +320,20 @@ namespace CVProject
         {
             var colorDialog = new System.Windows.Forms.ColorDialog();
             colorDialog.AllowFullOpen = true;
-            colorDialog.Color = System.Drawing.Color.FromArgb(curEnv.foreColor.A, curEnv.foreColor.R, curEnv.foreColor.G, curEnv.foreColor.B);
+            colorDialog.Color = System.Drawing.Color.FromArgb(foreColor.A, foreColor.R, foreColor.G, foreColor.B);
             if (colorDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                curEnv.foreColor.A = colorDialog.Color.A;
-                curEnv.foreColor.R = colorDialog.Color.R;
-                curEnv.foreColor.G = colorDialog.Color.G;
-                curEnv.foreColor.B = colorDialog.Color.B;
-                (btnForeColor.Template.FindName("ForeColorView", btnForeColor) as Rectangle).Fill = new SolidColorBrush(curEnv.foreColor);
+                foreColor.A = colorDialog.Color.A;
+                foreColor.R = colorDialog.Color.R;
+                foreColor.G = colorDialog.Color.G;
+                foreColor.B = colorDialog.Color.B;
+                (btnForeColor.Template.FindName("ForeColorView", btnForeColor) as Rectangle).Fill = new SolidColorBrush(foreColor);
             }
         }       
 
         private void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (listBox.ItemsSource == null) return;
             for (int i = 0; i <= listBox.SelectedIndex; i++)
                 (listBox.ItemContainerGenerator.ContainerFromIndex(i) as ListBoxItem).Foreground = new SolidColorBrush(Colors.White);
             for (int i = listBox.SelectedIndex + 1; i < curEnv.imgFile.ImageList.Count; i++)
@@ -272,26 +346,60 @@ namespace CVProject
         {
             var colorDialog = new System.Windows.Forms.ColorDialog();
             colorDialog.AllowFullOpen = true;
-            colorDialog.Color = System.Drawing.Color.FromArgb(curEnv.backColor.A, curEnv.backColor.R, curEnv.backColor.G, curEnv.backColor.B);
+            colorDialog.Color = System.Drawing.Color.FromArgb(backColor.A, backColor.R, backColor.G, backColor.B);
             if (colorDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                curEnv.backColor.A = colorDialog.Color.A;
-                curEnv.backColor.R = colorDialog.Color.R;
-                curEnv.backColor.G = colorDialog.Color.G;
-                curEnv.backColor.B = colorDialog.Color.B;
-                (btnBackColor.Template.FindName("BackColorView", btnBackColor) as Rectangle).Fill = new SolidColorBrush(curEnv.backColor);
+                backColor.A = colorDialog.Color.A;
+                backColor.R = colorDialog.Color.R;
+                backColor.G = colorDialog.Color.G;
+                backColor.B = colorDialog.Color.B;
+                (btnBackColor.Template.FindName("BackColorView", btnBackColor) as Rectangle).Fill = new SolidColorBrush(backColor);
             }
         }
 
         private void tabs_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (tabs.SelectedIndex == -1) return;
+            if (tabs.SelectedIndex == -1)
+            {
+                if (tabs.Items.Count == 0)
+                {
+                    listBox.ItemsSource = null;
+                    updateCurPixelInfo(Color.FromArgb(0, 0, 0, 0), 0, 0);
+                }
+                return;
+            }
             curEnvNum = tabs.SelectedIndex;
             Title = Settings.appName + " - " + curEnv.imgFile.FileName;
-            (btnForeColor.Template.FindName("ForeColorView", btnForeColor) as Rectangle).Fill = new SolidColorBrush(curEnv.foreColor);
-            (btnBackColor.Template.FindName("BackColorView", btnBackColor) as Rectangle).Fill = new SolidColorBrush(curEnv.backColor);
             listBox.ItemsSource = curEnv.imgFile.ImageList;
             listBox.SelectedIndex = curEnv.imgFile.curStateNo;
+        }
+
+        public void updateCurPixelInfo(Color curColor, int x, int y)
+        {
+            colorView.Fill = new SolidColorBrush(curColor);
+            RVal.Content = curColor.R;
+            GVal.Content = curColor.G;
+            BVal.Content = curColor.B;
+            AVal.Content = curColor.A;
+            var t = System.Drawing.Color.FromArgb(curColor.A, curColor.R, curColor.G, curColor.B);
+            HVal.Content = t.GetHue().ToString("0.00");
+            SVal.Content = (t.GetSaturation() * 100).ToString("0.00") + "%";
+            LVal.Content = (t.GetBrightness() * 100).ToString("0.00") + "%";
+            XVal.Content = x;
+            YVal.Content = y;
+        }
+
+        private void resetToolBox()
+        {
+            btnBrush.IsChecked = false;
+            btnCursor.IsChecked = false;
+            btnCircle.IsChecked = false;
+            btnEllipse.IsChecked = false;
+            btnLine.IsChecked = false;
+            btnEraser.IsChecked = false;
+            btnRect.IsChecked = false;
+            btnSelect.IsChecked = false;
+            btnPickColor.IsChecked = false;
         }
     }
 }
