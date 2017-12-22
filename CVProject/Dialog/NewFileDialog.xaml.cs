@@ -22,6 +22,13 @@ namespace CVProject.Dialog
         public NewFileDialog()
         {
             InitializeComponent();
+            var t = Clipboard.GetImage();
+            if (t != null)
+            {
+                Width.Value = t.PixelWidth;
+                Height.Value = t.PixelHeight;
+                Dpi.Value = (int)t.DpiX;
+            }
         }
 
         private void btnOK_Click(object sender, RoutedEventArgs e)

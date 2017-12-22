@@ -13,6 +13,7 @@ using System.Windows.Shapes;
 namespace CVProject.Model
 {
     public enum EditMode { Cursor, Brush, Eraser, Line, Rect, PickColor, Ellipse, Circle, Select };
+    public enum DrawMode { Link4 = 0, Link8 = 1, AntiAlias = 2}
 
     public class Environment
     {
@@ -26,6 +27,7 @@ namespace CVProject.Model
         private bool mouseDown;
         private Point startPoint, endPoint;
         private bool drawing = false;
+        private bool advanced;
         private MainWindow father;
 
         public Environment(ImageFile img, MainWindow window)
@@ -45,7 +47,36 @@ namespace CVProject.Model
             tabItem.contentControl.MouseMove += CurImage_MouseMove;
             tabItem.contentControl.MouseLeftButtonUp += CurImage_MouseLeftButtonUp;
             tabItem.contentControl.MouseWheel += CurImage_MouseWheel;
-            tabItem.contentControl.MouseDoubleClick += CurImage_MouseDoubleClick;            
+            tabItem.contentControl.MouseDoubleClick += CurImage_MouseDoubleClick;
+            tabItem.contentControl.MouseEnter += CurImage_MouseEnter;
+            tabItem.contentControl.MouseLeave += CurImage_MouseLeave;     
+        }
+
+        private void CurImage_MouseLeave(object sender, MouseEventArgs e)
+        {
+            father.Cursor = Cursors.Arrow;
+        }
+
+        private void CurImage_MouseEnter(object sender, MouseEventArgs e)
+        {
+            switch (father.editMode)
+            {
+                case EditMode.Brush:
+                    father.Cursor = Cursors.Pen;
+                    break;
+                case EditMode.Circle:
+                case EditMode.Ellipse:
+                case EditMode.Line:
+                case EditMode.Rect:
+                case EditMode.Select:
+                    father.Cursor = Cursors.Cross;
+                    break;
+                case EditMode.Cursor:
+                    father.Cursor = Cursors.SizeAll;
+                    break;
+                case EditMode.Eraser:
+                    break;
+            }
         }
 
         public void CancelSelect()
@@ -144,7 +175,7 @@ namespace CVProject.Model
                 case EditMode.Circle:
                     tabItem.CurImage.CaptureMouse();
                     startPoint = realPoint(e.GetPosition(tabItem.CurImage));
-                    Advance(father.editMode.ToString());
+                    advanced = false;
                     drawing = true;
                     break;
                 case EditMode.Select:
@@ -188,45 +219,75 @@ namespace CVProject.Model
                         break;
                     case EditMode.Brush:
                         if (!drawing) break;
+                        if (!advanced)
+                        {
+                            Advance(father.editMode.ToString());
+                            advanced = true;
+                        }
                         endPoint = realPoint(e.GetPosition(tabItem.CurImage));
-                        ImageProcessor.DrawLine(imgFile.curImage as WriteableBitmap, startPoint, endPoint, father.foreColor, 10);
+                        ImageProcessor.DrawLine(imgFile.curImage as WriteableBitmap, startPoint, endPoint, father.foreColor, (int)father.thickness.Value.Value, (DrawMode)father.drawMode.SelectedIndex);
                         startPoint = endPoint;
                         imgFile.Refresh();
                         tabItem.CurImage.Source = imgFile.curImage;
                         break;
                     case EditMode.Eraser:
                         if (!drawing) break;
+                        if (!advanced)
+                        {
+                            Advance(father.editMode.ToString());
+                            advanced = true;
+                        }
                         endPoint = realPoint(e.GetPosition(tabItem.CurImage));
-                        ImageProcessor.DrawLine(imgFile.curImage as WriteableBitmap, startPoint, endPoint, father.backColor, 10);
+                        ImageProcessor.DrawLine(imgFile.curImage as WriteableBitmap, startPoint, endPoint, father.backColor, (int)father.thickness.Value.Value, (DrawMode)father.drawMode.SelectedIndex);
                         startPoint = endPoint;
                         imgFile.Refresh();
                         tabItem.CurImage.Source = imgFile.curImage;
                         break;
                     case EditMode.Line:
                         if (!drawing) break;
+                        if (!advanced)
+                        {
+                            Advance(father.editMode.ToString());
+                            advanced = true;
+                        }
                         endPoint = realPoint(e.GetPosition(tabItem.CurImage));
-                        ImageProcessor.DrawLine(imgFile.Recover(), startPoint, endPoint, father.foreColor, 1);
+                        ImageProcessor.DrawLine(imgFile.Recover(), startPoint, endPoint, father.foreColor, (int)father.thickness.Value.Value, (DrawMode)father.drawMode.SelectedIndex);
                         imgFile.Commit();
                         tabItem.CurImage.Source = imgFile.curImage;
                         break;
                     case EditMode.Rect:
                         if (!drawing) break;
+                        if (!advanced)
+                        {
+                            Advance(father.editMode.ToString());
+                            advanced = true;
+                        }
                         endPoint = realPoint(e.GetPosition(tabItem.CurImage));
-                        ImageProcessor.DrawRect(imgFile.Recover(), startPoint, endPoint, father.foreColor, 1);
+                        ImageProcessor.DrawRect(imgFile.Recover(), startPoint, endPoint, father.foreColor, (int)father.thickness.Value.Value, (DrawMode)father.drawMode.SelectedIndex);
                         imgFile.Commit();
                         tabItem.CurImage.Source = imgFile.curImage;
                         break;
                     case EditMode.Ellipse:
                         if (!drawing) break;
+                        if (!advanced)
+                        {
+                            Advance(father.editMode.ToString());
+                            advanced = true;
+                        }
                         endPoint = realPoint(e.GetPosition(tabItem.CurImage));
-                        ImageProcessor.DrawEllipse(imgFile.Recover(), startPoint, endPoint, father.foreColor, 1);
+                        ImageProcessor.DrawEllipse(imgFile.Recover(), startPoint, endPoint, father.foreColor, (int)father.thickness.Value.Value, (DrawMode)father.drawMode.SelectedIndex);
                         imgFile.Commit();
                         tabItem.CurImage.Source = imgFile.curImage;
                         break;
                     case EditMode.Circle:
                         if (!drawing) break;
+                        if (!advanced)
+                        {
+                            Advance(father.editMode.ToString());
+                            advanced = true;
+                        }
                         endPoint = realPoint(e.GetPosition(tabItem.CurImage));
-                        ImageProcessor.DrawCircle(imgFile.Recover(), startPoint, endPoint, father.foreColor, 1);
+                        ImageProcessor.DrawCircle(imgFile.Recover(), startPoint, endPoint, father.foreColor, (int)father.thickness.Value.Value, (DrawMode)father.drawMode.SelectedIndex);
                         imgFile.Commit();
                         tabItem.CurImage.Source = imgFile.curImage;
                         break;
