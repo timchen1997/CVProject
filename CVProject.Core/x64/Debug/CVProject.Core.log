@@ -1,0 +1,6 @@
+﻿  filter.cpp
+e:\cvproject\cvproject.core\filter.cpp(21): warning C4244: “=”: 从“double”转换到“unsigned char”，可能丢失数据
+e:\cvproject\cvproject.core\filter.cpp(22): warning C4244: “=”: 从“double”转换到“unsigned char”，可能丢失数据
+e:\cvproject\cvproject.core\filter.cpp(23): warning C4244: “=”: 从“double”转换到“unsigned char”，可能丢失数据
+  CVProject.Core.vcxproj -> E:\CVProject\Debug\CVProject.Core.dll
+  CVProject.Core.vcxproj -> E:\CVProject\Debug\CVProject.Core.pdb (Full PDB)

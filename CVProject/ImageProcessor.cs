@@ -14,8 +14,20 @@ namespace CVProject
 {
     class ImageProcessor
     {
-        //[DllImport("CVProject.Core.dll", EntryPoint = "modifyImg", CallingConvention = CallingConvention.Cdecl)]
-       // private extern static void modifyImg(byte[] img, int width, int height);
+        [DllImport("CVProject.Core.dll", EntryPoint = "binarizeImg", CallingConvention = CallingConvention.Cdecl)]
+        public extern static void binarizeImg(IntPtr img, int width, int height, bool RInOut, byte RLow, byte RHigh, bool GInOut, byte GLow, byte GHigh, bool BInOut, byte BLow, byte BHigh);
+
+        [DllImport("CVProject.Core.dll", EntryPoint = "binarizeImgOtsu", CallingConvention = CallingConvention.Cdecl)]
+        public extern static void binarizeImg(IntPtr img, int width, int height);
+
+        [DllImport("CVProject.Core.dll", EntryPoint = "toGrayScale", CallingConvention = CallingConvention.Cdecl)]
+        public extern static void toGrayScale(IntPtr img, int width, int height, byte grayMode);
+
+        [DllImport("CVProject.Core.dll", EntryPoint = "smooth", CallingConvention = CallingConvention.Cdecl)]
+        public extern static void smooth(IntPtr img, int width, int height, double[] kernel, int size);
+
+        [DllImport("CVProject.Core.dll", EntryPoint = "smoothMedian", CallingConvention = CallingConvention.Cdecl)]
+        public extern static void smooth(IntPtr img, int width, int height, int size);
 
         public static void DrawLine(WriteableBitmap Image, System.Windows.Point a, System.Windows.Point b, Color c, int thickness, Model.DrawMode drawMode)
         {

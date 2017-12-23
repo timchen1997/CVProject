@@ -119,11 +119,20 @@
     <Compile Include="Control\TabItemPlus.xaml.cs">
       <DependentUpon>TabItemPlus.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialog\BinarizationDialog.xaml.cs">
+      <DependentUpon>BinarizationDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialog\GrayScaleDialog.xaml.cs">
+      <DependentUpon>GrayScaleDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dialog\JpegSaveDialog.xaml.cs">
       <DependentUpon>JpegSaveDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialog\NewFileDialog.xaml.cs">
       <DependentUpon>NewFileDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialog\SmoothingDialog.xaml.cs">
+      <DependentUpon>SmoothingDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="ImageProcessor.cs" />
     <Compile Include="Model\Environment.cs" />
@@ -136,11 +145,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Dialog\BinarizationDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialog\GrayScaleDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Dialog\JpegSaveDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Dialog\NewFileDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialog\SmoothingDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

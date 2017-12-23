@@ -1,0 +1,58 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CVProject.Dialog"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" x:Class="CVProject.Dialog.BinarizationDialog"
+        mc:Ignorable="d"
+        Title="Binarization" Height="232" Width="420" Background="#FF363636" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <RadioButton x:Name="radiobtnManaul" Content="" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Checked="radiobtnManaul_Checked"/>
+        <GroupBox Name="gboxManaul" Header="Manual" HorizontalAlignment="Left" Margin="31,10,0,0" VerticalAlignment="Top" Height="130" Width="371">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="52"/>
+                    <ColumnDefinition Width="50"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="R" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="0"/>
+                <ComboBox Grid.Row="0" Grid.Column="1" Name="RInOut" SelectedIndex="0" VerticalAlignment="Center" HorizontalAlignment="Center" SelectionChanged="SelectionChanged">
+                    <Label Content="in" />
+                    <Label Content="out" />
+                </ComboBox>
+                <xctk:RangeSlider Grid.Row="0" Grid.Column="2" Name="RSlider" HorizontalAlignment="Center" VerticalAlignment="Center" Maximum="255" Width="170" IsSnapToTickEnabled="True"/>
+                <xctk:DecimalUpDown Grid.Row="0" Grid.Column="3" Name="RLow" HorizontalAlignment="Center" VerticalAlignment="Center" Value="{Binding ElementName=RSlider,Path=LowerValue}" Maximum="255" Minimum="0" Margin="0,0,2,0" ValueChanged="ValueChanged"/>
+                <xctk:DecimalUpDown Grid.Row="0" Grid.Column="4" Name="RHigh" HorizontalAlignment="Center" VerticalAlignment="Center" Value="{Binding ElementName=RSlider,Path=HigherValue}" Maximum="255" Minimum="0" ValueChanged="ValueChanged"/>
+                <Label Content="G" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="1"/>
+                <ComboBox Grid.Row="1" Grid.Column="1" Name="GInOut" SelectedIndex="0" VerticalAlignment="Center" HorizontalAlignment="Center" SelectionChanged="SelectionChanged">
+                    <Label Content="in" />
+                    <Label Content="out" />
+                </ComboBox>
+                <xctk:RangeSlider Grid.Row="1" Grid.Column="2" Name="GSlider" HorizontalAlignment="Center" VerticalAlignment="Center" Maximum="255" Width="170" IsSnapToTickEnabled="True"/>
+                <xctk:DecimalUpDown Grid.Row="1" Grid.Column="3" Name="GLow" HorizontalAlignment="Center" VerticalAlignment="Center" Value="{Binding ElementName=GSlider,Path=LowerValue}" Maximum="255" Minimum="0" Margin="0,0,2,0" ValueChanged="ValueChanged"/>
+                <xctk:DecimalUpDown Grid.Row="1" Grid.Column="4" Name="GHigh" HorizontalAlignment="Center" VerticalAlignment="Center" Value="{Binding ElementName=GSlider,Path=HigherValue}" Maximum="255" Minimum="0" ValueChanged="ValueChanged"/>
+                <Label Content="B" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="2"/>
+                <ComboBox Grid.Row="2" Grid.Column="1" Name="BInOut" SelectedIndex="0" VerticalAlignment="Center" HorizontalAlignment="Center" SelectionChanged="SelectionChanged">
+                    <Label Content="in" />
+                    <Label Content="out" />
+                </ComboBox>
+                <xctk:RangeSlider Grid.Row="2" Grid.Column="2" Name="BSlider" HorizontalAlignment="Center" VerticalAlignment="Center" Maximum="255" Width="170" IsSnapToTickEnabled="True"/>
+                <xctk:DecimalUpDown Grid.Row="2" Grid.Column="3" Name="BLow" HorizontalAlignment="Center" VerticalAlignment="Center" Value="{Binding ElementName=BSlider,Path=LowerValue}" Maximum="255" Minimum="0" Margin="0,0,2,0" ValueChanged="ValueChanged"/>
+                <xctk:DecimalUpDown Grid.Row="2" Grid.Column="4" Name="BHigh" HorizontalAlignment="Center" VerticalAlignment="Center" Value="{Binding ElementName=BSlider,Path=HigherValue}" Maximum="255" Minimum="0" ValueChanged="ValueChanged"/>
+            </Grid>
+        </GroupBox>
+        <RadioButton x:Name="radiobtnOtsu" Content="" HorizontalAlignment="Left" Margin="10,145,0,0" VerticalAlignment="Top" Checked="radiobtnOtsu_Checked"/>
+        <GroupBox Header="Otsu" HorizontalAlignment="Left" Margin="31,145,0,0" VerticalAlignment="Top" Width="371" Height="24"/>
+        <Button x:Name="btnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="327,174,0,0" VerticalAlignment="Top" Width="75" Click="btnCancel_Click"/>
+        <Button x:Name="btnOK" Content="OK" HorizontalAlignment="Left" Margin="247,174,0,0" VerticalAlignment="Top" Width="75" Click="btnOK_Click"/>
+
+    </Grid>
+</Window>

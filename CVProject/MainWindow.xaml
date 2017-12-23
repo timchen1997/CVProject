@@ -66,9 +66,13 @@
                 <MenuItem Header="Redo"/>
             </MenuItem>
             <MenuItem Header="View"/>
-            <MenuItem Header="Image"/>
+            <MenuItem Header="Image">
+                <MenuItem Header="Binarization" Click="Binarization_Click"/>
+                <MenuItem Header="To GrayScale" Click="GrayScale_Click"/>
+                <MenuItem Header="Smooth" Click="Smooth_Click"/>
+            </MenuItem>
             <MenuItem Header="Help">
-                <MenuItem Header="About"/>
+                <MenuItem Header="About" />
             </MenuItem>
         </Menu>
         <DockPanel Grid.Row="1">
@@ -138,63 +142,51 @@
                 <Grid Grid.Column="0">
                     <TabControl x:Name="tabs" SelectionChanged="tabs_SelectionChanged"/>
                 </Grid>
-                <TabControl Grid.Column="1" HorizontalAlignment="Left" Height="177" Margin="10,10,0,0" VerticalAlignment="Top" Width="230" >
-                    <TabItem Header="Pixel">
-                        <Grid>
-                            <Grid.Background>
-                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                    <GradientStop Color="#FF363636" Offset="0"/>
-                                    <GradientStop Color="#FF424242" Offset="1"/>
-                                </LinearGradientBrush>
-                            </Grid.Background>
-                            <Rectangle x:Name="colorView" HorizontalAlignment="Left" Height="60" Margin="10,10,0,0" VerticalAlignment="Top" Width="60"/>
-                            <Label Content="X = " HorizontalAlignment="Left" Margin="113,8,0,0" VerticalAlignment="Top"/>
-                            <Label Content="Y = " HorizontalAlignment="Left" Margin="113,31,0,0" VerticalAlignment="Top"/>
-                            <Label Content="Red = " HorizontalAlignment="Left" Margin="10,75,0,0" VerticalAlignment="Top"/>
-                            <Label Content="Green = " HorizontalAlignment="Left" Margin="10,98,0,0" VerticalAlignment="Top"/>
-                            <Label Content="Blue = " HorizontalAlignment="Left" Margin="10,121,0,0" VerticalAlignment="Top"/>
-                            <Label Content="Hue = " HorizontalAlignment="Left" Margin="113,75,0,0" VerticalAlignment="Top"/>
-                            <Label Content="Saturation = " HorizontalAlignment="Left" Margin="113,98,0,0" VerticalAlignment="Top"/>
-                            <Label Content="Brightness = " HorizontalAlignment="Left" Margin="113,121,0,0" VerticalAlignment="Top"/>
-                            <Label Content="Alpha = " HorizontalAlignment="Left" Margin="113,54,0,0" VerticalAlignment="Top"/>
-                            <Label x:Name="SVal" HorizontalAlignment="Left" Margin="187,98,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.071,-0.125"/>
-                            <Label x:Name="HVal" HorizontalAlignment="Left" Margin="187,75,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.071,-0.125"/>
-                            <Label x:Name="AVal" HorizontalAlignment="Left" Margin="187,54,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.071,-0.125"/>
-                            <Label x:Name="YVal" HorizontalAlignment="Left" Margin="187,31,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.071,-0.125"/>
-                            <Label x:Name="XVal" HorizontalAlignment="Left" Margin="187,8,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.071,-0.125"/>
-                            <Label x:Name="LVal" HorizontalAlignment="Left" Margin="187,121,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.071,-0.125"/>
-                            <Label x:Name="GVal" HorizontalAlignment="Left" Margin="62,98,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.071,-0.125"/>
-                            <Label x:Name="BVal" HorizontalAlignment="Left" Margin="62,121,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.071,-0.125"/>
-                            <Label x:Name="RVal" HorizontalAlignment="Left" Margin="62,75,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.071,-0.125"/>
-                        </Grid>
-                    </TabItem>
-                    <TabItem Header="Histogram">
-                        <Grid>
-                            <Grid.Background>
-                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                    <GradientStop Color="#FF363636" Offset="0"/>
-                                    <GradientStop Color="#FF424242" Offset="1"/>
-                                </LinearGradientBrush>
-                            </Grid.Background>
-
-                        </Grid>
-                    </TabItem>
-                </TabControl>
-                <TabControl Grid.Column="1" HorizontalAlignment="Left" Height="177" Margin="10,192,0,0" VerticalAlignment="Top" Width="230">
-                    <TabItem Header="History">
-                        <Grid Background="#FF2C2C2C">
-                            <ListBox x:Name="listBox" Background="#FF2C2C2C" BorderBrush="{x:Null}" SelectionChanged="listBox_SelectionChanged">
-                                <ListBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <StackPanel>
-                                            <TextBlock Text="{Binding description}"/>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </ListBox.ItemTemplate>
-                            </ListBox>
-                        </Grid>
-                    </TabItem>
-                </TabControl>
+                <GroupBox Grid.Column="1" HorizontalAlignment="Left" Height="177" Margin="10,10,0,0" VerticalAlignment="Top" Width="230" Header="Pixel">
+                    <Grid>
+                        <Grid.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FF363636" Offset="0"/>
+                                <GradientStop Color="#FF424242" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Grid.Background>
+                        <Rectangle x:Name="colorView" HorizontalAlignment="Left" Height="60" Margin="10,10,0,0" VerticalAlignment="Top" Width="60"/>
+                        <Label Content="X = " HorizontalAlignment="Left" Margin="113,8,0,0" VerticalAlignment="Top"/>
+                        <Label Content="Y = " HorizontalAlignment="Left" Margin="113,31,0,0" VerticalAlignment="Top"/>
+                        <Label Content="Red = " HorizontalAlignment="Left" Margin="10,75,0,0" VerticalAlignment="Top"/>
+                        <Label Content="Green = " HorizontalAlignment="Left" Margin="10,98,0,0" VerticalAlignment="Top"/>
+                        <Label Content="Blue = " HorizontalAlignment="Left" Margin="10,121,0,0" VerticalAlignment="Top"/>
+                        <Label Content="Hue = " HorizontalAlignment="Left" Margin="113,75,0,0" VerticalAlignment="Top"/>
+                        <Label Content="Saturation = " HorizontalAlignment="Left" Margin="113,98,0,0" VerticalAlignment="Top"/>
+                        <Label Content="Brightness = " HorizontalAlignment="Left" Margin="113,121,0,0" VerticalAlignment="Top"/>
+                        <Label Content="Alpha = " HorizontalAlignment="Left" Margin="113,54,0,0" VerticalAlignment="Top"/>
+                        <Label x:Name="SVal" HorizontalAlignment="Left" Margin="187,98,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.071,-0.125"/>
+                        <Label x:Name="HVal" HorizontalAlignment="Left" Margin="187,75,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.071,-0.125"/>
+                        <Label x:Name="AVal" HorizontalAlignment="Left" Margin="187,54,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.071,-0.125"/>
+                        <Label x:Name="YVal" HorizontalAlignment="Left" Margin="187,31,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.071,-0.125"/>
+                        <Label x:Name="XVal" HorizontalAlignment="Left" Margin="187,8,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.071,-0.125"/>
+                        <Label x:Name="LVal" HorizontalAlignment="Left" Margin="187,121,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.071,-0.125"/>
+                        <Label x:Name="GVal" HorizontalAlignment="Left" Margin="62,98,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.071,-0.125"/>
+                        <Label x:Name="BVal" HorizontalAlignment="Left" Margin="62,121,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.071,-0.125"/>
+                        <Label x:Name="RVal" HorizontalAlignment="Left" Margin="62,75,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.071,-0.125"/>
+                    </Grid>
+                </GroupBox>
+                <GroupBox Grid.Column="1" HorizontalAlignment="Left" Height="177" Margin="10,192,0,0" VerticalAlignment="Top" Width="230"  Header="History">
+                    <Grid Background="#FF2C2C2C">
+                        <ListBox x:Name="listBox" Background="#FF2C2C2C" BorderBrush="{x:Null}" SelectionChanged="listBox_SelectionChanged">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding description}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Grid>
+                </GroupBox>
+                <GroupBox Grid.Column="1" HorizontalAlignment="Left" Height="177" Margin="10,374,0,0" VerticalAlignment="Top" Width="230"  Header="Histogram">
+                    <Grid Background="#FF2C2C2C"/>
+                </GroupBox>
             </Grid>
         </DockPanel>
         <StatusBar Grid.Row="2" Background="#FF212121" Foreground="White">

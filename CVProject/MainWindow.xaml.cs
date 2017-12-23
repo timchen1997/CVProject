@@ -28,7 +28,7 @@ namespace CVProject
         public Color foreColor = Color.FromArgb(255, 255, 255, 255);
         public Color backColor = Color.FromArgb(255, 0, 0, 0);
         private int curEnvNum = -1;
-        private Model.Environment curEnv
+        public Model.Environment curEnv
         {
             get
             {
@@ -41,7 +41,7 @@ namespace CVProject
             InitializeComponent();
             WindowState = WindowState.Maximized;
             Title = Settings.appName;
-            envList = new List<Model.Environment>();
+            envList = new List<Model.Environment>();;
         }
 
         private void OpenFile()
@@ -175,6 +175,28 @@ namespace CVProject
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private void Binarization_Click(object sender, RoutedEventArgs e)
+        {
+            curEnv.Advance("Binarize");
+            var dialog = new Dialog.BinarizationDialog(this);
+            if (dialog.ShowDialog() != true)
+                Undo();
+        }
+
+        private void GrayScale_Click(object sender, RoutedEventArgs e)
+        {
+            curEnv.Advance("Convert to grayscale");
+            var dialog = new Dialog.GrayScaleDialog(this);
+            if (dialog.ShowDialog() != true)
+                Undo();
+        }
+
+        private void Smooth_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new Dialog.SmoothingDialog(this);
+            dialog.ShowDialog();
         }
 
         private void Cursor_Click(object sender, RoutedEventArgs e)

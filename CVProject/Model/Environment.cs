@@ -52,6 +52,10 @@ namespace CVProject.Model
             tabItem.contentControl.MouseLeave += CurImage_MouseLeave;     
         }
 
+        public void refresh() {
+            tabItem.CurImage.Source = imgFile.curImage;
+        }
+
         private void CurImage_MouseLeave(object sender, MouseEventArgs e)
         {
             father.Cursor = Cursors.Arrow;
@@ -85,7 +89,7 @@ namespace CVProject.Model
             selecting = false;
         }
 
-        private void Advance(string description)
+        public void Advance(string description)
         {
             imgFile.Advance(description);
             father.listBox.SelectedIndex = imgFile.curStateNo;
@@ -153,7 +157,7 @@ namespace CVProject.Model
             father.envList.Remove(this);
             father.tabs.SelectedIndex = -1;
             if (father.tabs.Items.Count != 0)
-                father.tabs.SelectedIndex = i;
+                father.tabs.SelectedIndex = Math.Min(i, father.tabs.Items.Count - 1);
         }
 
         private void CurImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

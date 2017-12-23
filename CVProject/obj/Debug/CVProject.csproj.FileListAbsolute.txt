@@ -84,3 +84,11 @@ F:\CVProject\CVProject\obj\Debug\CVProject.exe
 F:\CVProject\CVProject\obj\Debug\CVProject.pdb
 F:\CVProject\CVProject\obj\Debug\Dialog\NewFileDialog.g.cs
 F:\CVProject\CVProject\obj\Debug\Dialog\NewFileDialog.baml
+E:\CVProject\CVProject\obj\Debug\Dialog\BinarizationDialog.g.cs
+E:\CVProject\CVProject\obj\Debug\Dialog\BinarizationDialog.baml
+E:\CVProject\CVProject\obj\Debug\Dialog\GrayScaleDialog.g.cs
+E:\CVProject\CVProject\obj\Debug\Dialog\NewFileDialog.g.cs
+E:\CVProject\CVProject\obj\Debug\Dialog\GrayScaleDialog.baml
+E:\CVProject\CVProject\obj\Debug\Dialog\NewFileDialog.baml
+E:\CVProject\CVProject\obj\Debug\Dialog\SmoothingDialog.g.cs
+E:\CVProject\CVProject\obj\Debug\Dialog\SmoothingDialog.baml
