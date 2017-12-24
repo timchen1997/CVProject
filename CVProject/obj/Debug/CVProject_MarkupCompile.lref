@@ -10,4 +10,5 @@ FE:\CVProject\CVProject\Dialog\SmoothingDialog.xaml;;
 FE:\CVProject\CVProject\Dialog\ResizeDialog.xaml;;
 FE:\CVProject\CVProject\Dialog\RotateDialog.xaml;;
 FE:\CVProject\CVProject\Dialog\ColorAdjustDialog.xaml;;
+FE:\CVProject\CVProject\Dialog\EdgeDetectDialog.xaml;;
 

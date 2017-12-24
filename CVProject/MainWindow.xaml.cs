@@ -201,6 +201,12 @@ namespace CVProject
                 Undo();
         }
 
+        private void edgeDetect_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new Dialog.EdgeDetectDialog(this);
+            dialog.ShowDialog();
+        }
+
         private void Smooth_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new Dialog.SmoothingDialog(this);

@@ -1,0 +1,44 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CVProject.Dialog"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" x:Class="CVProject.Dialog.EdgeDetectDialog"
+        mc:Ignorable="d"
+        Title="EdgeDetect" Height="325" Width="300" Background="#FF363636" WindowStartupLocation="CenterScreen">
+    <Grid>
+
+        <RadioButton x:Name="rbtnSobel" Content="" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Checked="Checked"/>
+        <RadioButton x:Name="rbtnLaplacian" Content="" HorizontalAlignment="Left" Margin="10,49,0,0" VerticalAlignment="Top" Checked="Checked"/>
+        <RadioButton x:Name="rbtnCanny" Content="" HorizontalAlignment="Left" Margin="10,129,0,0" VerticalAlignment="Top" Checked="Checked"/>
+        <GroupBox x:Name="gboxSobel" Header="Sobel" HorizontalAlignment="Left" Margin="36,10,0,0" VerticalAlignment="Top" Width="246" Height="24"/>
+        <GroupBox x:Name="gboxLaplacian" Header="Laplacian" HorizontalAlignment="Left" Margin="36,49,0,0" VerticalAlignment="Top" Width="246" Height="66">
+            <Grid>
+                <Label x:Name="label" Content="Mode" HorizontalAlignment="Left" Height="17" Margin="10,13,0,0" VerticalAlignment="Top"/>
+                <ComboBox x:Name="cboxMode" HorizontalAlignment="Left" Margin="49,10,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0">
+                    <Label Content="4-Link"/>
+                    <Label Content="8-Link"/>
+                </ComboBox>
+            </Grid>
+        </GroupBox>
+        <GroupBox x:Name="gboxCanny" Header="Canny" HorizontalAlignment="Left" Margin="36,128,0,0" VerticalAlignment="Top" Width="246" Height="130" Grid.RowSpan="2">
+            <Grid>
+                <Label Content="Gauss Kernel Size" HorizontalAlignment="Left" Height="17" Margin="10,13,0,0" VerticalAlignment="Top"/>
+                <ComboBox x:Name="cboxKSize" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="76" SelectedIndex="0" Margin="127,10,0,0">
+                    <Label Content="3"/>
+                    <Label Content="5"/>
+                    <Label Content="7"/>
+                </ComboBox>
+                <Label Content="Threshold" HorizontalAlignment="Left" Height="17" Margin="10,52,0,0" VerticalAlignment="Top"/>
+                <xctk:RangeSlider Name="TSlider" HorizontalAlignment="Left" Margin="67,36,0,0" VerticalAlignment="Top" Width="136" Maximum="255" LowerValue="30" HigherValue="80" IsSnapToTickEnabled="True"/>
+                <xctk:DecimalUpDown Name="l" HorizontalAlignment="Left" Margin="78,61,0,0" VerticalAlignment="Top" Width="55" Value="{Binding ElementName=TSlider, Path=LowerValue}" Minimum="0" Maximum="255"/>
+                <xctk:DecimalUpDown Name="r" HorizontalAlignment="Left" Margin="148,61,0,0" VerticalAlignment="Top" Width="55" Value="{Binding ElementName=TSlider, Path=HigherValue}" Minimum="0" Maximum="255"/>
+            </Grid>
+        </GroupBox>
+        <Button x:Name="btnOK" Content="OK" HorizontalAlignment="Left" Margin="127,267,0,0" VerticalAlignment="Top" Width="75" Click="btnOK_Click"/>
+        <Button x:Name="btnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="207,267,0,0" VerticalAlignment="Top" Width="75" Click="btnCancel_Click"/>
+
+
+    </Grid>
+</Window>

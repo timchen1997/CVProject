@@ -98,3 +98,5 @@ E:\CVProject\CVProject\obj\Debug\Dialog\RotateDialog.g.cs
 E:\CVProject\CVProject\obj\Debug\Dialog\RotateDialog.baml
 E:\CVProject\CVProject\obj\Debug\Dialog\ColorAdjustDialog.g.cs
 E:\CVProject\CVProject\obj\Debug\Dialog\ColorAdjustDialog.baml
+E:\CVProject\CVProject\obj\Debug\Dialog\EdgeDetectDialog.g.cs
+E:\CVProject\CVProject\obj\Debug\Dialog\EdgeDetectDialog.baml

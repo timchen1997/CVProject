@@ -73,6 +73,7 @@
                 <MenuItem Header="To GrayScale" Click="GrayScale_Click"/>
                 <MenuItem Header="Smooth" Click="Smooth_Click"/>
                 <MenuItem Header="Adjust Color" Click="colorAdjust_Click"/>
+                <MenuItem Header="Edge Detect" Click="edgeDetect_Click"/>
             </MenuItem>
             <MenuItem Header="Help">
                 <MenuItem Header="About" />

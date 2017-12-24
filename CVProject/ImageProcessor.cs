@@ -38,6 +38,15 @@ namespace CVProject
         [DllImport("CVProject.Core.dll", EntryPoint = "colorAdjust", CallingConvention = CallingConvention.Cdecl)]
         public extern static IntPtr colorAdjust(IntPtr img, int width, int height, double hdelta, double sfix, double lfix);
 
+        [DllImport("CVProject.Core.dll", EntryPoint = "sobel", CallingConvention = CallingConvention.Cdecl)]
+        public extern static void sobel(IntPtr img, int width, int height, int size);
+
+        [DllImport("CVProject.Core.dll", EntryPoint = "laplacian", CallingConvention = CallingConvention.Cdecl)]
+        public extern static void laplacian(IntPtr img, int width, int height, int mode);
+
+        [DllImport("CVProject.Core.dll", EntryPoint = "canny", CallingConvention = CallingConvention.Cdecl)]
+        public extern static void canny(IntPtr img, int width, int height, int size, int l, int r);
+
         public static void DrawLine(WriteableBitmap Image, System.Windows.Point a, System.Windows.Point b, Color c, int thickness, Model.DrawMode drawMode)
         {
             Mat m = new Mat(Image.PixelHeight, Image.PixelWidth, MatType.CV_8UC4, Image.BackBuffer);

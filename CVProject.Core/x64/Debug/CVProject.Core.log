@@ -1,6 +1,7 @@
-﻿  ColorAdjust.cpp
-e:\cvproject\cvproject.core\coloradjust.cpp(71): warning C4244: “=”: 从“double”转换到“unsigned char”，可能丢失数据
-e:\cvproject\cvproject.core\coloradjust.cpp(72): warning C4244: “=”: 从“double”转换到“unsigned char”，可能丢失数据
-e:\cvproject\cvproject.core\coloradjust.cpp(73): warning C4244: “=”: 从“double”转换到“unsigned char”，可能丢失数据
+﻿  Filter.cpp
+e:\cvproject\cvproject.core\filter.cpp(25): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
+e:\cvproject\cvproject.core\filter.cpp(26): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
+e:\cvproject\cvproject.core\filter.cpp(27): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
+    正在创建库 E:\CVProject\Debug\CVProject.Core.lib 和对象 E:\CVProject\Debug\CVProject.Core.exp
   CVProject.Core.vcxproj -> E:\CVProject\Debug\CVProject.Core.dll
   CVProject.Core.vcxproj -> E:\CVProject\Debug\CVProject.Core.pdb (Full PDB)

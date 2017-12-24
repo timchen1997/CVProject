@@ -32,3 +32,9 @@ extern "C" CVPROJECTCORE_API unsigned char *resize(unsigned char *, int, int, in
 extern "C" CVPROJECTCORE_API unsigned char *rotate(unsigned char *, int, int, double, unsigned char);
 
 extern "C" CVPROJECTCORE_API void colorAdjust(unsigned char *, int, int, double, double, double);
+
+extern "C" CVPROJECTCORE_API void sobel(unsigned char *, int, int, int);
+
+extern "C" CVPROJECTCORE_API void laplacian(unsigned char *, int, int, int);
+
+extern "C" CVPROJECTCORE_API void canny(unsigned char *, int, int, int, int, int);

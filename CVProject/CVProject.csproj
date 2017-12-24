@@ -126,6 +126,9 @@
     <Compile Include="Dialog\ColorAdjustDialog.xaml.cs">
       <DependentUpon>ColorAdjustDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialog\EdgeDetectDialog.xaml.cs">
+      <DependentUpon>EdgeDetectDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dialog\GrayScaleDialog.xaml.cs">
       <DependentUpon>GrayScaleDialog.xaml</DependentUpon>
     </Compile>
@@ -160,6 +163,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Dialog\ColorAdjustDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialog\EdgeDetectDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
