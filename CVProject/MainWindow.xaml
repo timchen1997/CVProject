@@ -64,12 +64,15 @@
             <MenuItem Header="Edit">
                 <MenuItem Header="Undo"/>
                 <MenuItem Header="Redo"/>
+                <MenuItem Header="Resize" Click="Resize_Click"/>
+                <MenuItem Header="Rotate" Click="Rotate_Click"/>
             </MenuItem>
             <MenuItem Header="View"/>
             <MenuItem Header="Image">
                 <MenuItem Header="Binarization" Click="Binarization_Click"/>
                 <MenuItem Header="To GrayScale" Click="GrayScale_Click"/>
                 <MenuItem Header="Smooth" Click="Smooth_Click"/>
+                <MenuItem Header="Adjust Color" Click="colorAdjust_Click"/>
             </MenuItem>
             <MenuItem Header="Help">
                 <MenuItem Header="About" />

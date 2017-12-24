@@ -47,7 +47,13 @@
     <ClCompile Include="Grayscale.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="filter.cpp">
+    <ClCompile Include="Transform.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Filter.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ColorAdjust.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

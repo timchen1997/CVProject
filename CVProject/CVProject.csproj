@@ -43,6 +43,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>true</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -122,6 +123,9 @@
     <Compile Include="Dialog\BinarizationDialog.xaml.cs">
       <DependentUpon>BinarizationDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialog\ColorAdjustDialog.xaml.cs">
+      <DependentUpon>ColorAdjustDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dialog\GrayScaleDialog.xaml.cs">
       <DependentUpon>GrayScaleDialog.xaml</DependentUpon>
     </Compile>
@@ -130,6 +134,12 @@
     </Compile>
     <Compile Include="Dialog\NewFileDialog.xaml.cs">
       <DependentUpon>NewFileDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialog\ResizeDialog.xaml.cs">
+      <DependentUpon>ResizeDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialog\RotateDialog.xaml.cs">
+      <DependentUpon>RotateDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialog\SmoothingDialog.xaml.cs">
       <DependentUpon>SmoothingDialog.xaml</DependentUpon>
@@ -149,6 +159,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Dialog\ColorAdjustDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Dialog\GrayScaleDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -158,6 +172,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Dialog\NewFileDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialog\ResizeDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialog\RotateDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

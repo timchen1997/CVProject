@@ -164,6 +164,11 @@ namespace CVProject.Model
         public void Advance(string description)
         {
             var newBitmap = (curImage as WriteableBitmap).Clone();
+            Advance(description, newBitmap);
+        }
+
+        public void Advance(string description, WriteableBitmap newBitmap)
+        {
             var ih = new ImageHistory(newBitmap, description);
             curStateNo++;
             if (curStateNo == ImageList.Count)
@@ -189,7 +194,9 @@ namespace CVProject.Model
 
         public void Refresh()
         {
-            ImageList[curStateNo].img = (curImage as WriteableBitmap).Clone();
+            (curImage as WriteableBitmap).Lock();
+            (curImage as WriteableBitmap).AddDirtyRect(new Int32Rect(0, 0, curImage.PixelWidth, curImage.PixelHeight));
+            (curImage as WriteableBitmap).Unlock();
         }
 
         public BitmapSource Part(Point a, Point b)

@@ -7,4 +7,7 @@ FE:\CVProject\CVProject\Dialog\NewFileDialog.xaml;;
 FE:\CVProject\CVProject\Window1.xaml;;
 FE:\CVProject\CVProject\MainWindow.xaml;;
 FE:\CVProject\CVProject\Dialog\SmoothingDialog.xaml;;
+FE:\CVProject\CVProject\Dialog\ResizeDialog.xaml;;
+FE:\CVProject\CVProject\Dialog\RotateDialog.xaml;;
+FE:\CVProject\CVProject\Dialog\ColorAdjustDialog.xaml;;
 

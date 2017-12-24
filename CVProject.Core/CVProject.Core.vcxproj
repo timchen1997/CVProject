@@ -161,6 +161,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Binarization.cpp" />
+    <ClCompile Include="ColorAdjust.cpp" />
     <ClCompile Include="CVProject.Core.cpp" />
     <ClCompile Include="dllmain.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
@@ -176,9 +177,10 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="filter.cpp" />
+    <ClCompile Include="Filter.cpp" />
     <ClCompile Include="Grayscale.cpp" />
     <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="Transform.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

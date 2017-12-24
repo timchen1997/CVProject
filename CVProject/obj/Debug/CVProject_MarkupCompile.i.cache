@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 E:\CVProject\CVProject\App.xaml
-81830513048
+11-1706203517
 
-21-1314411574
+241236049142
 25-670454752
-Control\TabItemPlus.xaml;Dialog\BinarizationDialog.xaml;Dialog\GrayScaleDialog.xaml;Dialog\JpegSaveDialog.xaml;Dialog\NewFileDialog.xaml;Dialog\SmoothingDialog.xaml;Window1.xaml;MainWindow.xaml;
+Control\TabItemPlus.xaml;Dialog\BinarizationDialog.xaml;Dialog\ColorAdjustDialog.xaml;Dialog\GrayScaleDialog.xaml;Dialog\JpegSaveDialog.xaml;Dialog\NewFileDialog.xaml;Dialog\ResizeDialog.xaml;Dialog\RotateDialog.xaml;Dialog\SmoothingDialog.xaml;Window1.xaml;MainWindow.xaml;
 
 True
 

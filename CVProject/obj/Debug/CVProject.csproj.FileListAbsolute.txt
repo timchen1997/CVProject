@@ -92,3 +92,9 @@ E:\CVProject\CVProject\obj\Debug\Dialog\GrayScaleDialog.baml
 E:\CVProject\CVProject\obj\Debug\Dialog\NewFileDialog.baml
 E:\CVProject\CVProject\obj\Debug\Dialog\SmoothingDialog.g.cs
 E:\CVProject\CVProject\obj\Debug\Dialog\SmoothingDialog.baml
+E:\CVProject\CVProject\obj\Debug\Dialog\ResizeDialog.g.cs
+E:\CVProject\CVProject\obj\Debug\Dialog\ResizeDialog.baml
+E:\CVProject\CVProject\obj\Debug\Dialog\RotateDialog.g.cs
+E:\CVProject\CVProject\obj\Debug\Dialog\RotateDialog.baml
+E:\CVProject\CVProject\obj\Debug\Dialog\ColorAdjustDialog.g.cs
+E:\CVProject\CVProject\obj\Debug\Dialog\ColorAdjustDialog.baml

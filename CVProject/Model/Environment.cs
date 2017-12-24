@@ -95,6 +95,12 @@ namespace CVProject.Model
             father.listBox.SelectedIndex = imgFile.curStateNo;
         }
 
+        public void Advance(string description, WriteableBitmap newBitmap)
+        {
+            imgFile.Advance(description, newBitmap);
+            father.listBox.SelectedIndex = imgFile.curStateNo;
+        }
+
         public void setSelectRectPos(Point a, Point b)
         {
             double x1 = a.X, y1 = a.Y, x2 = b.X, y2 = b.Y;

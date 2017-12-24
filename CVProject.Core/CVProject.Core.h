@@ -17,12 +17,6 @@ public:
 	// TODO:  在此添加您的方法。
 };
 
-extern "C" CVPROJECTCORE_API int nCVProjectCore;
-
-extern "C" CVPROJECTCORE_API int fnCVProjectCore(void);
-
-extern "C" CVPROJECTCORE_API void modifyImg(char *, int, int);
-
 extern "C" CVPROJECTCORE_API void binarizeImg(unsigned char *, int, int, bool, unsigned char, unsigned char, bool, unsigned char, unsigned char, bool, unsigned char, unsigned char);
 
 extern "C" CVPROJECTCORE_API void binarizeImgOtsu(unsigned char *, int, int);
@@ -32,3 +26,9 @@ extern "C" CVPROJECTCORE_API void toGrayScale(unsigned char *, int, int, unsigne
 extern "C" CVPROJECTCORE_API void smooth(unsigned char *, int, int, double *, int);
 
 extern "C" CVPROJECTCORE_API void smoothMedian(unsigned char *, int, int, int);
+
+extern "C" CVPROJECTCORE_API unsigned char *resize(unsigned char *, int, int, int, int, unsigned char);
+
+extern "C" CVPROJECTCORE_API unsigned char *rotate(unsigned char *, int, int, double, unsigned char);
+
+extern "C" CVPROJECTCORE_API void colorAdjust(unsigned char *, int, int, double, double, double);

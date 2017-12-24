@@ -29,6 +29,15 @@ namespace CVProject
         [DllImport("CVProject.Core.dll", EntryPoint = "smoothMedian", CallingConvention = CallingConvention.Cdecl)]
         public extern static void smooth(IntPtr img, int width, int height, int size);
 
+        [DllImport("CVProject.Core.dll", EntryPoint = "resize", CallingConvention = CallingConvention.Cdecl)]
+        public extern static IntPtr resize(IntPtr img, int width, int height, int nwidth, int nheight, byte mode);
+
+        [DllImport("CVProject.Core.dll", EntryPoint = "rotate", CallingConvention = CallingConvention.Cdecl)]
+        public extern static IntPtr rotate(IntPtr img, int width, int height, double degree, byte mode);
+
+        [DllImport("CVProject.Core.dll", EntryPoint = "colorAdjust", CallingConvention = CallingConvention.Cdecl)]
+        public extern static IntPtr colorAdjust(IntPtr img, int width, int height, double hdelta, double sfix, double lfix);
+
         public static void DrawLine(WriteableBitmap Image, System.Windows.Point a, System.Windows.Point b, Color c, int thickness, Model.DrawMode drawMode)
         {
             Mat m = new Mat(Image.PixelHeight, Image.PixelWidth, MatType.CV_8UC4, Image.BackBuffer);

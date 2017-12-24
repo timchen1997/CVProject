@@ -2,8 +2,6 @@
 #include "image.h"
 #include <cstring>
 
-
-
 static bool check(pixel *p, bool RInOut, unsigned char RLow, unsigned char RHigh, 
 	bool GInOut, unsigned char GLow, unsigned char GHigh, bool BInOut, unsigned char BLow, unsigned char BHigh) {
 	if (!RInOut && (p->r < RLow || p->r > RHigh)) return false;
@@ -14,8 +12,6 @@ static bool check(pixel *p, bool RInOut, unsigned char RLow, unsigned char RHigh
 	if (BInOut && p->b >= BLow && p->b <= BHigh) return false;
 	return true;
 }
-
-
 
 static inline double sqr(double a) {
 	return a * a;

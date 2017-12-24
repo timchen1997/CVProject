@@ -193,9 +193,29 @@ namespace CVProject
                 Undo();
         }
 
+        private void colorAdjust_Click(object sender, RoutedEventArgs e)
+        {
+            curEnv.Advance("Adjust Color");
+            var dialog = new Dialog.ColorAdjustDialog(this);
+            if (dialog.ShowDialog() != true)
+                Undo();
+        }
+
         private void Smooth_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new Dialog.SmoothingDialog(this);
+            dialog.ShowDialog();
+        }
+
+        private void Resize_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new Dialog.ResizeDialog(this);
+            dialog.ShowDialog();
+        }
+
+        private void Rotate_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new Dialog.RotateDialog(this);
             dialog.ShowDialog();
         }
 
