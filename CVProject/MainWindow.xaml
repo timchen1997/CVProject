@@ -66,6 +66,7 @@
                 <MenuItem Header="Redo"/>
                 <MenuItem Header="Resize" Click="Resize_Click"/>
                 <MenuItem Header="Rotate" Click="Rotate_Click"/>
+                <MenuItem Header="Cut" Click="Cut_Click"/>
             </MenuItem>
             <MenuItem Header="View"/>
             <MenuItem Header="Image">

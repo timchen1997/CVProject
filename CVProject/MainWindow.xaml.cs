@@ -225,6 +225,12 @@ namespace CVProject
             dialog.ShowDialog();
         }
 
+        private void Cut_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new Dialog.CutDialog(this);
+            dialog.ShowDialog();
+        }
+
         private void Cursor_Click(object sender, RoutedEventArgs e)
         {
             resetToolBox();

@@ -114,3 +114,5 @@ F:\CVProject\CVProject\obj\Debug\Dialog\GrayScaleDialog.baml
 F:\CVProject\CVProject\obj\Debug\Dialog\ResizeDialog.baml
 F:\CVProject\CVProject\obj\Debug\Dialog\RotateDialog.baml
 F:\CVProject\CVProject\obj\Debug\Dialog\SmoothingDialog.baml
+F:\CVProject\CVProject\obj\Debug\Dialog\CutDialog.g.cs
+F:\CVProject\CVProject\obj\Debug\Dialog\CutDialog.baml

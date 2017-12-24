@@ -199,7 +199,7 @@ namespace CVProject.Model
             (curImage as WriteableBitmap).Unlock();
         }
 
-        public BitmapSource Part(Point a, Point b)
+        public WriteableBitmap Part(Point a, Point b)
         {
             int x1 = (int) Math.Min(a.X, b.X),
                 x2 = (int) Math.Max(a.X, b.X),
@@ -208,7 +208,7 @@ namespace CVProject.Model
             byte[] buffer = new byte[(x2 - x1) * (y2 - y1) * curImage.Format.BitsPerPixel];
             curImage.CopyPixels(new Int32Rect(x1, y1, x2 - x1, y2 - y1), buffer, (x2 - x1) * curImage.Format.BitsPerPixel, 0);
             var r = BitmapSource.Create(x2 - x1, y2 - y1, curImage.DpiX, curImage.DpiY, curImage.Format, curImage.Palette, buffer, (x2 - x1) * curImage.Format.BitsPerPixel);
-            return r;
+            return new WriteableBitmap(r);
         }
     }
 }
