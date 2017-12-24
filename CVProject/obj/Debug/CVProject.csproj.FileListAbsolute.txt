@@ -100,3 +100,17 @@ E:\CVProject\CVProject\obj\Debug\Dialog\ColorAdjustDialog.g.cs
 E:\CVProject\CVProject\obj\Debug\Dialog\ColorAdjustDialog.baml
 E:\CVProject\CVProject\obj\Debug\Dialog\EdgeDetectDialog.g.cs
 E:\CVProject\CVProject\obj\Debug\Dialog\EdgeDetectDialog.baml
+F:\CVProject\CVProject\obj\Debug\Dialog\BinarizationDialog.g.cs
+F:\CVProject\CVProject\obj\Debug\Dialog\ColorAdjustDialog.g.cs
+F:\CVProject\CVProject\obj\Debug\Dialog\EdgeDetectDialog.g.cs
+F:\CVProject\CVProject\obj\Debug\Dialog\GrayScaleDialog.g.cs
+F:\CVProject\CVProject\obj\Debug\Dialog\ResizeDialog.g.cs
+F:\CVProject\CVProject\obj\Debug\Dialog\RotateDialog.g.cs
+F:\CVProject\CVProject\obj\Debug\Dialog\SmoothingDialog.g.cs
+F:\CVProject\CVProject\obj\Debug\Dialog\BinarizationDialog.baml
+F:\CVProject\CVProject\obj\Debug\Dialog\ColorAdjustDialog.baml
+F:\CVProject\CVProject\obj\Debug\Dialog\EdgeDetectDialog.baml
+F:\CVProject\CVProject\obj\Debug\Dialog\GrayScaleDialog.baml
+F:\CVProject\CVProject\obj\Debug\Dialog\ResizeDialog.baml
+F:\CVProject\CVProject\obj\Debug\Dialog\RotateDialog.baml
+F:\CVProject\CVProject\obj\Debug\Dialog\SmoothingDialog.baml

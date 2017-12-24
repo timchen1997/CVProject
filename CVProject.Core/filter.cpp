@@ -56,13 +56,13 @@ CVPROJECTCORE_API void smoothMedian(unsigned char *img, int width, int height, i
 					vg[a * size + b] = p->g;
 					vb[a * size + b] = p->b;
 				}
-			std::sort(vr, vr + size * size);
-			std::sort(vg, vg + size * size);
-			std::sort(vb, vb + size * size);
+			std::nth_element(vr, vr + size * size / 2, vr + size * size);
+			std::nth_element(vg, vg + size * size / 2, vg + size * size);
+			std::nth_element(vb, vb + size * size / 2, vb + size * size);
 			auto p = PIXEL(newimg, width, i, j);
-			p->r = vr[size / 2];
-			p->g = vg[size / 2];
-			p->b = vb[size / 2];
+			p->r = vr[size * size / 2];
+			p->g = vg[size * size / 2];
+			p->b = vb[size * size / 2];
 		}
 	for (int i = size / 2; i < height - size / 2; i++)
 		for (int j = size / 2; j < width - size / 2; j++)

@@ -1,14 +1,14 @@
 ﻿
-FE:\CVProject\CVProject\App.xaml;;
-FE:\CVProject\CVProject\Dialog\BinarizationDialog.xaml;;
-FE:\CVProject\CVProject\Dialog\GrayScaleDialog.xaml;;
-FE:\CVProject\CVProject\Dialog\JpegSaveDialog.xaml;;
-FE:\CVProject\CVProject\Dialog\NewFileDialog.xaml;;
-FE:\CVProject\CVProject\Window1.xaml;;
-FE:\CVProject\CVProject\MainWindow.xaml;;
-FE:\CVProject\CVProject\Dialog\SmoothingDialog.xaml;;
-FE:\CVProject\CVProject\Dialog\ResizeDialog.xaml;;
-FE:\CVProject\CVProject\Dialog\RotateDialog.xaml;;
-FE:\CVProject\CVProject\Dialog\ColorAdjustDialog.xaml;;
-FE:\CVProject\CVProject\Dialog\EdgeDetectDialog.xaml;;
+FF:\CVProject\CVProject\App.xaml;;
+FF:\CVProject\CVProject\Dialog\BinarizationDialog.xaml;;
+FF:\CVProject\CVProject\Dialog\ColorAdjustDialog.xaml;;
+FF:\CVProject\CVProject\Dialog\EdgeDetectDialog.xaml;;
+FF:\CVProject\CVProject\Dialog\GrayScaleDialog.xaml;;
+FF:\CVProject\CVProject\Dialog\JpegSaveDialog.xaml;;
+FF:\CVProject\CVProject\Dialog\NewFileDialog.xaml;;
+FF:\CVProject\CVProject\Dialog\ResizeDialog.xaml;;
+FF:\CVProject\CVProject\Dialog\RotateDialog.xaml;;
+FF:\CVProject\CVProject\Dialog\SmoothingDialog.xaml;;
+FF:\CVProject\CVProject\Window1.xaml;;
+FF:\CVProject\CVProject\MainWindow.xaml;;
 
