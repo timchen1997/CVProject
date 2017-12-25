@@ -135,6 +135,9 @@
     <Compile Include="Dialog\GrayScaleDialog.xaml.cs">
       <DependentUpon>GrayScaleDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialog\HoughDialog.xaml.cs">
+      <DependentUpon>HoughDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dialog\JpegSaveDialog.xaml.cs">
       <DependentUpon>JpegSaveDialog.xaml</DependentUpon>
     </Compile>
@@ -181,6 +184,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Dialog\GrayScaleDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialog\HoughDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

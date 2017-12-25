@@ -47,6 +47,9 @@ namespace CVProject
         [DllImport("CVProject.Core.dll", EntryPoint = "canny", CallingConvention = CallingConvention.Cdecl)]
         public extern static void canny(IntPtr img, int width, int height, int size, int l, int r);
 
+        [DllImport("CVProject.Core.dll", EntryPoint = "histogramBalance", CallingConvention = CallingConvention.Cdecl)]
+        public extern static void histogramBalance(IntPtr img, int width, int height);
+
         public static void DrawLine(WriteableBitmap Image, System.Windows.Point a, System.Windows.Point b, Color c, int thickness, Model.DrawMode drawMode)
         {
             Mat m = new Mat(Image.PixelHeight, Image.PixelWidth, MatType.CV_8UC4, Image.BackBuffer);

@@ -163,6 +163,7 @@
   <ItemGroup>
     <ClCompile Include="Binarization.cpp" />
     <ClCompile Include="ColorAdjust.cpp" />
+    <ClCompile Include="Contrast.cpp" />
     <ClCompile Include="CVProject.Core.cpp" />
     <ClCompile Include="dllmain.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>

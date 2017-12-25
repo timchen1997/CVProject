@@ -239,6 +239,19 @@ namespace CVProject
             dialog.ShowDialog();
         }
 
+        private void houghTransform_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new Dialog.HoughDialog(this);
+            dialog.ShowDialog();
+        }
+
+        private void histoBal_Click(object sender, RoutedEventArgs e)
+        {
+            curEnv.Advance("Histogram Balance");
+            var t = curEnv.imgFile.curImage as WriteableBitmap;
+            ImageProcessor.histogramBalance(t.BackBuffer, t.PixelWidth, t.PixelHeight);
+        }
+
         private void Cursor_Click(object sender, RoutedEventArgs e)
         {
             resetToolBox();

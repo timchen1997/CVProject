@@ -79,6 +79,8 @@
                 <MenuItem Header="Smooth" Click="Smooth_Click"/>
                 <MenuItem Header="Adjust Color" Click="colorAdjust_Click"/>
                 <MenuItem Header="Edge Detect" Click="edgeDetect_Click"/>
+                <MenuItem Header="Hough Transform" Click="houghTransform_Click"/>
+                <MenuItem Header="Histogram Balance" Click="histoBal_Click"/>
             </MenuItem>
             <MenuItem Header="Help">
                 <MenuItem Header="About" />

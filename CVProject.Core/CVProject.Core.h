@@ -38,3 +38,5 @@ extern "C" CVPROJECTCORE_API void sobel(unsigned char *, int, int, int);
 extern "C" CVPROJECTCORE_API void laplacian(unsigned char *, int, int, int);
 
 extern "C" CVPROJECTCORE_API void canny(unsigned char *, int, int, int, int, int);
+
+extern "C" CVPROJECTCORE_API void histogramBalance(unsigned char *, int, int);

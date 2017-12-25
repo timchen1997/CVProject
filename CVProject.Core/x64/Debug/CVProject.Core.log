@@ -1,6 +1,3 @@
-﻿  Filter.cpp
-f:\cvproject\cvproject.core\filter.cpp(25): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
-f:\cvproject\cvproject.core\filter.cpp(26): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
-f:\cvproject\cvproject.core\filter.cpp(27): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
-    正在创建库 F:\CVProject\Debug\CVProject.Core.lib 和对象 F:\CVProject\Debug\CVProject.Core.exp
+﻿  Contrast.cpp
+f:\cvproject\cvproject.core\contrast.cpp(18): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
   CVProject.Core.vcxproj -> F:\CVProject\Debug\CVProject.Core.dll

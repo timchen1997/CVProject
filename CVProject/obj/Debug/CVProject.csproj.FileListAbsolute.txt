@@ -118,3 +118,5 @@ F:\CVProject\CVProject\obj\Debug\Dialog\CutDialog.g.cs
 F:\CVProject\CVProject\obj\Debug\Dialog\CutDialog.baml
 F:\CVProject\CVProject\obj\Debug\Dialog\PasteDialog.g.cs
 F:\CVProject\CVProject\obj\Debug\Dialog\PasteDialog.baml
+F:\CVProject\CVProject\obj\Debug\Dialog\HoughDialog.g.cs
+F:\CVProject\CVProject\obj\Debug\Dialog\HoughDialog.baml
