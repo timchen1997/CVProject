@@ -15,6 +15,7 @@
         <RoutedUICommand x:Key="redo_key" Text="Button Click"/>
         <RoutedUICommand x:Key="cancelSelect_key" Text="Button Click"/>
         <RoutedUICommand x:Key="copy_key" Text="Button Click"/>
+        <RoutedUICommand x:Key="paste_key" Text="Button Click"/>
         <RoutedUICommand x:Key="newFile_key" Text="Button Click"/>
         <RoutedUICommand x:Key="selectAll_key" Text="Button Click"/>
     </Window.Resources>
@@ -25,6 +26,7 @@
         <KeyBinding Gesture="Ctrl+Y" Command="{StaticResource redo_key}"/>
         <KeyBinding Gesture="Ctrl+D" Command="{StaticResource cancelSelect_key}"/>
         <KeyBinding Gesture="Ctrl+C" Command="{StaticResource copy_key}"/>
+        <KeyBinding Gesture="Ctrl+V" Command="{StaticResource paste_key}"/>
         <KeyBinding Gesture="Ctrl+N" Command="{StaticResource newFile_key}"/>
         <KeyBinding Gesture="Ctrl+A" Command="{StaticResource selectAll_key}"/>
     </Window.InputBindings>
@@ -41,6 +43,8 @@
                         Executed="CancelSelectCommand_Executed"/>
         <CommandBinding Command="{StaticResource copy_key}" 
                         Executed="CopyCommand_Executed"/>
+        <CommandBinding Command="{StaticResource paste_key}" 
+                        Executed="PasteCommand_Executed"/>
         <CommandBinding Command="{StaticResource newFile_key}" 
                         Executed="NewFileCommand_Executed"/>
         <CommandBinding Command="{StaticResource selectAll_key}" 

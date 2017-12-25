@@ -143,6 +143,14 @@ namespace CVProject
             status.Text = "Copied to clipboard";
         }
 
+        private void Paste()
+        {
+            curEnv.Advance("Paste");
+            var dialog = new Dialog.PasteDialog(this);
+            if (dialog.ShowDialog() != true)
+                Undo();
+        }
+
         private void SelectAll()
         {
             curEnv.selectPointA = new Point(0, 0);
@@ -322,6 +330,11 @@ namespace CVProject
         private void CopyCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             Copy();
+        }
+
+        private void PasteCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            Paste();
         }
 
         private void NewFileCommand_Executed(object sender, ExecutedRoutedEventArgs e)

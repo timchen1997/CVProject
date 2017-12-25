@@ -116,3 +116,5 @@ F:\CVProject\CVProject\obj\Debug\Dialog\RotateDialog.baml
 F:\CVProject\CVProject\obj\Debug\Dialog\SmoothingDialog.baml
 F:\CVProject\CVProject\obj\Debug\Dialog\CutDialog.g.cs
 F:\CVProject\CVProject\obj\Debug\Dialog\CutDialog.baml
+F:\CVProject\CVProject\obj\Debug\Dialog\PasteDialog.g.cs
+F:\CVProject\CVProject\obj\Debug\Dialog\PasteDialog.baml

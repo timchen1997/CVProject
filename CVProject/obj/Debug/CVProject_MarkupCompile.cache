@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 F:\CVProject\CVProject\App.xaml
-13315856892
+14-5049395
 
-22-2145135022
+23-711098161
 25-247686773
-Control\TabItemPlus.xaml;Dialog\BinarizationDialog.xaml;Dialog\ColorAdjustDialog.xaml;Dialog\CutDialog.xaml;Dialog\EdgeDetectDialog.xaml;Dialog\GrayScaleDialog.xaml;Dialog\JpegSaveDialog.xaml;Dialog\NewFileDialog.xaml;Dialog\ResizeDialog.xaml;Dialog\RotateDialog.xaml;Dialog\SmoothingDialog.xaml;Window1.xaml;MainWindow.xaml;
+Control\TabItemPlus.xaml;Dialog\BinarizationDialog.xaml;Dialog\ColorAdjustDialog.xaml;Dialog\CutDialog.xaml;Dialog\EdgeDetectDialog.xaml;Dialog\GrayScaleDialog.xaml;Dialog\JpegSaveDialog.xaml;Dialog\NewFileDialog.xaml;Dialog\PasteDialog.xaml;Dialog\ResizeDialog.xaml;Dialog\RotateDialog.xaml;Dialog\SmoothingDialog.xaml;Window1.xaml;MainWindow.xaml;
 
 False
 
