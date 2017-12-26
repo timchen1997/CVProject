@@ -43,6 +43,12 @@ extern "C" CVPROJECTCORE_API void ArithmeticOper(unsigned char *, int, int, unsi
 
 extern "C" CVPROJECTCORE_API int houghLine(unsigned char *, int, int, int, int*);
 
-extern "C" CVPROJECTCORE_API int houghCircle(unsigned char *, int, int, int, int*);
+extern "C" CVPROJECTCORE_API int houghCircle(unsigned char *, int, int, int, int, int,int*);
 
 extern "C" CVPROJECTCORE_API void histogramBalance(unsigned char *, int, int);
+
+extern "C" CVPROJECTCORE_API void contrastLinear(unsigned char *, int, int, unsigned char, unsigned char, unsigned char, unsigned char);
+
+extern "C" CVPROJECTCORE_API void contrastLog(unsigned char *, int, int, double);
+
+extern "C" CVPROJECTCORE_API void contrastExp(unsigned char *, int, int, double);

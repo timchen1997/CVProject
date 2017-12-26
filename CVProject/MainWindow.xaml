@@ -72,7 +72,9 @@
                 <MenuItem Header="Rotate" Click="Rotate_Click"/>
                 <MenuItem Header="Cut" Click="Cut_Click"/>
             </MenuItem>
-            <MenuItem Header="View"/>
+            <MenuItem Header="View">
+                <MenuItem Header="Histogram" Click="Histogram_Click"/>
+            </MenuItem>
             <MenuItem Header="Image">
                 <MenuItem Header="Binarization" Click="Binarization_Click"/>
                 <MenuItem Header="To GrayScale" Click="GrayScale_Click"/>
@@ -81,7 +83,7 @@
                 <MenuItem Header="Edge Detect" Click="edgeDetect_Click"/>
                 <MenuItem Header="Arithmetic Oper" Click="arithmeticOper_Click"/>
                 <MenuItem Header="Hough Transform" Click="houghTransform_Click"/>
-                <MenuItem Header="Histogram Balance" Click="histoBal_Click"/>
+                <MenuItem Header="Adjust Contrast" Click="contrastAdjust_Click"/>
             </MenuItem>
             <MenuItem Header="Help">
                 <MenuItem Header="About" />

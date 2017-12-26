@@ -1,1 +1,9 @@
-﻿
+﻿  Contrast.cpp
+e:\cvproject\cvproject.core\contrast.cpp(19): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
+e:\cvproject\cvproject.core\contrast.cpp(32): warning C4244: “=”: 从“double”转换到“unsigned char”，可能丢失数据
+e:\cvproject\cvproject.core\contrast.cpp(34): warning C4244: “=”: 从“double”转换到“unsigned char”，可能丢失数据
+e:\cvproject\cvproject.core\contrast.cpp(36): warning C4244: “=”: 从“double”转换到“unsigned char”，可能丢失数据
+e:\cvproject\cvproject.core\contrast.cpp(53): warning C4244: “=”: 从“double”转换到“unsigned char”，可能丢失数据
+e:\cvproject\cvproject.core\contrast.cpp(70): warning C4244: “=”: 从“double”转换到“unsigned char”，可能丢失数据
+  CVProject.Core.vcxproj -> E:\CVProject\Debug\CVProject.Core.dll
+  CVProject.Core.vcxproj -> E:\CVProject\Debug\CVProject.Core.pdb (Full PDB)

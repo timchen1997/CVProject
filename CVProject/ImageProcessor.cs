@@ -50,16 +50,25 @@ namespace CVProject
         [DllImport("CVProject.Core.dll", EntryPoint = "ArithmeticOper", CallingConvention = CallingConvention.Cdecl)]
         public extern static void ArithmeticOper(IntPtr imgA, int widthA, int heightA, IntPtr imgB, int widthB, int heightB, double ratioA, double ratioB, int oper);
 
+        [DllImport("CVProject.Core.dll", EntryPoint = "contrastLinear", CallingConvention = CallingConvention.Cdecl)]
+        public extern static void contrastLinear(IntPtr img, int width, int height, byte x1, byte x2, byte y1, byte y2);
+
+        [DllImport("CVProject.Core.dll", EntryPoint = "contrastLog", CallingConvention = CallingConvention.Cdecl)]
+        public extern static void contrastLog(IntPtr img, int width, int height, double c);
+
+        [DllImport("CVProject.Core.dll", EntryPoint = "contrastExp", CallingConvention = CallingConvention.Cdecl)]
+        public extern static void contrastExp(IntPtr img, int width, int height, double c);
+
         [DllImport("CVProject.Core.dll", EntryPoint = "houghLine", CallingConvention = CallingConvention.Cdecl)]
         private extern static int __houghLine(IntPtr img, int width, int height, int threshold, int[] lineList);
 
         [DllImport("CVProject.Core.dll", EntryPoint = "houghCircle", CallingConvention = CallingConvention.Cdecl)]
-        private extern static int __houghCircle(IntPtr img, int width, int height, int threshold, int[] circleList);
+        private extern static int __houghCircle(IntPtr img, int width, int height, int threshold, int rmin, int rmax, int[] circleList);
 
-        public static void houghLine(WriteableBitmap Image, int threhold)
+        public static void houghLine(WriteableBitmap Image, int threshold)
         {
             int[] lineList = new int[Image.PixelHeight * Image.PixelHeight];
-            int lineNum = __houghLine(Image.BackBuffer, Image.PixelWidth, Image.PixelHeight, threhold, lineList);
+            int lineNum = __houghLine(Image.BackBuffer, Image.PixelWidth, Image.PixelHeight, threshold, lineList);
             for (int i = 0; i < lineNum; i++)
             {
                 int r = lineList[2 * i], theta = lineList[2 * i + 1];
@@ -69,10 +78,10 @@ namespace CVProject
             }
         }
 
-        public static void houghCircle(WriteableBitmap Image, int threhold)
+        public static void houghCircle(WriteableBitmap Image, int threhold, int rmin, int rmax)
         {
             int[] circleList = new int[Image.PixelHeight * Image.PixelHeight];
-            int lineNum = __houghCircle(Image.BackBuffer, Image.PixelWidth, Image.PixelHeight, threhold, circleList);
+            int lineNum = __houghCircle(Image.BackBuffer, Image.PixelWidth, Image.PixelHeight, threhold, rmin, rmax, circleList);
             for (int i = 0; i < lineNum; i++)
             {
                 int b = circleList[3 * i], a = circleList[3 * i + 1], r = circleList[3 * i + 2];

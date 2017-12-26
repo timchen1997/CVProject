@@ -44,12 +44,9 @@ CVPROJECTCORE_API int houghLine(unsigned char *img, int width, int height, int t
 	return top / 2;
 }
 
-CVPROJECTCORE_API int houghCircle(unsigned char *img, int width, int height, int threshold, int* circleList) {
+CVPROJECTCORE_API int houghCircle(unsigned char *img, int width, int height, int threshold, int rMin, int rMax, int* circleList) {
 	int top = 0;
 	int *count = (int *)malloc(sizeof(int) * (width + 1) * (height + 1));
-	int rMax = std::min(width, height) / 2;
-	//int rMin = threshold / 2 / PI;
-	int rMin = 124;
 	for (int r = rMin; r <= rMax; r++) {
 		memset(count, 0, sizeof(int) * (width + 1) * (height + 1));
 		for (int i = 0; i < height; i++)

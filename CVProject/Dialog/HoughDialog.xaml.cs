@@ -29,6 +29,11 @@ namespace CVProject.Dialog
 
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
+            father.curEnv.Advance("Hough Transform");
+            if (rbtnLine.IsChecked == true)
+                ImageProcessor.houghLine(father.curEnv.imgFile.curImage as WriteableBitmap, threshold.Value.Value);
+            else
+                ImageProcessor.houghCircle(father.curEnv.imgFile.curImage as WriteableBitmap, threshold.Value.Value, rmin.Value.Value, rmax.Value.Value);
             DialogResult = true;
         }
 

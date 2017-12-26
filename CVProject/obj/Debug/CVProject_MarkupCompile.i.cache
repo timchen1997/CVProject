@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 E:\CVProject\CVProject\App.xaml
-16399610575
+18-167502655
 
-29349038207
-25-670454752
-Control\TabItemPlus.xaml;Dialog\ArithmeticDialog.xaml;Dialog\BinarizationDialog.xaml;Dialog\ColorAdjustDialog.xaml;Dialog\CutDialog.xaml;Dialog\EdgeDetectDialog.xaml;Dialog\GrayScaleDialog.xaml;Dialog\HoughDialog.xaml;Dialog\JpegSaveDialog.xaml;Dialog\NewFileDialog.xaml;Dialog\PasteDialog.xaml;Dialog\ResizeDialog.xaml;Dialog\RotateDialog.xaml;Dialog\SmoothingDialog.xaml;Window1.xaml;MainWindow.xaml;
+31-844629040
+33335000509
+Control\TabItemPlus.xaml;Dialog\ArithmeticDialog.xaml;Dialog\BinarizationDialog.xaml;Dialog\ColorAdjustDialog.xaml;Dialog\ContrastDialog.xaml;Dialog\CutDialog.xaml;Dialog\EdgeDetectDialog.xaml;Dialog\GrayScaleDialog.xaml;Dialog\HistogramDialog.xaml;Dialog\HoughDialog.xaml;Dialog\JpegSaveDialog.xaml;Dialog\NewFileDialog.xaml;Dialog\PasteDialog.xaml;Dialog\ResizeDialog.xaml;Dialog\RotateDialog.xaml;Dialog\SmoothingDialog.xaml;Window1.xaml;MainWindow.xaml;
 
-False
+True
 

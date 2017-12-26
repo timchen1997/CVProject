@@ -6,13 +6,15 @@ FE:\CVProject\CVProject\Dialog\ColorAdjustDialog.xaml;;
 FE:\CVProject\CVProject\Dialog\CutDialog.xaml;;
 FE:\CVProject\CVProject\Dialog\EdgeDetectDialog.xaml;;
 FE:\CVProject\CVProject\Dialog\GrayScaleDialog.xaml;;
+FE:\CVProject\CVProject\Dialog\HistogramDialog.xaml;;
 FE:\CVProject\CVProject\Dialog\HoughDialog.xaml;;
 FE:\CVProject\CVProject\Dialog\JpegSaveDialog.xaml;;
 FE:\CVProject\CVProject\Dialog\NewFileDialog.xaml;;
+FE:\CVProject\CVProject\Dialog\PasteDialog.xaml;;
 FE:\CVProject\CVProject\Dialog\ResizeDialog.xaml;;
 FE:\CVProject\CVProject\Dialog\RotateDialog.xaml;;
 FE:\CVProject\CVProject\Dialog\SmoothingDialog.xaml;;
 FE:\CVProject\CVProject\Window1.xaml;;
 FE:\CVProject\CVProject\MainWindow.xaml;;
-FE:\CVProject\CVProject\Dialog\PasteDialog.xaml;;
+FE:\CVProject\CVProject\Dialog\ContrastDialog.xaml;;
 
