@@ -82,6 +82,9 @@ namespace CVProject
             }
         }
 
+        [DllImport("CVProject.Core.dll", EntryPoint = "histogramBalance", CallingConvention = CallingConvention.Cdecl)]
+        public extern static void histogramBalance(IntPtr img, int width, int height);
+
         public static void DrawLine(WriteableBitmap Image, System.Windows.Point a, System.Windows.Point b, Color c, int thickness, Model.DrawMode drawMode)
         {
             Mat m = new Mat(Image.PixelHeight, Image.PixelWidth, MatType.CV_8UC4, Image.BackBuffer);
@@ -104,6 +107,20 @@ namespace CVProject
         {
             Mat m = new Mat(Image.PixelHeight, Image.PixelWidth, MatType.CV_8UC4, Image.BackBuffer);
             Cv2.Circle(m, new OpenCvSharp.Point((a.X + b.X) / 2, (a.Y + b.Y) / 2), (int)Math.Min(Math.Abs(a.X - b.X), Math.Abs(a.Y - b.Y)) / 2, new Scalar(c.B, c.G, c.R, c.A), thickness, (LineTypes)(1 << (int)(drawMode + 2)));
+        }
+
+        public static void Paste(WriteableBitmap dest, BitmapSource src, System.Windows.Point Offset)
+        {
+            //dest.WritePixels(new Int32Rect(Math.Max(-Offset.X, 0), Math.Max(-Offset.Y, 0), src.PixelWidth - )
+            var tsrc = new WriteableBitmap(src);
+            int srcX = (int)Math.Max(-Offset.X, 0), srcY = (int)Math.Max(-Offset.Y, 0);
+            int srcWidth = src.PixelWidth - (int)Math.Max(-Offset.X, 0);
+            int srcHeight = src.PixelHeight - (int)Math.Max(-Offset.Y, 0);
+            srcWidth = (int)Math.Min(srcWidth, dest.PixelWidth - Math.Max(Offset.X, 0));
+            srcHeight = (int)Math.Min(srcHeight, dest.PixelHeight - Math.Max(Offset.Y, 0));
+            dest.WritePixels(new Int32Rect(srcX, srcY, srcWidth, srcHeight), 
+                tsrc.BackBuffer, src.PixelHeight * src.PixelWidth * 4, src.PixelWidth * 4, 
+                (int)Math.Max(Offset.X, 0), (int)Math.Max(Offset.Y, 0));
         }
 
     }

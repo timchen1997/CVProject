@@ -59,10 +59,14 @@
     <ClCompile Include="ColorAdjust.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="Arithmetic.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="hough.cpp">
+=======
+    <ClCompile Include="Contrast.cpp">
+>>>>>>> 423b5f188c8a04adb3ebeabf1070f78e4edb43af
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

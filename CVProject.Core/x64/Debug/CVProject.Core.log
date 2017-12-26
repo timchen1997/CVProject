@@ -1,6 +1,1 @@
-﻿  hough.cpp
-e:\cvproject\cvproject.core\hough.cpp(14): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
-e:\cvproject\cvproject.core\hough.cpp(22): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
-e:\cvproject\cvproject.core\hough.cpp(60): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
-  CVProject.Core.vcxproj -> E:\CVProject\Debug\CVProject.Core.dll
-  CVProject.Core.vcxproj -> E:\CVProject\Debug\CVProject.Core.pdb (Full PDB)
+﻿

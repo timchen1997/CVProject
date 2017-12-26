@@ -138,11 +138,17 @@
     <Compile Include="Dialog\GrayScaleDialog.xaml.cs">
       <DependentUpon>GrayScaleDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialog\HoughDialog.xaml.cs">
+      <DependentUpon>HoughDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dialog\JpegSaveDialog.xaml.cs">
       <DependentUpon>JpegSaveDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialog\NewFileDialog.xaml.cs">
       <DependentUpon>NewFileDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialog\PasteDialog.xaml.cs">
+      <DependentUpon>PasteDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialog\ResizeDialog.xaml.cs">
       <DependentUpon>ResizeDialog.xaml</DependentUpon>
@@ -188,6 +194,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Dialog\HoughDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Dialog\JpegSaveDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -195,6 +205,10 @@
     <Page Include="Dialog\NewFileDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialog\PasteDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Dialog\ResizeDialog.xaml">
       <SubType>Designer</SubType>

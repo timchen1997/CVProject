@@ -44,3 +44,5 @@ extern "C" CVPROJECTCORE_API void ArithmeticOper(unsigned char *, int, int, unsi
 extern "C" CVPROJECTCORE_API int houghLine(unsigned char *, int, int, int, int*);
 
 extern "C" CVPROJECTCORE_API int houghCircle(unsigned char *, int, int, int, int*);
+
+extern "C" CVPROJECTCORE_API void histogramBalance(unsigned char *, int, int);

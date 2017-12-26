@@ -19,9 +19,36 @@ namespace CVProject.Dialog
     /// </summary>
     public partial class HoughDialog : Window
     {
-        public HoughDialog()
+        private MainWindow father;
+        public HoughDialog(MainWindow father)
         {
             InitializeComponent();
+            this.father = father;
+            rbtnLine.IsChecked = true;
+        }
+
+        private void btnOK_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = true;
+        }
+
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = false;
+        }
+
+        private void Checked(object sender, RoutedEventArgs e)
+        {
+            if (rbtnLine.IsChecked == true)
+            {
+                rmin.IsEnabled = false;
+                rmax.IsEnabled = false;
+            }
+            else
+            {
+                rmin.IsEnabled = true;
+                rmax.IsEnabled = true;
+            }
         }
     }
 }
