@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-F:\CVProject\CVProject\obj\Debug\
+E:\CVProject\CVProject\obj\Debug\
 CVProject
 none
 false
 DEBUG;TRACE
-F:\CVProject\CVProject\App.xaml
-13315856892
+E:\CVProject\CVProject\App.xaml
+15720516862
 
-26805873356
-25-247686773
-Control\TabItemPlus.xaml;Dialog\BinarizationDialog.xaml;Dialog\ColorAdjustDialog.xaml;Dialog\CutDialog.xaml;Dialog\EdgeDetectDialog.xaml;Dialog\GrayScaleDialog.xaml;Dialog\JpegSaveDialog.xaml;Dialog\NewFileDialog.xaml;Dialog\ResizeDialog.xaml;Dialog\RotateDialog.xaml;Dialog\SmoothingDialog.xaml;Window1.xaml;MainWindow.xaml;
+28-1084998654
+25-670454752
+Control\TabItemPlus.xaml;Dialog\ArithmeticDialog.xaml;Dialog\BinarizationDialog.xaml;Dialog\ColorAdjustDialog.xaml;Dialog\CutDialog.xaml;Dialog\EdgeDetectDialog.xaml;Dialog\GrayScaleDialog.xaml;Dialog\HoughDialog.xaml;Dialog\JpegSaveDialog.xaml;Dialog\NewFileDialog.xaml;Dialog\ResizeDialog.xaml;Dialog\RotateDialog.xaml;Dialog\SmoothingDialog.xaml;Window1.xaml;MainWindow.xaml;
 
 True
 

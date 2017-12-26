@@ -75,6 +75,8 @@
                 <MenuItem Header="Smooth" Click="Smooth_Click"/>
                 <MenuItem Header="Adjust Color" Click="colorAdjust_Click"/>
                 <MenuItem Header="Edge Detect" Click="edgeDetect_Click"/>
+                <MenuItem Header="Arithmetic Oper" Click="arithmeticOper_Click"/>
+                <MenuItem Header="Hough" Click="Hough_Click"/>
             </MenuItem>
             <MenuItem Header="Help">
                 <MenuItem Header="About" />
@@ -156,24 +158,24 @@
                             </LinearGradientBrush>
                         </Grid.Background>
                         <Rectangle x:Name="colorView" HorizontalAlignment="Left" Height="60" Margin="10,10,0,0" VerticalAlignment="Top" Width="60"/>
-                        <Label Content="X = " HorizontalAlignment="Left" Margin="113,8,0,0" VerticalAlignment="Top"/>
-                        <Label Content="Y = " HorizontalAlignment="Left" Margin="113,31,0,0" VerticalAlignment="Top"/>
+                        <Label Content="X = " HorizontalAlignment="Left" Margin="100,8,0,0" VerticalAlignment="Top"/>
+                        <Label Content="Y = " HorizontalAlignment="Left" Margin="100,31,0,0" VerticalAlignment="Top"/>
                         <Label Content="Red = " HorizontalAlignment="Left" Margin="10,75,0,0" VerticalAlignment="Top"/>
                         <Label Content="Green = " HorizontalAlignment="Left" Margin="10,98,0,0" VerticalAlignment="Top"/>
                         <Label Content="Blue = " HorizontalAlignment="Left" Margin="10,121,0,0" VerticalAlignment="Top"/>
-                        <Label Content="Hue = " HorizontalAlignment="Left" Margin="113,75,0,0" VerticalAlignment="Top"/>
-                        <Label Content="Saturation = " HorizontalAlignment="Left" Margin="113,98,0,0" VerticalAlignment="Top"/>
-                        <Label Content="Brightness = " HorizontalAlignment="Left" Margin="113,121,0,0" VerticalAlignment="Top"/>
-                        <Label Content="Alpha = " HorizontalAlignment="Left" Margin="113,54,0,0" VerticalAlignment="Top"/>
-                        <Label x:Name="SVal" HorizontalAlignment="Left" Margin="187,98,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.071,-0.125"/>
-                        <Label x:Name="HVal" HorizontalAlignment="Left" Margin="187,75,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.071,-0.125"/>
-                        <Label x:Name="AVal" HorizontalAlignment="Left" Margin="187,54,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.071,-0.125"/>
-                        <Label x:Name="YVal" HorizontalAlignment="Left" Margin="187,31,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.071,-0.125"/>
-                        <Label x:Name="XVal" HorizontalAlignment="Left" Margin="187,8,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.071,-0.125"/>
-                        <Label x:Name="LVal" HorizontalAlignment="Left" Margin="187,121,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.071,-0.125"/>
-                        <Label x:Name="GVal" HorizontalAlignment="Left" Margin="62,98,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.071,-0.125"/>
-                        <Label x:Name="BVal" HorizontalAlignment="Left" Margin="62,121,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.071,-0.125"/>
-                        <Label x:Name="RVal" HorizontalAlignment="Left" Margin="62,75,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.071,-0.125"/>
+                        <Label Content="Hue = " HorizontalAlignment="Left" Margin="100,75,0,0" VerticalAlignment="Top"/>
+                        <Label Content="Saturation = " HorizontalAlignment="Left" Margin="100,98,0,0" VerticalAlignment="Top"/>
+                        <Label Content="Brightness = " HorizontalAlignment="Left" Margin="100,121,0,0" VerticalAlignment="Top"/>
+                        <Label Content="Alpha = " HorizontalAlignment="Left" Margin="100,54,0,0" VerticalAlignment="Top"/>
+                        <Label x:Name="SVal" HorizontalAlignment="Left" Margin="174,98,0,0" VerticalAlignment="Top"/>
+                        <Label x:Name="HVal" HorizontalAlignment="Left" Margin="174,75,0,0" VerticalAlignment="Top"/>
+                        <Label x:Name="AVal" HorizontalAlignment="Left" Margin="174,54,0,0" VerticalAlignment="Top"/>
+                        <Label x:Name="YVal" HorizontalAlignment="Left" Margin="174,31,0,0" VerticalAlignment="Top"/>
+                        <Label x:Name="XVal" HorizontalAlignment="Left" Margin="174,8,0,0" VerticalAlignment="Top"/>
+                        <Label x:Name="LVal" HorizontalAlignment="Left" Margin="174,121,0,0" VerticalAlignment="Top"/>
+                        <Label x:Name="GVal" HorizontalAlignment="Left" Margin="62,98,0,0" VerticalAlignment="Top"/>
+                        <Label x:Name="BVal" HorizontalAlignment="Left" Margin="62,121,0,0" VerticalAlignment="Top"/>
+                        <Label x:Name="RVal" HorizontalAlignment="Left" Margin="62,75,0,0" VerticalAlignment="Top"/>
                     </Grid>
                 </GroupBox>
                 <GroupBox Grid.Column="1" HorizontalAlignment="Left" Height="177" Margin="10,192,0,0" VerticalAlignment="Top" Width="230"  Header="History">

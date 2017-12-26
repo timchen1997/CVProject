@@ -120,6 +120,9 @@
     <Compile Include="Control\TabItemPlus.xaml.cs">
       <DependentUpon>TabItemPlus.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialog\ArithmeticDialog.xaml.cs">
+      <DependentUpon>ArithmeticDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dialog\BinarizationDialog.xaml.cs">
       <DependentUpon>BinarizationDialog.xaml</DependentUpon>
     </Compile>
@@ -158,6 +161,10 @@
       <DependentUpon>Window1.xaml</DependentUpon>
     </Compile>
     <Page Include="Control\TabItemPlus.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialog\ArithmeticDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

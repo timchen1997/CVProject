@@ -207,6 +207,20 @@ namespace CVProject
             dialog.ShowDialog();
         }
 
+        private void arithmeticOper_Click(object sender, RoutedEventArgs e)
+        {
+            curEnv.Advance("Arithmetic Operation");
+            var dialog = new Dialog.ArithmeticDialog(this);
+            if (dialog.ShowDialog() != true)
+                Undo();
+        }
+
+        private void Hough_Click(object sender, RoutedEventArgs e)
+        {
+            curEnv.Advance("Hough");
+            ImageProcessor.houghCircle(curEnv.imgFile.curImage as WriteableBitmap, 180);
+        }
+
         private void Smooth_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new Dialog.SmoothingDialog(this);

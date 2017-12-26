@@ -116,3 +116,7 @@ F:\CVProject\CVProject\obj\Debug\Dialog\RotateDialog.baml
 F:\CVProject\CVProject\obj\Debug\Dialog\SmoothingDialog.baml
 F:\CVProject\CVProject\obj\Debug\Dialog\CutDialog.g.cs
 F:\CVProject\CVProject\obj\Debug\Dialog\CutDialog.baml
+E:\CVProject\CVProject\obj\Debug\Dialog\CutDialog.g.cs
+E:\CVProject\CVProject\obj\Debug\Dialog\CutDialog.baml
+E:\CVProject\CVProject\obj\Debug\Dialog\ArithmeticDialog.g.cs
+E:\CVProject\CVProject\obj\Debug\Dialog\ArithmeticDialog.baml

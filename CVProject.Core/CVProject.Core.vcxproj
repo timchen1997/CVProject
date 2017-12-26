@@ -161,6 +161,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Arithmetic.cpp" />
     <ClCompile Include="Binarization.cpp" />
     <ClCompile Include="ColorAdjust.cpp" />
     <ClCompile Include="CVProject.Core.cpp" />
@@ -180,6 +181,7 @@
     </ClCompile>
     <ClCompile Include="Filter.cpp" />
     <ClCompile Include="Grayscale.cpp" />
+    <ClCompile Include="hough.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="Transform.cpp" />
   </ItemGroup>

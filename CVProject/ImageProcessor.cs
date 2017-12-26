@@ -47,6 +47,41 @@ namespace CVProject
         [DllImport("CVProject.Core.dll", EntryPoint = "canny", CallingConvention = CallingConvention.Cdecl)]
         public extern static void canny(IntPtr img, int width, int height, int size, int l, int r);
 
+        [DllImport("CVProject.Core.dll", EntryPoint = "ArithmeticOper", CallingConvention = CallingConvention.Cdecl)]
+        public extern static void ArithmeticOper(IntPtr imgA, int widthA, int heightA, IntPtr imgB, int widthB, int heightB, double ratioA, double ratioB, int oper);
+
+        [DllImport("CVProject.Core.dll", EntryPoint = "houghLine", CallingConvention = CallingConvention.Cdecl)]
+        private extern static int __houghLine(IntPtr img, int width, int height, int threshold, int[] lineList);
+
+        [DllImport("CVProject.Core.dll", EntryPoint = "houghCircle", CallingConvention = CallingConvention.Cdecl)]
+        private extern static int __houghCircle(IntPtr img, int width, int height, int threshold, int[] circleList);
+
+        public static void houghLine(WriteableBitmap Image, int threhold)
+        {
+            int[] lineList = new int[Image.PixelHeight * Image.PixelHeight];
+            int lineNum = __houghLine(Image.BackBuffer, Image.PixelWidth, Image.PixelHeight, threhold, lineList);
+            for (int i = 0; i < lineNum; i++)
+            {
+                int r = lineList[2 * i], theta = lineList[2 * i + 1];
+                var pa = new System.Windows.Point(0, r / Math.Cos(theta / 180.0 * Math.PI));
+                var pb = new System.Windows.Point(Image.PixelWidth, r / Math.Cos(theta / 180.0 * Math.PI) - Image.PixelWidth * Math.Tan(theta / 180.0 * Math.PI));
+                DrawLine(Image, pa, pb, Color.FromArgb(255, 255, 0, 0), 1, Model.DrawMode.Link4);
+            }
+        }
+
+        public static void houghCircle(WriteableBitmap Image, int threhold)
+        {
+            int[] circleList = new int[Image.PixelHeight * Image.PixelHeight];
+            int lineNum = __houghCircle(Image.BackBuffer, Image.PixelWidth, Image.PixelHeight, threhold, circleList);
+            for (int i = 0; i < lineNum; i++)
+            {
+                int b = circleList[3 * i], a = circleList[3 * i + 1], r = circleList[3 * i + 2];
+                var pa = new System.Windows.Point(a - r, b - r);
+                var pb = new System.Windows.Point(a + r, b + r);
+                DrawCircle(Image, pa, pb, Color.FromArgb(255, 255, 0, 0), 1, Model.DrawMode.Link4);
+            }
+        }
+
         public static void DrawLine(WriteableBitmap Image, System.Windows.Point a, System.Windows.Point b, Color c, int thickness, Model.DrawMode drawMode)
         {
             Mat m = new Mat(Image.PixelHeight, Image.PixelWidth, MatType.CV_8UC4, Image.BackBuffer);

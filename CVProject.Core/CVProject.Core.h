@@ -38,3 +38,9 @@ extern "C" CVPROJECTCORE_API void sobel(unsigned char *, int, int, int);
 extern "C" CVPROJECTCORE_API void laplacian(unsigned char *, int, int, int);
 
 extern "C" CVPROJECTCORE_API void canny(unsigned char *, int, int, int, int, int);
+
+extern "C" CVPROJECTCORE_API void ArithmeticOper(unsigned char *, int, int, unsigned char *, int, int, double, double, int);
+
+extern "C" CVPROJECTCORE_API int houghLine(unsigned char *, int, int, int, int*);
+
+extern "C" CVPROJECTCORE_API int houghCircle(unsigned char *, int, int, int, int*);
