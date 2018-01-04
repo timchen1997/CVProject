@@ -73,4 +73,8 @@ extern "C" CVPROJECTCORE_API void skeletonRebuild(unsigned char *, int, int, uns
 
 extern "C" CVPROJECTCORE_API void morphologicalReconstruct(unsigned char *, unsigned char *, int, int, unsigned char*);
 
+extern "C" CVPROJECTCORE_API void morphologicalReconstruct2(unsigned char *, unsigned char *, int, int, unsigned char*);
+
 extern "C" CVPROJECTCORE_API void watershed(unsigned char *, int, int);
+
+extern "C" CVPROJECTCORE_API void distanceTrans2(unsigned char *, int, int, unsigned char *);

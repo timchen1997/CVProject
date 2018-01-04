@@ -334,6 +334,21 @@ CVPROJECTCORE_API void distanceTrans(unsigned char *img, int width, int height) 
 	free(timg);
 }
 
+CVPROJECTCORE_API void distanceTrans2(unsigned char *img, int width, int height, unsigned char *kernel) {
+	std::vector<unsigned char *> imgs;
+	while (!isEmpty(img, width, height)) {
+		auto timg = duplicate(img, width, height);
+		erode(img, width, height, kernel);
+		minus(timg, img, width, height);
+		imgs.push_back(timg);
+	}
+	int k = imgs.size();
+	for (int i = 0; i < k; i++) {
+		ArithmeticOper(img, width, height, imgs[i], width, height, 1, (double)(i + 1) / k, 0);
+		free(imgs[i]);
+	}
+}
+
 CVPROJECTCORE_API void morphologicalReconstruct(unsigned char *a, unsigned char *b, int width, int height, unsigned char* kernel) {
 	unsigned char *timg = duplicate(b, width, height), *backup = nullptr;
 	do {
@@ -341,6 +356,25 @@ CVPROJECTCORE_API void morphologicalReconstruct(unsigned char *a, unsigned char 
 		backup = duplicate(timg, width, height);
 		dilate(timg, width, height, kernel);
 		and (timg, a, width, height);
+	} while (!equal(backup, timg, width, height));
+	for (int i = 0; i < height; i++)
+		for (int j = 0; j < width; j++) {
+			auto p1 = PIXEL(a, width, i, j), p2 = PIXEL(timg, width, i, j);
+			p1->r = p2->r;
+			p1->g = p2->g;
+			p1->b = p2->b;
+		}
+	free(timg);
+	free(backup);
+}
+
+CVPROJECTCORE_API void morphologicalReconstruct2(unsigned char *a, unsigned char *b, int width, int height, unsigned char* kernel) {
+	unsigned char *timg = duplicate(b, width, height), *backup = nullptr;
+	do {
+		if (backup) free(backup);
+		backup = duplicate(timg, width, height);
+		erode(timg, width, height, kernel);
+		or (timg, a, width, height);
 	} while (!equal(backup, timg, width, height));
 	for (int i = 0; i < height; i++)
 		for (int j = 0; j < width; j++) {

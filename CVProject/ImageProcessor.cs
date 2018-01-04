@@ -80,6 +80,9 @@ namespace CVProject
         [DllImport("CVProject.Core.dll", EntryPoint = "morphologicalReconstruct", CallingConvention = CallingConvention.Cdecl)]
         public extern static void morphologicalReconstruct(IntPtr a, IntPtr b, int width, int height, byte[] kernel);
 
+        [DllImport("CVProject.Core.dll", EntryPoint = "morphologicalReconstruct2", CallingConvention = CallingConvention.Cdecl)]
+        public extern static void morphologicalReconstruct2(IntPtr a, IntPtr b, int width, int height, byte[] kernel);
+
         [DllImport("CVProject.Core.dll", EntryPoint = "thin", CallingConvention = CallingConvention.Cdecl)]
         public extern static void thin(IntPtr img, int width, int height, byte[] kernel);
 
@@ -88,6 +91,9 @@ namespace CVProject
 
         [DllImport("CVProject.Core.dll", EntryPoint = "distanceTrans", CallingConvention = CallingConvention.Cdecl)]
         public extern static void distanceTrans(IntPtr img, int width, int height);
+
+        [DllImport("CVProject.Core.dll", EntryPoint = "distanceTrans2", CallingConvention = CallingConvention.Cdecl)]
+        public extern static void distanceTrans(IntPtr img, int width, int height, byte[] kernel);
 
         [DllImport("CVProject.Core.dll", EntryPoint = "watershed", CallingConvention = CallingConvention.Cdecl)]
         public extern static void watershed(IntPtr img, int width, int height);

@@ -48,7 +48,7 @@ namespace CVProject.Dialog
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
             byte[] kernelArray = new byte[49];
-            WriteableBitmap t;
+            WriteableBitmap t, tb;
             for (int i = 0; i < 7; i++)
                 for (int j = 0; j < 7; j++)
                     kernelArray[i * 7 + j] = kernel[i, j].IsChecked == true ? (byte)255 : (byte)0;
@@ -87,8 +87,19 @@ namespace CVProject.Dialog
                 case 6:
                     father.curEnv.Advance("Morphological Reconstruct");
                     t = father.curEnv.imgFile.curImage as WriteableBitmap;
-                    var tb = father.envList[cboxFile.SelectedIndex].imgFile.curImage as WriteableBitmap;
+                    tb = father.envList[cboxFile.SelectedIndex].imgFile.curImage as WriteableBitmap;
                     ImageProcessor.morphologicalReconstruct(t.BackBuffer, tb.BackBuffer, Math.Min(t.PixelWidth, tb.PixelWidth), Math.Min(t.PixelHeight, tb.PixelHeight), kernelArray);
+                    break;
+                case 7:
+                    father.curEnv.Advance("Distance Transform");
+                    t = father.curEnv.imgFile.curImage as WriteableBitmap;
+                    ImageProcessor.distanceTrans(t.BackBuffer, t.PixelWidth, t.PixelHeight, kernelArray);
+                    break;
+                case 8:
+                    father.curEnv.Advance("Morphological Reconstruct");
+                    t = father.curEnv.imgFile.curImage as WriteableBitmap;
+                    tb = father.envList[cboxFile.SelectedIndex].imgFile.curImage as WriteableBitmap;
+                    ImageProcessor.morphologicalReconstruct2(t.BackBuffer, tb.BackBuffer, Math.Min(t.PixelWidth, tb.PixelWidth), Math.Min(t.PixelHeight, tb.PixelHeight), kernelArray);
                     break;
             }
             DialogResult = true;
@@ -102,7 +113,7 @@ namespace CVProject.Dialog
         private void cboxMode_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (father == null) return;
-            if (cboxMode.SelectedIndex == 6)
+            if (cboxMode.SelectedIndex == 6 || cboxMode.SelectedIndex == 8)
                 cboxFile.IsEnabled = true;
             else
                 cboxFile.IsEnabled = false;

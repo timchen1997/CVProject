@@ -27,6 +27,8 @@
                 <Label Content="Skeleton" />
                 <Label Content="Skeleton Rebuild" />
                 <Label Content="Morpho Reconstruct" />
+                <Label Content="Distance Transform" />
+                <Label Content="Morpho Reconstruct2" />
             </ComboBox>
 
         </Grid>
