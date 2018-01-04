@@ -59,6 +59,39 @@ namespace CVProject
         [DllImport("CVProject.Core.dll", EntryPoint = "contrastExp", CallingConvention = CallingConvention.Cdecl)]
         public extern static void contrastExp(IntPtr img, int width, int height, double c);
 
+        [DllImport("CVProject.Core.dll", EntryPoint = "erode", CallingConvention = CallingConvention.Cdecl)]
+        public extern static void erode(IntPtr img, int width, int height, byte[] kernel);
+
+        [DllImport("CVProject.Core.dll", EntryPoint = "dilate", CallingConvention = CallingConvention.Cdecl)]
+        public extern static void dilate(IntPtr img, int width, int height, byte[] kernel);
+
+        [DllImport("CVProject.Core.dll", EntryPoint = "open", CallingConvention = CallingConvention.Cdecl)]
+        public extern static void open(IntPtr img, int width, int height, byte[] kernel);
+
+        [DllImport("CVProject.Core.dll", EntryPoint = "close", CallingConvention = CallingConvention.Cdecl)]
+        public extern static void close(IntPtr img, int width, int height, byte[] kernel);
+
+        [DllImport("CVProject.Core.dll", EntryPoint = "skeleton", CallingConvention = CallingConvention.Cdecl)]
+        public extern static void skeleton(IntPtr img, int width, int height, byte[] kernel);
+
+        [DllImport("CVProject.Core.dll", EntryPoint = "skeletonRebuild", CallingConvention = CallingConvention.Cdecl)]
+        public extern static void skeletonRebuild(IntPtr img, int width, int height, byte[] kernel);
+
+        [DllImport("CVProject.Core.dll", EntryPoint = "morphologicalReconstruct", CallingConvention = CallingConvention.Cdecl)]
+        public extern static void morphologicalReconstruct(IntPtr a, IntPtr b, int width, int height, byte[] kernel);
+
+        [DllImport("CVProject.Core.dll", EntryPoint = "thin", CallingConvention = CallingConvention.Cdecl)]
+        public extern static void thin(IntPtr img, int width, int height, byte[] kernel);
+
+        [DllImport("CVProject.Core.dll", EntryPoint = "thick", CallingConvention = CallingConvention.Cdecl)]
+        public extern static void thick(IntPtr img, int width, int height, byte[] kernel);
+
+        [DllImport("CVProject.Core.dll", EntryPoint = "distanceTrans", CallingConvention = CallingConvention.Cdecl)]
+        public extern static void distanceTrans(IntPtr img, int width, int height);
+
+        [DllImport("CVProject.Core.dll", EntryPoint = "watershed", CallingConvention = CallingConvention.Cdecl)]
+        public extern static void watershed(IntPtr img, int width, int height);
+
         [DllImport("CVProject.Core.dll", EntryPoint = "houghLine", CallingConvention = CallingConvention.Cdecl)]
         private extern static int __houghLine(IntPtr img, int width, int height, int threshold, int[] lineList);
 

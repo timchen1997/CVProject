@@ -1,73 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="源文件">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="头文件">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="资源文件">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
+    <ClCompile Include="Arithmetic.cpp" />
+    <ClCompile Include="Binarization.cpp" />
+    <ClCompile Include="ColorAdjust.cpp" />
+    <ClCompile Include="Contrast.cpp" />
+    <ClCompile Include="CVProject.Core.cpp" />
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="Filter.cpp" />
+    <ClCompile Include="Grayscale.cpp" />
+    <ClCompile Include="hough.cpp" />
+    <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="Transform.cpp" />
+    <ClCompile Include="morphology.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CVProject.Core.h" />
+    <ClInclude Include="filter.h" />
+    <ClInclude Include="image.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="stdafx.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="CVProject.Core.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="image.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="filter.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="CVProject.Core.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="dllmain.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Binarization.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Grayscale.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Transform.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Filter.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="ColorAdjust.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-<<<<<<< HEAD
-    <ClCompile Include="Arithmetic.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="hough.cpp">
-=======
-    <ClCompile Include="Contrast.cpp">
->>>>>>> 423b5f188c8a04adb3ebeabf1070f78e4edb43af
-      <Filter>源文件</Filter>
-    </ClCompile>
   </ItemGroup>
 </Project>

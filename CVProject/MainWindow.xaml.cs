@@ -266,6 +266,46 @@ namespace CVProject
                 Undo();
         }
 
+        private void morphoBasic_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new Dialog.MorphologyDialog(this);
+            dialog.ShowDialog();
+        }
+
+        private void Thin_Click(object sender, RoutedEventArgs e)
+        {
+            curEnv.Advance("Thin");
+            byte[] kernel = new byte[9];
+            kernel[0] = kernel[1] = kernel[2] = kernel[4] = 255;
+            kernel[3] = kernel[5] = 128;
+            var t = curEnv.imgFile.curImage as WriteableBitmap;
+            ImageProcessor.thin(t.BackBuffer, t.PixelWidth, t.PixelHeight, kernel);
+        }
+
+        private void Thicken_Click(object sender, RoutedEventArgs e)
+        {
+            curEnv.Advance("Thick");
+            byte[] kernel = new byte[9];
+            kernel[0] = kernel[1] = kernel[2] = 255;
+            kernel[3] = kernel[5] = 128;
+            var t = curEnv.imgFile.curImage as WriteableBitmap;
+            ImageProcessor.thick(t.BackBuffer, t.PixelWidth, t.PixelHeight, kernel);
+        }
+
+        private void DistTrans_Click(object sender, RoutedEventArgs e)
+        {
+            curEnv.Advance("Distance Transform");
+            var t = curEnv.imgFile.curImage as WriteableBitmap;
+            ImageProcessor.distanceTrans(t.BackBuffer, t.PixelWidth, t.PixelHeight);
+        }
+
+        private void Watershed_Click(object sender, RoutedEventArgs e)
+        {
+            curEnv.Advance("Watershed");
+            var t = curEnv.imgFile.curImage as WriteableBitmap;
+            ImageProcessor.watershed(t.BackBuffer, t.PixelWidth, t.PixelHeight);
+        }
+
         private void Cursor_Click(object sender, RoutedEventArgs e)
         {
             resetToolBox();

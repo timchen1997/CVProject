@@ -8,13 +8,13 @@ E:\CVProject\CVProject\obj\Debug\
 CVProject
 none
 false
-DEBUG;TRACE
+TRACE;DEBUG
 E:\CVProject\CVProject\App.xaml
-18-167502655
+191990626996
 
-27-265007849
+281722686131
 33335000509
-Control\TabItemPlus.xaml;Dialog\ArithmeticDialog.xaml;Dialog\BinarizationDialog.xaml;Dialog\ColorAdjustDialog.xaml;Dialog\ContrastDialog.xaml;Dialog\CutDialog.xaml;Dialog\EdgeDetectDialog.xaml;Dialog\GrayScaleDialog.xaml;Dialog\HistogramDialog.xaml;Dialog\HoughDialog.xaml;Dialog\JpegSaveDialog.xaml;Dialog\NewFileDialog.xaml;Dialog\PasteDialog.xaml;Dialog\ResizeDialog.xaml;Dialog\RotateDialog.xaml;Dialog\SmoothingDialog.xaml;Window1.xaml;MainWindow.xaml;
+Control\TabItemPlus.xaml;Dialog\ArithmeticDialog.xaml;Dialog\BinarizationDialog.xaml;Dialog\ColorAdjustDialog.xaml;Dialog\ContrastDialog.xaml;Dialog\CutDialog.xaml;Dialog\EdgeDetectDialog.xaml;Dialog\GrayScaleDialog.xaml;Dialog\HistogramDialog.xaml;Dialog\HoughDialog.xaml;Dialog\JpegSaveDialog.xaml;Dialog\MorphologyDialog.xaml;Dialog\NewFileDialog.xaml;Dialog\PasteDialog.xaml;Dialog\ResizeDialog.xaml;Dialog\RotateDialog.xaml;Dialog\SmoothingDialog.xaml;Window1.xaml;MainWindow.xaml;
 
 False
 

@@ -1,0 +1,68 @@
+﻿<Window x:Class="CVProject.Dialog.MorphologyDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CVProject.Dialog"
+        mc:Ignorable="d"
+        Title="Basic Morphology Oper" Height="330" Width="300" Background="#FF363636" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Content="Mode" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <ComboBox x:Name="cboxMode" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" SelectedIndex="0" SelectionChanged="cboxMode_SelectionChanged">
+                <Label Content="Erode" />
+                <Label Content="Dilate" />
+                <Label Content="Open" />
+                <Label Content="Close" />
+                <Label Content="Skeleton" />
+                <Label Content="Skeleton Rebuild" />
+                <Label Content="Morpho Reconstruct" />
+            </ComboBox>
+
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Content="Mark Image" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <ComboBox x:Name="cboxFile" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" SelectedIndex="0">
+            </ComboBox>
+
+        </Grid>
+        <Grid Grid.Row="2" Name="kernelGrid" Margin="10,0,10,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+        </Grid>
+        <Grid Grid.Row="3">
+            <Button x:Name="btnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="207,6,0,6" VerticalAlignment="Center" Width="75" Click="btnCancel_Click"/>
+            <Button x:Name="btnOK" Content="OK" HorizontalAlignment="Left" Margin="127,6,0,6" VerticalAlignment="Center" Width="75" Click="btnOK_Click"/>
+        </Grid>
+    </Grid>
+</Window>

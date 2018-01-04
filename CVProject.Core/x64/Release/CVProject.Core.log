@@ -1,0 +1,7 @@
+﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(1189,5): warning MSB8012: TargetPath(E:\CVProject\x64\Release\CVProject.Core.dll) does not match the Linker's OutputFile property value (E:\CVProject\Release\CVProject.Core.dll). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
+    正在创建库 E:\CVProject\x64\Release\CVProject.Core.lib 和对象 E:\CVProject\x64\Release\CVProject.Core.exp
+  正在生成代码
+  All 313 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  已完成代码的生成
+  CVProject.Core.vcxproj -> E:\CVProject\x64\Release\CVProject.Core.dll
+  CVProject.Core.vcxproj -> E:\CVProject\x64\Release\CVProject.Core.pdb (Full PDB)

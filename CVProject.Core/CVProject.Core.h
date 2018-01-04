@@ -52,3 +52,25 @@ extern "C" CVPROJECTCORE_API void contrastLinear(unsigned char *, int, int, unsi
 extern "C" CVPROJECTCORE_API void contrastLog(unsigned char *, int, int, double);
 
 extern "C" CVPROJECTCORE_API void contrastExp(unsigned char *, int, int, double);
+
+extern "C" CVPROJECTCORE_API void dilate(unsigned char *, int, int, unsigned char *);
+
+extern "C" CVPROJECTCORE_API void erode(unsigned char *, int, int, unsigned char *);
+
+extern "C" CVPROJECTCORE_API void open(unsigned char *, int, int, unsigned char *);
+
+extern "C" CVPROJECTCORE_API void close(unsigned char *, int, int, unsigned char *);
+
+extern "C" CVPROJECTCORE_API void thin(unsigned char *, int, int, unsigned char *);
+
+extern "C" CVPROJECTCORE_API void thick(unsigned char *, int, int, unsigned char *);
+
+extern "C" CVPROJECTCORE_API void skeleton(unsigned char *, int, int, unsigned char *);
+
+extern "C" CVPROJECTCORE_API void distanceTrans(unsigned char *, int, int);
+
+extern "C" CVPROJECTCORE_API void skeletonRebuild(unsigned char *, int, int, unsigned char *);
+
+extern "C" CVPROJECTCORE_API void morphologicalReconstruct(unsigned char *, unsigned char *, int, int, unsigned char*);
+
+extern "C" CVPROJECTCORE_API void watershed(unsigned char *, int, int);

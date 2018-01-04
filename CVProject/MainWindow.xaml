@@ -84,6 +84,13 @@
                 <MenuItem Header="Arithmetic Oper" Click="arithmeticOper_Click"/>
                 <MenuItem Header="Hough Transform" Click="houghTransform_Click"/>
                 <MenuItem Header="Adjust Contrast" Click="contrastAdjust_Click"/>
+                <MenuItem Header="Morphology">
+                    <MenuItem Header="Basic" Click="morphoBasic_Click"/>
+                    <MenuItem Header="Thin" Click="Thin_Click"/>
+                    <MenuItem Header="Thicken" Click="Thicken_Click"/>
+                    <MenuItem Header="Distance Transform" Click="DistTrans_Click"/>
+                    <MenuItem Header="Watershed" Click="Watershed_Click"/>
+                </MenuItem>
             </MenuItem>
             <MenuItem Header="Help">
                 <MenuItem Header="About" />

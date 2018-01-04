@@ -166,21 +166,21 @@ CVPROJECTCORE_API void canny(unsigned char *img, int width, int height, int size
 			p->b = (unsigned char)std::min(sqrt(px->b * px->b + py->b * py->b), 255.0);
 			double angle = atan2(py->r, px->r);
 			if (angle >= -PI / 8 && angle < PI / 8)
-				direction[i * height + j] = 0;
+				direction[i * width + j] = 0;
 			else if (angle >= PI / 8 && angle < PI * 3 / 8)
-				direction[i * height + j] = 1;
+				direction[i * width + j] = 1;
 			else if (angle >= PI * 3 / 8 && angle < PI * 5 / 8)
-				direction[i * height + j] = 2;
+				direction[i * width + j] = 2;
 			else if (angle >= PI * 5 / 8 && angle < PI * 7 / 8)
-				direction[i * height + j] = 3;
+				direction[i * width + j] = 3;
 			else if (angle >= PI * 7 / 8 || angle < -PI * 7 / 8)
-				direction[i * height + j] = 0;
+				direction[i * width + j] = 0;
 			else if (angle >= -PI * 7 / 8 && angle < -PI * 5 / 8)
-				direction[i * height + j] = 1;
+				direction[i * width + j] = 1;
 			else if (angle >= -PI * 5 / 8 && angle < -PI * 3 / 8)
-				direction[i * height + j] = 2;
+				direction[i * width + j] = 2;
 			else
-				direction[i * height + j] = 3;
+				direction[i * width + j] = 3;
 		}
 	free(imgx);
 	free(imgy);
@@ -190,7 +190,7 @@ CVPROJECTCORE_API void canny(unsigned char *img, int width, int height, int size
 	for (int i = 1; i < height - 1; i++)
 		for (int j = 1; j < width - 1; j++) {
 			auto p = PIXEL(img, width, i, j);
-			int d = direction[i * height + j];
+			int d = direction[i * width + j];
 			auto sp = PIXEL(img, width, i + dx[d], j + dy[d]);
 			auto pp = PIXEL(img, width, i - dx[d], j - dy[d]);
 			if (p->r < sp->r || p->r < pp->r)
@@ -213,10 +213,10 @@ CVPROJECTCORE_API void canny(unsigned char *img, int width, int height, int size
 	for (int i = 0; i < height; i++)
 		for (int j = 0; j < width; j++) {
 			auto p = PIXEL(img, width, i, j);
-			if (p->r >= lthreshold && p->r < rthreshold && !marked[i * height + j]) {
+			if (p->r >= lthreshold && p->r < rthreshold && !marked[i * width + j]) {
 				s.push(std::make_pair(i, j));
 				q.push(std::make_pair(i, j));
-				marked[i * height + j] = true;
+				marked[i * width + j] = true;
 				while (!s.empty()) {
 					auto cur = s.top();
 					s.pop();
@@ -225,10 +225,10 @@ CVPROJECTCORE_API void canny(unsigned char *img, int width, int height, int size
 						int tj = j + dy[k];
 						if (OUTSIDE(width, height, ti, tj)) continue;
 						auto p = PIXEL(img, width, ti, tj);
-						if (p->r >= lthreshold && p->r < rthreshold && !marked[ti * height + tj]) {
+						if (p->r >= lthreshold && p->r < rthreshold && !marked[ti * width + tj]) {
 							s.push(std::make_pair(ti, tj));
 							q.push(std::make_pair(ti, tj));
-							marked[ti * height + tj] = true;
+							marked[ti * width + tj] = true;
 						}
 						else if (p->r >= rthreshold) {
 							connected = true;

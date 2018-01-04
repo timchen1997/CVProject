@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-F:\Courses\SE342\CVProject\CVProject\obj\Release\
+E:\CVProject\CVProject\obj\Release\
 CVProject
 none
 false
-TRACE
-F:\Courses\SE342\CVProject\CVProject\App.xaml
-11151548125
+TRACE;/STACK:104857600
+E:\CVProject\CVProject\App.xaml
+191990626996
 
-13-1770825847
-21-1565073154
-MainWindow.xaml;
+322033547455
+33335000509
+Control\TabItemPlus.xaml;Dialog\ArithmeticDialog.xaml;Dialog\BinarizationDialog.xaml;Dialog\ColorAdjustDialog.xaml;Dialog\ContrastDialog.xaml;Dialog\CutDialog.xaml;Dialog\EdgeDetectDialog.xaml;Dialog\GrayScaleDialog.xaml;Dialog\HistogramDialog.xaml;Dialog\HoughDialog.xaml;Dialog\JpegSaveDialog.xaml;Dialog\MorphologyDialog.xaml;Dialog\NewFileDialog.xaml;Dialog\PasteDialog.xaml;Dialog\ResizeDialog.xaml;Dialog\RotateDialog.xaml;Dialog\SmoothingDialog.xaml;Window1.xaml;MainWindow.xaml;
 
 False
 
