@@ -30,20 +30,37 @@ struct mystack {
 	}
 };
 
+template <typename T>
+T max(T a, T b) {
+	return a > b ? a : b;
+}
+
+template <typename T>
+T min(T a, T b) {
+	return a < b ? a : b;
+}
+
 CVPROJECTCORE_API void dilate(unsigned char *img, int width, int height, unsigned char *kernel) {
 	unsigned char *newimg = (unsigned char *)malloc(sizeof(unsigned char) * width * height * 4);
 	memset(newimg, 0, sizeof(unsigned char) * width * height * 4);
+	int dx[49], dy[49];
+	int top = 0;
+	for (int i = 0; i < 7; i++)
+		for (int j = 0; j < 7; j++)
+			if (KERNELITEM(kernel, 7, i, j)) {
+				dx[top] = i - 3;
+				dy[top] = j - 3;
+				top++;
+			}
 	for (int i = 0; i < height; i++)
 		for (int j = 0; j < width; j++) {
 			auto p = PIXEL(newimg, width, i, j);
 			unsigned char maxn = 0;
-			for (int a = -3; a <= 3; a++)
-				for (int b = -3; b <= 3; b++) {
-					int ni = i + a, nj = j + b;
-					if (OUTSIDE(width, height, ni, nj)) continue;
-					if (!KERNELITEM(kernel, 7, a + 3, b + 3)) continue;
-					maxn = std::max(maxn, PIXEL(img, width, ni, nj)->r);
-				}
+			for (int a = 0; a < top; a++){
+				int ni = i + dx[a], nj = j + dy[a];
+				if (OUTSIDE(width, height, ni, nj)) continue;
+				maxn = max(maxn, PIXEL(img, width, ni, nj)->r);
+			}
 			p->r = p->g = p->b = maxn;
 			p->a = PIXEL(img, width, i, j)->a;
 		}
@@ -56,17 +73,24 @@ CVPROJECTCORE_API void dilate(unsigned char *img, int width, int height, unsigne
 CVPROJECTCORE_API void erode(unsigned char *img, int width, int height, unsigned char *kernel) {
 	unsigned char *newimg = (unsigned char *)malloc(sizeof(unsigned char) * width * height * 4);
 	memset(newimg, 0, sizeof(unsigned char) * width * height * 4);
+	int dx[49], dy[49];
+	int top = 0;
+	for (int i = 0; i < 7; i++)
+		for (int j = 0; j < 7; j++)
+			if (KERNELITEM(kernel, 7, i, j)) {
+				dx[top] = i - 3;
+				dy[top] = j - 3;
+				top++;
+			}
 	for (int i = 0; i < height; i++)
 		for (int j = 0; j < width; j++) {
 			auto p = PIXEL(newimg, width, i, j);
 			unsigned char minn = 255;
-			for (int a = -3; a <= 3; a++)
-				for (int b = -3; b <= 3; b++) {
-					int ni = i + a, nj = j + b;
-					if (OUTSIDE(width, height, ni, nj)) continue;
-					if (!KERNELITEM(kernel, 7, a + 3, b + 3)) continue;
-					minn = std::min(minn, PIXEL(img, width, ni, nj)->r);
-				}
+			for (int a = 0; a < top; a++) {
+				int ni = i + dx[a], nj = j + dy[a];
+				if (OUTSIDE(width, height, ni, nj)) continue;
+				minn = min(minn, PIXEL(img, width, ni, nj)->r);
+			}
 			p->r = p->g = p->b = minn;
 			p->a = PIXEL(img, width, i, j)->a;
 		}
@@ -130,7 +154,7 @@ static void or(unsigned char* a, unsigned char *b, int width, int height) {
 	for (int i = 0; i < height; i++)
 		for (int j = 0; j < width; j++) {
 			auto p = PIXEL(a, width, i, j);
-			unsigned char val = std::max(p->r, PIXEL(b, width, i, j)->r);
+			unsigned char val = max(p->r, PIXEL(b, width, i, j)->r);
 			p->r = p->g = p->b = val;
 		}
 }
@@ -139,7 +163,7 @@ static void and(unsigned char* a, unsigned char *b, int width, int height) {
 	for (int i = 0; i < height; i++)
 		for (int j = 0; j < width; j++) {
 			auto p = PIXEL(a, width, i, j);
-			unsigned char val = std::min(p->r, PIXEL(b, width, i, j)->r);
+			unsigned char val = min(p->r, PIXEL(b, width, i, j)->r);
 			p->r = p->g = p->b = val;
 		}
 }
@@ -319,11 +343,11 @@ CVPROJECTCORE_API void distanceTrans(unsigned char *img, int width, int height) 
 				for (int b = 0; b < width; b++) {
 					if (PIXEL(img, width, a, b)->r != 0) continue;
 					int d = sqr(a - i) + sqr(b - j);
-					mind = std::min(d, mind);
+					mind = min(d, mind);
 				}
 			auto p = SIGNEDPIXEL(timg, width, i, j);
 			p->r = mind;
-			maxd = std::max(mind, maxd);
+			maxd = max(mind, maxd);
 		}
 	double td = sqrt(maxd);
 	for (int i = 0; i < height; i++)

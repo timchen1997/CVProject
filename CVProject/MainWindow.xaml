@@ -205,9 +205,6 @@
                         </ListBox>
                     </Grid>
                 </GroupBox>
-                <GroupBox Grid.Column="1" HorizontalAlignment="Left" Height="177" Margin="10,374,0,0" VerticalAlignment="Top" Width="230"  Header="Histogram">
-                    <Grid Background="#FF2C2C2C"/>
-                </GroupBox>
             </Grid>
         </DockPanel>
         <StatusBar Grid.Row="2" Background="#FF212121" Foreground="White">
@@ -217,8 +214,6 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="60"/>
-                            <ColumnDefinition Width="200"/>
-                            <ColumnDefinition Width="50"/>
                         </Grid.ColumnDefinitions>
                     </Grid>
                 </ItemsPanelTemplate>
@@ -228,12 +223,6 @@
             </StatusBarItem>
             <StatusBarItem Grid.Column="1">
                 <Button Width="55" Content="Reset" Click="btnReset_Click" x:Name="btnReset"/>
-            </StatusBarItem>
-            <StatusBarItem Grid.Column="2">
-                <Slider Width="190"/>
-            </StatusBarItem>
-            <StatusBarItem Grid.Column="3">
-                <TextBox Width="48"/>
             </StatusBarItem>
         </StatusBar>
     </Grid>
